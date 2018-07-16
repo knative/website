@@ -1,2 +1,4 @@
 # knative.github.io
-Source for the Knative Web site
+
+
+WIP: This repository is a placeholder for Knative Web site source code (knative.dev)
