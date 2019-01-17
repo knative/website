@@ -1,0 +1,11 @@
+# Knative STAGING Site Params (adds to (or can override) Site "_default")
+# Use STAGING for development, like inflight PR reviews and content testing
+
+# Usage notes:
+# To build with these settings, you run: "hugo --environment staging"
+# Hugo build then uses every setting defined in "config/_default" and then merge
+# all settings defined here for "staging" on top of all those define for "_default".
+
+# STAGING site default version
+version = "master (v.next)"
+githubbranch = "master"

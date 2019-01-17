@@ -1,0 +1,12 @@
+[build]
+  publish = "public"
+  command = "rm -rf content && git clone -b site-docs https://github.com/RichieEscarez/docs.git content/en && hugo"
+
+[context.production.environment]
+  HUGO_VERSION = "0.53"
+  HUGO_ENV = "production"
+  HUGO_ENABLEGITINFO = "true"
+
+[context.deploy-preview.environment]
+  HUGO_VERSION = "0.53"
+  HUGO_ENV = "development"

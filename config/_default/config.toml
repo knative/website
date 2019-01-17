@@ -1,0 +1,72 @@
+# Knative DEFAULT Site Configuration
+
+# Usage notes:
+# To build with these settings, you run: "hugo"
+# Also see "production" and "staging" environment settings.
+
+baseURL = "https://knative-v1.netlify.com/"
+title = "Knative"
+configDir = "config"
+
+# Ignore files when rendering (to hide from Nav tree and sitemap)
+# Add files here that you "include" in other files using the 'readfile' shortcode
+ignoreFiles = [
+  "_Example_LANG.toml",
+  "docs/README.md",
+  "docs/build/README.md",
+  "docs/eventing/README.md",
+  "docs/eventing/sources/README.md",
+  "docs/install/README.md",
+  "docs/serving/README.md",
+  "docs/reference/build.md",
+  "docs/reference/serving.md",
+  "docs/serving/samples/README.md",
+  "docs/reference/eventing/eventing.md",
+  "docs/reference/eventing/eventing-sources.md" ]
+
+# Hugo allows theme composition (and inheritance). The precedence is from left to right.
+theme = ["docsy"]
+
+enableRobotsTXT = true
+
+# Language settings
+contentDir = "content/en"
+defaultContentLanguage = "en"
+# TODO: Investigate if this should be true when other nls exist?
+defaultContentLanguageInSubdir = false
+# Useful when translating.
+enableMissingTranslationPlaceholders = true
+
+# Will give values to .Lastmod etc.
+enableGitInfo = true
+
+disableKinds = ["taxonomy", "taxonomyTerm"]
+
+# Highlighting config
+pygmentsCodeFences = true
+pygmentsUseClasses = false
+# Use the new Chroma Go highlighter in Hugo.
+pygmentsUseClassic = false
+#pygmentsOptions = "linenos=table"
+# See https://help.farbox.com/pygments.html
+pygmentsStyle = "tango"
+
+ # First one is picked as the Twitter card image if not set on page.
+ #images = "/docs/images/...."
+
+# Configure how URLs look like per section.
+[permalinks]
+blog = "/:section/:year/:month/:day/:slug/"
+
+## Configuration for BlackFriday markdown parser: https://github.com/russross/blackfriday
+[blackfriday]
+plainIDAnchors = true
+hrefTargetBlank = true
+angledQuotes = false
+latexDashes = true
+
+# Image processing configuration.
+[imaging]
+resampleFilter = "CatmullRom"
+quality = 75
+anchor = "smart"

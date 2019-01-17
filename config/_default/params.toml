@@ -1,0 +1,79 @@
+# Knative DEFAULT Site Params
+# Default site parameters, see "PRODUCTION" and "STAGING" for environment specific overrides
+
+commonsLicense = "Creative Commons Attribution 4.0 License"
+commons_license = "https://creativecommons.org/licenses/by/4.0/"
+apacheLicense = "Apache 2.0 License"
+apache_license = "https://www.apache.org/licenses/LICENSE-2.0"
+
+github_repo = "https://github.com/knative/docs"
+
+
+# Product versions
+
+# Default site version (Latest release)
+version = "v0.3.x"
+githubbranch = "release-v0.3"
+
+# Create a separate [[versions]] set for every version / doc set branch
+# Use the ghbranchname param for specifying the GitHub branchname ->
+# Example: [thisisalink](https://github.com/..../tree/{{< params "ghbranchname" >}}/....)
+
+[[versions]]
+  version = "v0.2.x"
+  ghbranchname = "release-v0.2"
+  url = "https://v0.2.knative.dev/docs"
+
+[[versions]]
+  version = "v0.1.x"
+  ghbranchname = "release-v0.1"
+  url = "https://github.com/knative/docs/tree/v0.1.x"
+
+[[versions]]
+  version = "master (v.next)"
+  ghbranchname = "master"
+  url = "https://github.com/knative/docs"
+
+
+# User interface configuration
+[ui]
+# Enable to show the side bar menu in its compact state.
+sidebar_menu_compact = false
+#  Set to true to disable breadcrumb navigation.
+breadcrumb_disable = false
+
+[links]
+# End user relevant links. These will show up on left side of footer and in the community page if you have one.
+[[links.user]]
+  name = "Knative User Group"
+  url = "https://groups.google.com/forum/#!forum/knative-users"
+  icon = "fa fa-envelope"
+        desc = "Discussion and help from your fellow users"
+[[links.user]]
+  name ="Twitter"
+  url = "https://twitter.com/KnativeProject"
+  icon = "fab fa-twitter"
+        desc = "Follow us on Twitter to get the latest news!"
+[[links.user]]
+  name = "Stack Overflow Questions"
+  url = "https://stackoverflow.com/questions/tagged/*knative*"
+  icon = "fab fa-stack-overflow"
+        desc = "Knative tagged questions and curated answers"
+# Developer relevant links. These will show up on right side of footer and in the community page if you have one.
+[[links.developer]]
+  name = "Knative GitHub Repo"
+  url = "https://github.com/knative"
+  icon = "fab fa-github"
+        desc = "Development takes place here!"
+[[links.developer]]
+  name = "Knative Slack Channels"
+  url = "https://knative.slack.com/"
+  icon = "fab fa-slack"
+        desc = "Chat with other project developers"
+[[links.developer]]
+  name = "Knative Developer Group"
+  url = "https://groups.google.com/forum/#!forum/knative-dev"
+  icon = "fa fa-envelope"
+        desc = "Discuss development issues around the project"
+
+
