@@ -4,14 +4,19 @@
 # To build with these settings, you run: "hugo"
 # Also see "production" and "staging" environment settings.
 
-baseURL = "https://knative-v1.netlify.com/"
+baseURL = "https://knative.netlify.com/"
 title = "Knative"
 configDir = "config"
 
-# Ignore files when rendering (to hide from Nav tree and sitemap)
+# Ignore files when rendering/building site (to hide from Nav tree and sitemap)
 # Add files here that you "include" in other files using the 'readfile' shortcode
+#
+# Example: Each README.md file (kept so GitHub repo has landing pages) that are "included" 
+# (like: {{% readfile file="path-from-root/README.md" markdown="true" %}} in a _index.md file)
+# should be hidden from the Hugo build (to avoid blank nav entries and extra sitemap entries).
 ignoreFiles = [
-  "_Example_LANG.toml",
+  "community/README.md",
+  "community/samples/README.md",
   "docs/README.md",
   "docs/build/README.md",
   "docs/eventing/README.md",
