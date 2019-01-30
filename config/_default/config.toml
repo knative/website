@@ -15,6 +15,7 @@ configDir = "config"
 # (like: {{% readfile file="path-from-root/README.md" markdown="true" %}} in a _index.md file)
 # should be hidden from the Hugo build (to avoid blank nav entries and extra sitemap entries).
 ignoreFiles = [
+<<<<<<< HEAD
   "README.md",
   "docs/reference/build.md",
   "docs/reference/serving.md",
