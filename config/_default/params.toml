@@ -13,21 +13,21 @@ github_repo = "https://github.com/knative/docs"
 
 # Default site version (Latest release)
 version = "v0.3.x"
-githubbranch = "release-v0.3"
+githubbranch = "release-0.3"
 
 # Create a separate [[versions]] set for every version / doc set branch
 # Use the ghbranchname param for specifying the GitHub branchname ->
 # Example: [thisisalink](https://github.com/..../tree/{{< params "ghbranchname" >}}/....)
 
 [[versions]]
-  version = "v0.2.x"
-  ghbranchname = "release-v0.2"
-  url = "https://v0.2.knative.dev/docs"
+  version = "v0.2.x - GitHub"
+  ghbranchname = "release-0.2"
+  url = "https://github.com/knative/docs/tree/release-0.2"
 
 [[versions]]
-  version = "v0.1.x"
-  ghbranchname = "release-v0.1"
-  url = "https://github.com/knative/docs/tree/v0.1.x"
+  version = "v0.1.x - GitHub"
+  ghbranchname = "release-0.1"
+  url = "https://github.com/knative/docs/tree/release-0.2"
 
 [[versions]]
   version = "master (v.next)"
