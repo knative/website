@@ -10,17 +10,17 @@ configDir = "config"
 
 # Ignore files when rendering/building site (to hide from Nav tree and sitemap)
 # Add files here that you "include" in other files using the 'readfile' shortcode
+# Example: {{% readfile file="path-from-root/README.md" markdown="true" %}}
 #
-# Example: Each README.md file (kept so GitHub repo has landing pages) that are "included" 
-# (like: {{% readfile file="path-from-root/README.md" markdown="true" %}} in a _index.md file)
-# should be hidden from the Hugo build (to avoid blank nav entries and extra sitemap entries).
+# All README.md files are ignored because they are "included" into _index.md files
+# and we want the build to avoid blank nav entries and extra/duplicate sitemap entries.
+# (the README.md files are kept for GitHub repo users so a landing pages appears)
 ignoreFiles = [
-<<<<<<< HEAD
-  "README.md",
-  "docs/reference/build.md",
-  "docs/reference/serving.md",
-  "docs/reference/eventing/eventing.md",
-  "docs/reference/eventing/eventing-sources.md" ]
+  "README.md$",
+  "docs/docs/reference/build.md",
+  "docs/docs/reference/serving.md",
+  "docs/docs/reference/eventing/eventing.md",
+  "docs/docs/reference/eventing/eventing-sources.md" ]
 
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
 theme = ["docsy"]
@@ -50,7 +50,7 @@ pygmentsUseClassic = false
 pygmentsStyle = "tango"
 
  # First one is picked as the Twitter card image if not set on page.
- #images = "/docs/images/...."
+ #images = "/docs/docs/images/...."
 
 # Configure how URLs look like per section.
 [permalinks]

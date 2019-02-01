@@ -6,8 +6,10 @@ commons_license = "https://creativecommons.org/licenses/by/4.0/"
 apacheLicense = "Apache 2.0 License"
 apache_license = "https://www.apache.org/licenses/LICENSE-2.0"
 
+# GitHub repository
 github_repo = "https://github.com/knative/docs"
-
+# Default GitHub branch - Latest Knative docs release
+github_branch = "release-0.3"
 
 # Product versions
 
@@ -27,7 +29,7 @@ githubbranch = "release-0.3"
 [[versions]]
   version = "v0.1.x - GitHub"
   ghbranchname = "release-0.1"
-  url = "https://github.com/knative/docs/tree/release-0.2"
+  url = "https://github.com/knative/docs/tree/release-0.1"
 
 [[versions]]
   version = "master (v.next)"
