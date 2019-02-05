@@ -59,7 +59,6 @@ blog = "/:section/:year/:month/:day/:slug/"
 ## Configuration for BlackFriday markdown parser: https://github.com/russross/blackfriday
 [blackfriday]
 plainIDAnchors = true
-hrefTargetBlank = true
 angledQuotes = false
 latexDashes = true
 
