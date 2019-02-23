@@ -82,7 +82,7 @@ git clone -b "$BRANCH" https://github.com/knative/docs.git content/en
 #  - ignore non-docs source directories
 #  - ignore temporary API shell files (until those API source builds are modified to include frontmatter)
 echo 'Converting links in GitHub source for Hugo build...'
-find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*serving-api.md' ! -name '*eventing-sources-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/test/*' ! -path '*/vendor/*' -exec sed -i '/\]\\(http.*/!s/README\.md//g;/\]\\(http.*/!s/\.md//g' {} +
+find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*serving-api.md' ! -name '*eventing-sources-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/test/*' ! -path '*/vendor/*' -print | xargs grep -Ei ".md)" | grep -Eiv "\(http[s]" | sed 's#/README.md)#/)#g;s#\.md)#)#g'
 
 # Start HUGO build
 hugo
