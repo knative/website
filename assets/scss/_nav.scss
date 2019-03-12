@@ -38,8 +38,8 @@
         top: 0;
         width: 100%;
 
-        .brand-name {
-            display: none;}
+        /*.brand-name {
+            display: none;}*/
     }
 
     @include media-breakpoint-down(md) {
@@ -50,7 +50,6 @@
 
     .navbar-brand {
         text-transform: none;
-        text-align: middle;
 
         .nav-link {
             display: inline-block;
@@ -60,11 +59,9 @@
         .navbar-logo {
             svg {
                 display: inline-block;
-                position: absolute;
-                z-index: 33;
-                margin: -39px 10px 0 10px;
-                padding: 10px;
-                height: 95px;
+                height: 50px;
+                width: auto;
+                margin-right: 10px;
             }
         }
     }
@@ -84,6 +81,7 @@
 
     .dropdown {
         min-width: 100px;
+        margin-right: 1rem;
     }
 
     @include media-breakpoint-down(md) {

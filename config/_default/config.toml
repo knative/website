@@ -7,6 +7,8 @@
 baseURL = "https://knative.netlify.com/"
 title = "Knative"
 configDir = "config"
+canonifyURLs = "true"
+relativeURLs = "true"
 
 # Ignore files when rendering/building site (to hide from Nav tree and sitemap)
 # Add files here that you "include" in other files using the 'readfile' shortcode
@@ -50,7 +52,7 @@ pygmentsUseClassic = false
 pygmentsStyle = "tango"
 
  # First one is picked as the Twitter card image if not set on page.
- #images = "/docs/docs/images/...."
+ #images = "/docs/images/...."
 
 # Configure how URLs look like per section.
 [permalinks]
@@ -59,6 +61,7 @@ blog = "/:section/:year/:month/:day/:slug/"
 ## Configuration for BlackFriday markdown parser: https://github.com/russross/blackfriday
 [blackfriday]
 plainIDAnchors = true
+hrefTargetBlank = true
 angledQuotes = false
 latexDashes = true
 
