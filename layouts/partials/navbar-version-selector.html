@@ -1,8 +1,20 @@
+{{ $.Scratch.Set "activeVersion" .Site.Params.version }}
+{{ $.Scratch.Set "currDocsVer" "Release: Latest" }}
+{{ $curPage := .Page.Section }}
 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  {{ .Site.Params.version }}
-</a>
+{{ range .Site.Params.versions }}
+  {{ $docsVersions := ( printf "%s%s" .version "-docs" | printf "%s" ) }}
+  {{ if eq $curPage $docsVersions }}
+  {{ $.Scratch.Set "currDocsVer" ( printf "%s%s" "Release: " .version | printf "%s" ) }}
+    {{ $.Scratch.Set "activeVersion" .version }}
+  {{ else if eq $curPage "development" }}
+    {{ $.Scratch.Set "currDocsVer" "Pre-release" }}
+    {{ $.Scratch.Set "activeVersion" .version }}
+  {{ end }}
+{{ end }}
+<span>{{ $.Scratch.Get "currDocsVer" }}</span></a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
   {{ range .Site.Params.versions }}
-  <a class="dropdown-item" href="{{ .url }}">{{ .version }}</a>
+  <a class="dropdown-item{{ if eq ( $.Scratch.Get "activeVersion" ) ( printf "%s" .version ) }} active{{ end }}" href="{{ .url }}">{{ .version }}</a>
   {{ end }}
 </div>
