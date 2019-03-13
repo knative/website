@@ -7,5 +7,5 @@
 # all settings defined here for "staging" on top of all those define for "_default".
 
 # STAGING site default version
-version = "master (v.next)"
+version = "development"
 githubbranch = "master"

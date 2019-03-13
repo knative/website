@@ -3,8 +3,8 @@
 # Quit on error
 set -e
 
-# Set default branch
-DEFAULTBRANCH=release-0.3
+# Set default branch (latest docs release)
+DEFAULTBRANCH="release-0.3"
 BRANCH="$DEFAULTBRANCH"
 
 # Get and use specified branch name otherwise, use default (latest release)
@@ -14,7 +14,7 @@ while getopts b: branch
 do
 echo '------ MANUAL BUILD REQUESTED ------'
 # Set specified branch
-BRANCH=${OPTARG}
+BRANCH="${OPTARG}"
 done
 
 # If a webhook requested the build, find and use that branch name
@@ -22,8 +22,8 @@ done
 if [[ $INCOMING_HOOK_BODY || $INCOMING_HOOK_TITLE || $INCOMING_HOOK_URL ]]
 then
 # First look for "merged" content
-MERGEDPR=$(echo $INCOMING_HOOK_BODY | grep -o '\"merged\"\:true\,' || true)
-# If a merged PR if found, then deploy to knative.dev
+MERGEDPR=$(echo "$INCOMING_HOOK_BODY" | grep -o '\"merged\"\:true\,' || true)
+# If a merged PR if found, then deploy production site (www.knative.dev)
 if [[ $MERGEDPR ]]
 then
 echo '------ PR' "$PULL_REQUEST" 'MERGED ------'
@@ -32,21 +32,20 @@ else
 echo '------ BUILD REQUEST FROM WEBHOOK ------'
 echo 'Webhook Title:' "$INCOMING_HOOK_TITLE"
 echo 'Webhook URL:' "$INCOMING_HOOK_URL"
-# Verbose so hide the body unless you need to troubleshoot
-#echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
+echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
 # Getting branch from webhook
 echo 'Parsing Webhook request for branch name'
 # Check if webhook request came from an open PR
-PULLREQUEST=$(echo $INCOMING_HOOK_BODY | grep -o -m 1 '\"pull_request\"' || true)
+PULLREQUEST=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"pull_request\"' || true)
 if [[ $PULLREQUEST ]]
 then
 # Webhook from an in-progress PR
-GETPRBRANCH=$(echo $INCOMING_HOOK_BODY | grep -o -m 1 '\"head\"\:{\"label\":.*\"ref\"\:\".*\"\,\"sha' || true)
-BRANCH1=$(echo $GETPRBRANCH | sed -e 's/\"\,\"sha\"\:.*//;s/.*\"ref\"\:\"//')
+GETPRBRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"head\"\:{\"label\":.*\"ref\"\:\".*\"\,\"sha' || true)
+BRANCH1=$(echo "$GETPRBRANCH" | sed -e 's/\"\,\"sha\"\:.*//;s/.*\"ref\"\:\"//')
 else
 # GitHub "Push"
-GETRELEASEBRANCH=$(echo $INCOMING_HOOK_BODY | grep -o ':"refs\/heads\/.*\"\,\"before\":' || true)
-BRANCH=$(echo $GETRELEASEBRANCH | sed -e 's/:\"refs\/heads\///;s/\"\,\"before\"://')
+GETRELEASEBRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o ':"refs\/heads\/.*\"\,\"before\":' || true)
+BRANCH=$(echo "$GETRELEASEBRANCH" | sed -e 's/:\"refs\/heads\///;s/\"\,\"before\"://')
 fi
 fi
 else
@@ -68,20 +67,31 @@ echo '------ PROCESSING SOURCE FILES ------'
 # Connect the separate site source and docs source repos
 # Prevent clone error (git clone fails if directory exists)
 # This forces a complete build of the site for each request
-echo 'Deleting past clone for new copy...'
-rm -rf content
+echo 'Deleting content dir...'
+rm -rf content/en
+
 # Get latest source from https://github.com/knative/docs
 echo 'Cloning docs source from the' "$BRANCH" 'branch of https://github.com/knative/docs...'
 git clone -b "$BRANCH" https://github.com/knative/docs.git content/en
 
+echo 'Getting community, blog, and contributor content from master branch'
+git clone https://github.com/knative/docs.git content/en
+echo 'Getting pre-release development docs from master branch'
+mv content/en/docs content/en/development
+echo 'Getting the latest docs release from' "$BRANCH" 'branch'
+git clone -b "$BRANCH" https://github.com/knative/docs.git content/en/docs
+
 # Convert GitHub enabled source, into HUGO supported content:
-#  - Remove all .md file extensions 
-#  - Ensure any paths to "README.md" are truncated to containing folder
-#  - ignore all _index.md files (req. Hugo 'section' files)
-#  - ignore .git* files
-#  - ignore non-docs source directories
-#  - ignore temporary API shell files (until those API source builds are modified to include frontmatter)
-echo 'Converting links in GitHub source for Hugo build...'
+#  - Skip/assume any Markdown link with fully qualified HTTP(s) URL is 'external' 
+#    - Otherwise, remove all '.md' file extensions from Markdown links
+#  - Truncate paths to "README.md" (remove 'README.md', point to parent folder)
+#  - Ignore Hugo site related files:
+#     - _index.md files (req. Hugo 'section' files)
+#     - API shell files (until those API source builds are modified to include frontmatter)
+#  - Skip GitHub files:
+#    - .git* files
+#    - non-docs directories
+echo 'Converting all GitHub links in source for Hugo build...'
 find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*serving-api.md' ! -name '*eventing-sources-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/test/*' ! -path '*/vendor/*' -exec sed -i '/](/ { /http/ !s#/README.md##g; /http/ !s#\.md## g}' {} +
 
 # Start HUGO build
@@ -91,8 +101,10 @@ echo '------ VIEW BUILD OUTPUT ------'
 # Only show published site if build triggered by PR merge
 if [[ $MERGEDPR ]]
 then
-echo 'Merged content is published at:' "$URL"
+echo '------ CONTENT PUBLISHED ------'
+echo 'Merged content will be live at:' "$URL"
 else
+echo '------ PREVIEW CHANGES ------'
 echo 'Shared staging URL:' "$DEPLOY_PRIME_URL"
-echo 'Unique build URL:' "$DEPLOY_URL"
+echo 'URL unique to this build:' "$DEPLOY_URL"
 fi
