@@ -74,13 +74,33 @@ rm -rf content/en
 echo 'Cloning docs source from the' "$BRANCH" 'branch of https://github.com/knative/docs...'
 git clone -b "$BRANCH" https://github.com/knative/docs.git content/en
 
-echo 'Getting community, blog, and contributor content from master branch'
-git clone -b "$BRANCH" https://github.com/knative/docs.git content/en
+# Temporary copies of v0.3 to validate versioning on Production site
+mv content/en/docs content/en/development
+git clone -b "$BRANCH" https://github.com/knative/docs.git temp/release/latest
+mv temp/release/latest/docs content/en/docs
+git clone -b "$BRANCH" https://github.com/knative/docs.git temp/release/v0.3
+mv temp/release/v0.3/docs content/en/v0.3-docs
 
+# HOLD until master branch is updated for website
+#echo 'Getting community, blog, and contributor content from master branch'
+#git clone https://github.com/knative/docs.git content/en
 #echo 'Getting pre-release development docs from master branch'
+# Docs in 'master' branch are "pre-release" only:
 #mv content/en/docs content/en/development
 #echo 'Getting the latest docs release from' "$BRANCH" 'branch'
-#git clone -b "$BRANCH" https://github.com/knative/docs.git content/en/docs
+#git clone -b "$BRANCH" https://github.com/knative/docs.git temp/release/latest
+# Only copy and keep the "docs" folder from all branched releases:
+#mv temp/release/latest/docs content/en/docs
+#echo 'Getting the archived docs releases
+#git clone -b "release-0.3" https://github.com/knative/docs.git temp/release/v0.3
+#mv temp/release/v0.3/docs content/en/v0.3-docs
+
+# Template for next release:
+#git clone -b "release-[VERSION#]" https://github.com/knative/docs.git temp/release/[VERSION#]
+#mv temp/release/[VERSION#]/docs content/en/[VERSION#]-docs
+
+# Delete temp directory (old copies of shared content: blog, contributing, community)
+rm -rf temp
 
 # Convert GitHub enabled source, into HUGO supported content:
 #  - Skip/assume any Markdown link with fully qualified HTTP(s) URL is 'external'
