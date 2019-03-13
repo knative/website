@@ -18,7 +18,7 @@ BRANCH="${OPTARG}"
 done
 
 # If a webhook requested the build, find and use that branch name
-# Check for webhook payload 
+# Check for webhook payload
 if [[ $INCOMING_HOOK_BODY || $INCOMING_HOOK_TITLE || $INCOMING_HOOK_URL ]]
 then
 # First look for "merged" content
@@ -75,14 +75,15 @@ echo 'Cloning docs source from the' "$BRANCH" 'branch of https://github.com/knat
 git clone -b "$BRANCH" https://github.com/knative/docs.git content/en
 
 echo 'Getting community, blog, and contributor content from master branch'
-git clone https://github.com/knative/docs.git content/en
-echo 'Getting pre-release development docs from master branch'
-mv content/en/docs content/en/development
-echo 'Getting the latest docs release from' "$BRANCH" 'branch'
-git clone -b "$BRANCH" https://github.com/knative/docs.git content/en/docs
+git clone -b "$BRANCH" https://github.com/knative/docs.git content/en
+
+#echo 'Getting pre-release development docs from master branch'
+#mv content/en/docs content/en/development
+#echo 'Getting the latest docs release from' "$BRANCH" 'branch'
+#git clone -b "$BRANCH" https://github.com/knative/docs.git content/en/docs
 
 # Convert GitHub enabled source, into HUGO supported content:
-#  - Skip/assume any Markdown link with fully qualified HTTP(s) URL is 'external' 
+#  - Skip/assume any Markdown link with fully qualified HTTP(s) URL is 'external'
 #    - Otherwise, remove all '.md' file extensions from Markdown links
 #  - Truncate paths to "README.md" (remove 'README.md', point to parent folder)
 #  - Ignore Hugo site related files:
