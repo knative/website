@@ -4,7 +4,7 @@
 # To build with these settings, you run: "hugo"
 # Also see "production" and "staging" environment settings.
 
-baseURL = "https://knative.netlify.com/"
+baseURL = "https://www.knative.dev/"
 title = "Knative"
 configDir = "config"
 canonifyURLs = "true"
@@ -12,7 +12,9 @@ relativeURLs = "true"
 
 # Ignore files when rendering/building site (to hide from Nav tree and sitemap)
 # Add files here that you "include" in other files using the 'readfile' shortcode
-# Example: {{% readfile file="path-from-root/README.md" markdown="true" %}}
+# Examples: 
+# Based on root path: {{% readfile file="docs/serving/README.md" markdown="true" %}}
+# Using relative path: {{% readfile file="README.md" relatative="true" markdown="true" %}}
 #
 # All README.md files are ignored because they are "included" into _index.md files
 # and we want the build to avoid blank nav entries and extra/duplicate sitemap entries.
@@ -26,8 +28,6 @@ ignoreFiles = [
 
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
 theme = ["docsy"]
-
-enableRobotsTXT = true
 
 # Language settings
 contentDir = "content/en"

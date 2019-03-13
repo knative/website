@@ -5,8 +5,7 @@
 # Hugo build then uses every setting defined in "config/_default" and then merge
 # all settings defined here for "staging" on top of all those define for "_default".
 
-# TODO: update to custom domain: https://knative.dev
-baseURL = "https://knative.netlify.com/"
+enableRobotsTXT = true
 
 [services]
 [services.googleAnalytics]
