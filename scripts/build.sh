@@ -103,9 +103,16 @@ mv temp/release/v0.3/docs content/en/v0.3-docs
 rm -rf temp
 
 # Convert GitHub enabled source, into HUGO supported content:
-#  - Skip/assume any Markdown link with fully qualified HTTP(s) URL is 'external'
+#  - For all 'content/*.md' files:
+#    - Skip/assume any Markdown link with fully qualified HTTP(s) URL is 'external'
 #    - Otherwise, remove all '.md' file extensions from Markdown links
-#  - Truncate paths to "README.md" (remove 'README.md', point to parent folder)
+#    - Replace all "README.md" with "index.html"
+#  - For files NOT included using the "readfile" shortcode:
+#     (exclude all README.md files from relative link adjustment)
+#    - Adjust relative links by adding additional depth:
+#      - Convert './' to '../'
+#      - Convert '../' to '../../'
+#      - Convert '../../' to '../../../'
 #  - Ignore Hugo site related files:
 #     - _index.md files (req. Hugo 'section' files)
 #     - API shell files (until those API source builds are modified to include frontmatter)
@@ -113,7 +120,8 @@ rm -rf temp
 #    - .git* files
 #    - non-docs directories
 echo 'Converting all GitHub links in source for Hugo build...'
-find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*serving-api.md' ! -name '*eventing-sources-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/test/*' ! -path '*/vendor/*' -exec sed -i '/](/ { /http/ !s#/README.md##g; /http/ !s#\.md## g}' {} +
+find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' ! -name '*serving-api.md' ! -name '*eventing-sources-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/test/*' ! -path '*/vendor/*' -exec sed -i '/](/ { /\!\[/ !s#(\.\.\/\.\.\/#(../../../#g; /\!\[/ !s#(\.\.\/#(../../#g; /\!\[/ !s#(\.\/#(../#g; /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
+find . -type f -path '*/content/*README.md' -exec sed -i '/](/ { /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 
 # Start HUGO build
 hugo
