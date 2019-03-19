@@ -112,7 +112,6 @@ rm -rf temp
 #    - Adjust relative links by adding additional depth:
 #      - Convert './' to '../'
 #      - Convert '../' to '../../'
-#      - Convert '../../' to '../../../'
 #  - Ignore Hugo site related files:
 #     - _index.md files (req. Hugo 'section' files)
 #     - API shell files (until those API source builds are modified to include frontmatter)
@@ -120,7 +119,7 @@ rm -rf temp
 #    - .git* files
 #    - non-docs directories
 echo 'Converting all GitHub links in source for Hugo build...'
-find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' ! -name '*serving-api.md' ! -name '*eventing-sources-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/test/*' ! -path '*/vendor/*' -exec sed -i '/](/ { /\!\[/ !s#(\.\.\/\.\.\/#(../../../#g; /\!\[/ !s#(\.\.\/#(../../#g; /\!\[/ !s#(\.\/#(../#g; /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
+find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' ! -name '*serving-api.md' ! -name '*eventing-sources-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/test/*' ! -path '*/vendor/*' -exec sed -i '/](/ { /\!\[/ !s#(\.\.\/#(../../#g; /\!\[/ !s#(\.\/#(../#g; /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 find . -type f -path '*/content/*README.md' -exec sed -i '/](/ { /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 
 # Start HUGO build
