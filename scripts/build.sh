@@ -4,7 +4,7 @@
 set -e
 
 # Set default branch (latest docs release)
-DEFAULTBRANCH="release-0.3"
+DEFAULTBRANCH="release-0.4"
 BRANCH="$DEFAULTBRANCH"
 
 # Get and use specified branch name otherwise, use default (latest release)
@@ -35,15 +35,15 @@ echo 'Webhook URL:' "$INCOMING_HOOK_URL"
 echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
 # Getting branch from webhook
 echo 'Parsing Webhook request for branch name'
-# Check if webhook request came from an open PR
+# Check if webhook request came from an PR
 PULLREQUEST=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"pull_request\"' || true)
 if [[ $PULLREQUEST ]]
 then
-# Webhook from an in-progress PR
+# Webhook from a PR
 GETPRBRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"head\"\:{\"label\":.*\"ref\"\:\".*\"\,\"sha' || true)
 BRANCH1=$(echo "$GETPRBRANCH" | sed -e 's/\"\,\"sha\"\:.*//;s/.*\"ref\"\:\"//')
 else
-# GitHub "Push"
+# Webhook from a 'git push'
 GETRELEASEBRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o ':"refs\/heads\/.*\"\,\"before\":' || true)
 BRANCH=$(echo "$GETRELEASEBRANCH" | sed -e 's/:\"refs\/heads\///;s/\"\,\"before\"://')
 fi
@@ -72,35 +72,28 @@ rm -rf content/en
 
 # Get latest source from https://github.com/knative/docs
 echo 'Cloning docs source from the' "$BRANCH" 'branch of https://github.com/knative/docs...'
-git clone -b "$BRANCH" https://github.com/knative/docs.git content/en
-
-# Temporary copies of v0.3 to validate versioning on Production site
+# MASTER
+echo 'Getting community, blog, and contributor content from master branch'
+git clone -b master https://github.com/knative/docs.git content/en
+echo 'Getting pre-release development docs from master branch'
+# Content in "docs" folder of the 'master' branch contains "pre-release" content:
 mv content/en/docs content/en/development
+# BRANCHES (only branches in knative/docs currently supported)
+echo 'Getting the latest docs release from' "$BRANCH" 'branch'
 git clone -b "$BRANCH" https://github.com/knative/docs.git temp/release/latest
-mv temp/release/latest/docs content/en/docs
-git clone -b "$BRANCH" https://github.com/knative/docs.git temp/release/v0.3
-mv temp/release/v0.3/docs content/en/v0.3-docs
-
-# HOLD until master branch is updated for website
-#echo 'Getting community, blog, and contributor content from master branch'
-#git clone https://github.com/knative/docs.git content/en
-#echo 'Getting pre-release development docs from master branch'
-# Docs in 'master' branch are "pre-release" only:
-#mv content/en/docs content/en/development
-#echo 'Getting the latest docs release from' "$BRANCH" 'branch'
-#git clone -b "$BRANCH" https://github.com/knative/docs.git temp/release/latest
 # Only copy and keep the "docs" folder from all branched releases:
-#mv temp/release/latest/docs content/en/docs
-#echo 'Getting the archived docs releases
-#git clone -b "release-0.3" https://github.com/knative/docs.git temp/release/v0.3
-#mv temp/release/v0.3/docs content/en/v0.3-docs
+mv temp/release/latest/docs content/en/docs
+echo 'Getting the archived docs releases'
+git clone -b "release-0.3" https://github.com/knative/docs.git temp/release/v0.3
+mv temp/release/v0.3/docs content/en/v0.3-docs
+# Delete temp directory (clear out old copies of shared content: blog, contributing, community)
+rm -rf temp
 
+###############################################################
 # Template for next release:
 #git clone -b "release-[VERSION#]" https://github.com/knative/docs.git temp/release/[VERSION#]
 #mv temp/release/[VERSION#]/docs content/en/[VERSION#]-docs
-
-# Delete temp directory (old copies of shared content: blog, contributing, community)
-rm -rf temp
+###############################################################
 
 # Convert GitHub enabled source, into HUGO supported content:
 #  - For all 'content/*.md' files:
@@ -125,7 +118,6 @@ find . -type f -path '*/content/*README.md' -exec sed -i '/](/ { /http/ !s#READM
 # Start HUGO build
 hugo
 
-echo '------ VIEW BUILD OUTPUT ------'
 # Only show published site if build triggered by PR merge
 if [[ $MERGEDPR ]]
 then
