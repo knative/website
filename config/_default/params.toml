@@ -11,9 +11,9 @@ github_repo = "https://github.com/knative/docs"
 
 # Default values (Latest Knative docs release)
 # Default GitHub branch
-github_branch = "release-0.3"
+github_branch = "release-0.4"
 # Default website version
-version = "v0.3"
+version = "v0.4"
 
 # Product versions
 
@@ -22,11 +22,16 @@ version = "v0.3"
 # Example: [thisisalink](https://github.com/..../tree/{{< params "ghbranchname" >}}/....)
 
 [[versions]]
-  version = "v0.3"
-  ghbranchname = "release-0.3"
+  version = "v0.4"
+  ghbranchname = "release-0.4"
   url = "https://www.knative.dev/docs/"
 
 # Past versions
+[[versions]]
+  version = "v0.3"
+  ghbranchname = "release-0.3"
+  url = "https://www.knative.dev/v0.3-docs/"
+
 [[versions]]
   version = "v0.2"
   ghbranchname = "release-0.2"
@@ -40,7 +45,7 @@ version = "v0.3"
 [[versions]]
   version = "development"
   ghbranchname = "master"
-  url = "https://github.com/knative/docs"
+  url = "https://www.knative.dev/development/"
 
 
 # User interface configuration
