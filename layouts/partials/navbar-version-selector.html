@@ -27,7 +27,7 @@
 {{ end }}
   {{/* generate menu */}}
   <span class="d-none d-lg-inline d-xl-inline">{{ ( printf "%s%s" $docLabel ( $.Scratch.Get "docsVer" ) | printf "%s" ) }}</span>
-  <span class="d-none d-sm-inline d-md-inline d-lg-none d-xl-none">{{ ( printf "%s%s" $releaseLabel ( $.Scratch.Get "docsVer" ) | printf "%s" ) }}</span>
+  <span class="d-sm-inline d-md-inline d-lg-none d-xl-none">{{ ( printf "%s%s" $releaseLabel ( $.Scratch.Get "docsVer" ) | printf "%s" ) }}</span>
 </a>
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
   {{ range .Site.Params.versions }}
