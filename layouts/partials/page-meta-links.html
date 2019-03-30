@@ -1,16 +1,33 @@
 
 {{ if .Path }}
-{{ $gh_repo := ($.Param "github_repo") }}
-{{ $gh_branch := ($.Param "github_branch") }}
-{{ if $gh_repo }}
-{{ if $gh_branch }}
-<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
-{{ $editURL := printf "%s/edit/%s/%s" $gh_repo $gh_branch .Path }}
-{{ $issuesURL := printf "%s/issues/new?title=%s(%s)&labels=kind%2Fbug&template=bug-in-existing-docs.md" $gh_repo (htmlEscape $.Title) (htmlEscape $.Path)}}
-<a href="{{ $editURL }}" target="_blank"><i class="fa fa-edit fa-fw"></i> {{ T "post_edit_this" }}</a>
-<a href="{{ $issuesURL }}" target="_blank"><i class="fab fa-github fa-fw"></i> {{ T "post_create_issue" }}</a>
-</div>
-{{ end }}
-{{ end }}
-{{ end }}
+  {{ $pageSection := .Page.Section }}
+  {{ $.Scratch.Set "filepath" .Path }}
+  {{ if eq (printf "%s" .File) "_index" }}
+    {{ $.Scratch.Set "filepath" (replace (printf "%s" .Path) "_index" "README") }}
+  {{ end }}
+  {{ if ne $pageSection "docs" }}
+    {{ $.Scratch.Set "filepath" (replaceRE "v[0-9].[0-9]-docs" "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
+  {{ end }}
+  {{ if eq $pageSection .Site.Params.master }}
+    {{ $.Scratch.Set "filepath" (replaceRE "development" "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
+  {{ end }}
 
+  {{ $.Scratch.Set "gh_branch" ($.Param "github_branch") }}
+  {{ range .Site.Params.versions }}
+    {{ if eq $pageSection .dirpath }}
+      {{ $.Scratch.Set "gh_branch" .ghbranchname }}
+    {{ end }}
+  {{ end }}
+
+  {{ $gh_repo := ($.Param "github_repo") }}
+
+  {{ if $gh_repo }}
+    <div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+    {{ $editURL := printf "%s/edit/%s/%s" $gh_repo ($.Scratch.Get "gh_branch") ($.Scratch.Get "filepath") }}
+    {{ $issuesURL := printf "%s/issues/new?title=%s(%s)&labels=kind%2Fbug&template=bug-in-existing-docs.md" $gh_repo (htmlEscape $.Title) (htmlEscape $.Path)}}
+    <a href="{{ $editURL }}" target="_blank"><i class="fa fa-edit fa-fw"></i> {{ T "post_edit_this" }}</a>
+    <a href="{{ $issuesURL }}" target="_blank"><i class="fab fa-github fa-fw"></i> {{ T "post_create_issue" }}</a>
+    </div>
+  {{ end }}
+
+{{ end }}
