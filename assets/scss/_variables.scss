@@ -15,17 +15,20 @@ $enable-shadows: true;
 
 $td-enable-google-fonts: true;
 
-// Theme colors
+// Knative colors
+$knative-darker: rgb(8, 101, 173);
+$knative-lighter: rgb(102, 149, 202);
 
+// Theme colors
 $primary: #403F4C !default;
 $primary-light: lighten($primary, 75%) !default;
-$secondary: #FFA630 !default;
+$secondary: $knative-lighter; // #FFA630 !default;
 $success: #3772FF !default;
 $info: #C0E0DE !default;
 $warning: #ED6A5A !default;
 $danger: #ED6A5A !default;
 $white: #fff !default;
-$light: #D3F3EE !default;
+$light: $knative-lighter;
 
 $dark: #403F4C !default;
 $blue: #72A1E5 !default;
@@ -52,9 +55,10 @@ $td-sidebar-border-color: $border-color !default;
 // Background colors for the sections on home page etc. It is a paint by number system, starting at 0, where the number is taken from the shortcode's ordinal
 // if not provided by the user.
 // These colors are all part of the theme palette, but the mix is fairly random to create variation. This can be overridden by the project if needed.
-$td-box-colors: $dark, $primary, $secondary, $info, $primary-light, $gray-600, $success, $warning, $dark, $danger, $primary, $secondary, $primary-light, $info;
+//$td-box-colors: $dark, $primary, $secondary, $info, $primary-light, $gray-600, $success, $warning, $dark, $danger, $primary, $secondary, $primary-light, $info;
+$td-box-colors: $gray-300, $secondary, $gray-300, $secondary, $gray-500, $secondary, $gray-500, $secondary, $gray-500, $secondary;
 
-$link-color: $blue !default;
+$link-color: $knative-darker !default; //$blue !default;
 $link-decoration: none !default;
 $link-hover-color: darken($link-color, 15%) !default;
 $link-hover-decoration: none !default;
