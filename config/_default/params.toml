@@ -9,49 +9,78 @@ apache_license = "https://www.apache.org/licenses/LICENSE-2.0"
 # GitHub repository
 github_repo = "https://github.com/knative/docs"
 
-# Default values (Latest Knative docs release)
+
+# Non-docs params
+# Content section path values. The directory folder of the other
+# non-docs sections that appear in the main nav bar (site banner).
+sec_blog = "blog"
+sec_community = "community"
+sec_contrib = "contributing"
+
+# Pre-release section path value ("master" docs directory folder)
+master = "development"
+
+# Default docs params
+# Latest Knative docs release/version - Default values (for Docsy Template)
 # Default GitHub branch
 github_branch = "release-0.4"
 # Default website version
 version = "v0.4"
 
-# Product versions
-
+# Doc versions params
 # Create a separate [[versions]] set for every version / doc set branch
 # Use the ghbranchname param for specifying the GitHub branchname ->
 # Example: [thisisalink](https://github.com/..../tree/{{< params "ghbranchname" >}}/....)
+#
+# [[versions]] - Defines a single "version" of the Knative docs
+#   version - Intuitive version label (ie. visible in menus)
+#   ghbranchname - Name of branch of the doc version in GitHub (https://github.com/knative/docs/branches)
+#   url - Fully qualified website URL to the doc version (ie. https://www.knative.dev/[dirpath])
+#   dirpath - The content folder name of the doc version
+#           - Latest release is always set to "docs"
+#           - Past/archived releases change to "v#.#-docs",
+#             where # is the MAJOR and MINOR semantic version values
 
+# Latest version
+# Set to "docs" path
 [[versions]]
   version = "v0.4"
   ghbranchname = "release-0.4"
   url = "https://www.knative.dev/docs/"
+  dirpath = "docs"
 
-# Past versions
+# Archived versions
+# Prefix all past versions with release # "v#.#-docs"
 [[versions]]
   version = "v0.3"
   ghbranchname = "release-0.3"
   url = "https://www.knative.dev/v0.3-docs/"
+  dirpath = "v0.3-docs"
 
 [[versions]]
   version = "v0.2"
   ghbranchname = "release-0.2"
   url = "https://github.com/knative/docs/tree/release-0.2"
+  dirpath = "github-repo"
 
 [[versions]]
   version = "v0.1"
   ghbranchname = "release-0.1"
   url = "https://github.com/knative/docs/tree/release-0.1"
+  dirpath = "github-repo"
 
+# In-development (pre-release) content - "master" branch
 [[versions]]
   version = "development"
   ghbranchname = "master"
   url = "https://www.knative.dev/development/"
+  dirpath = "development"
 
 
 # User interface configuration
 [ui]
-# Enable to show the side bar menu in its compact state.
-sidebar_menu_compact = false
+# Set to true to display the nav bar in compact state (collapse menu).
+sidebar_menu_compact = true
 #  Set to true to disable breadcrumb navigation.
 breadcrumb_disable = false
 

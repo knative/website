@@ -1,8 +1,8 @@
-{{/* Prefix values for labels */}}
-{{ $docLabel := "Documentation " }}
-{{ $releaseLabel := "Release: " }}
-{{ $mstMainLabel := "Pre-release" }}
-{{ $mstDropLabel := "development" }}
+{{/* Prefix labels for menus */}}
+{{ $.Scratch.Set "docLabel" "Documentation " }}
+{{ $.Scratch.Set "releaseLabel" "Release: " }}
+{{ $masterMainLabel := "Pre-release" }}
+{{ $masterDropLabel := .Site.Params.master }}
 
 {{/* set defaults for version and dropdown menu highlighting */}}
 {{ $.Scratch.Set "activeVersion" .Site.Params.version }}
@@ -14,25 +14,33 @@
 {{/* generate menu from config/params.toml */}}
 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 {{ range .Site.Params.versions }}
-  {{/* create "v##-docs" value to check against URLs */}}
-  {{ $docVerURL := ( printf "%s%s" .version "-docs" | printf "%s" ) }}
-  {{ if eq $curPage $docVerURL }}
-    {{ $.Scratch.Set "docsVer" .version }}
-    {{ $.Scratch.Set "activeVersion" .version }}
-  {{/* if not a released version (master branch), use $mstMainLabel */}}
-  {{ else if eq $curPage $mstDropLabel }}
-    {{ $.Scratch.Set "docsVer" $mstMainLabel }}
+  {{ if eq $curPage .dirpath }}
+
+    {{ if eq $curPage $masterDropLabel }}
+      {{/* pre-release content (master branch) */}}
+      {{ $.Scratch.Set "docLabel" $masterMainLabel }}
+      {{ $.Scratch.Set "releaseLabel" $masterMainLabel }}
+    {{ else }}
+      {{/* released version */}}
+      {{ $.Scratch.Add "docLabel" " " }}
+      {{ $.Scratch.Add "docLabel" .version }}
+      {{ $.Scratch.Set "docsVer" .version }}
+      {{ $.Scratch.Add "releaseLabel" " " }}
+      {{ $.Scratch.Add "releaseLabel" .version }}
+    {{ end }}
+
     {{ $.Scratch.Set "activeVersion" .version }}
   {{ end }}
 {{ end }}
-  {{/* generate menu */}}
-  <span class="d-none d-lg-inline d-xl-inline">{{ ( printf "%s%s" $docLabel ( $.Scratch.Get "docsVer" ) | printf "%s" ) }}</span>
-  <span class="d-sm-inline d-md-inline d-lg-none d-xl-none">{{ ( printf "%s%s" $releaseLabel ( $.Scratch.Get "docsVer" ) | printf "%s" ) }}</span>
+  {{/* set current version label */}}
+  <span class="d-none d-lg-inline d-xl-inline">{{ printf "%s" ($.Scratch.Get "docLabel") }}</span>
+  <span class="d-sm-inline d-md-inline d-lg-none d-xl-none">{{ printf "%s" ($.Scratch.Get "releaseLabel") }}</span>
 </a>
+{{/* generate dropdown menu */}}
 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
   {{ range .Site.Params.versions }}
   <a
   class="dropdown-item{{ if eq ( $.Scratch.Get "activeVersion" ) ( printf "%s" .version ) }} active{{ end }}"
-  style="{{ if eq .version $mstDropLabel }}color:#BCBCBC{{ end }}" href="{{ .url }}">{{ .version }}</a>
+  style="{{ if eq .version $masterDropLabel }}color:#BCBCBC{{ end }}" href="{{ .url }}">{{ .version }}</a>
   {{ end }}
 </div>
