@@ -6,7 +6,7 @@
   </a>
   <div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
     <ul class="navbar-nav mt-2 mt-lg-0">
-      {{ if or (eq .Page.Section .Site.Params.secblog) (eq .Page.Section .Site.Params.seccommunity) (eq .Page.Section .Site.Params.seccontrib) (eq .Page.Section "") }}
+      {{ if or (eq .Page.Section .Site.Params.sec_blog) (eq .Page.Section .Site.Params.sec_community) (eq .Page.Section .Site.Params.sec_contrib) (eq .Page.Section "") }}
       <li class="nav-item mr-4 mb-2 mb-lg-0">
         <a class="nav-link" href="../docs/"><span>Documentation</span></a>
       </li>

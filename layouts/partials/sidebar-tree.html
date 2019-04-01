@@ -8,7 +8,7 @@
     </button>
   </form>
   <nav class="collapse td-sidebar-nav pt-2 pl-4" id="td-section-nav">
-    {{ if or (ne .Page.Section .Site.Params.secblog) (ne .Page.Section .Site.Params.seccommunity) (ne .Page.Section .Site.Params.seccontrib) }}
+    {{ if or (ne .Page.Section .Site.Params.sec_blog) (ne .Page.Section .Site.Params.sec_community) (ne .Page.Section .Site.Params.sec_contrib) }}
     <div class="nav-item dropdown d-block d-lg-none">
       {{ partial "navbar-version-selector.html" . }}
     </div>
