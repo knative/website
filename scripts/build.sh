@@ -115,6 +115,10 @@ echo 'Converting all GitHub links in source for Hugo build...'
 find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' ! -name '*serving-api.md' ! -name '*eventing-sources-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/test/*' ! -path '*/vendor/*' -exec sed -i '/](/ { /\!\[/ !s#(\.\.\/#(../../#g; /\!\[/ !s#(\.\/#(../#g; /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 find . -type f -path '*/content/*README.md' -exec sed -i '/](/ { /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 
+
+echo 'Copying override content into content folder'
+cp -rfv content-override/* content/
+
 # Start HUGO build
 hugo
 
