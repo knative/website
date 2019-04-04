@@ -1,6 +1,6 @@
 # Knative PRODUCTION Site Params (adds to (or can override) Site "_default")
 
-# Only add Google Custom Search, Google Analytics, and Feedback links to PRODUCTION
+# Only add Google Custom Search and Feedback links to PRODUCTION
 
 # Create ID at https://cse.google.com/cse/
 # Google Custom Search Engine ID. Remove or comment out to disable search.
@@ -10,8 +10,8 @@ gcs_engine_id = "017267796498475278487:yjsfmompynk"
 # This feature depends on [services.googleAnalytics] and will be disabled if "services.googleAnalytics.id" is not set.
 # If you want this feature, but occasionally need to remove the "Feedback" section from a single page,
 # add "hide_feedback: true" to the page's front matter.
-[params.ui.feedback]
+[ui.feedback]
 enable = true
 # The responses that the user sees after clicking "yes" (the page was helpful) or "no" (the page was not helpful).
-yes = 'Glad to hear it! Please <a href="https://github.com/knative/docs/issues/new">tell us how we can improve</a>.'
-no = 'Sorry to hear that. Please <a href="https://github.com/knative/docs/issues/new">tell us how we can improve</a>.'
+yes = 'Glad to hear it! Please <a href="https://github.com/knative/docs/issues/new/?title=Page%20is%20helpful&labels=kind%2Fmeta">tell us how we can improve</a>.'
+no = 'Sorry to hear that. Please <a href="https://github.com/knative/docs/issues/new/?title=Page%20needs%20improvement&labels=kind%2Fmeta">tell us how we can improve</a>.'

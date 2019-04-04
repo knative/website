@@ -1,7 +1,7 @@
 {{/* In page TOC for landing pages (_index.md/.html) that exclude "readfile". */}}
 {{ if not (.HasShortcode "readfile") }}
 <div>
-  <div >
+  <div>
     {{ template "inpage-toc" (dict "page" . "section" .CurrentSection) }}
   </div>
 </div>

@@ -12,7 +12,7 @@ relativeURLs = "true"
 
 # Ignore files when rendering/building site (to hide from Nav tree and sitemap)
 # Add files here that you "include" in other files using the 'readfile' shortcode
-# Examples: 
+# Examples:
 # Based on root path: {{% readfile file="docs/serving/README.md" markdown="true" %}}
 # Using relative path: {{% readfile file="README.md" relatative="true" markdown="true" %}}
 #
@@ -64,6 +64,8 @@ plainIDAnchors = true
 hrefTargetBlank = true
 angledQuotes = false
 latexDashes = true
+# Needs investigation - opens all links in new tab (canonifyURLs conflict?)
+#hrefTargetBlank = true
 
 # Image processing configuration.
 [imaging]
