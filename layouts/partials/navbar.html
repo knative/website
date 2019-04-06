@@ -6,24 +6,23 @@
   </a>
   <div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
     <ul class="navbar-nav mt-2 mt-lg-0">
-      {{ if or (eq .Page.Section .Site.Params.sec_blog) (eq .Page.Section .Site.Params.sec_community) (eq .Page.Section .Site.Params.sec_contrib) (eq .Page.Section "") }}
-      <li class="nav-item mr-4 mb-2 mb-lg-0">
-        <a class="nav-link" href="../docs/"><span>Documentation</span></a>
-      </li>
-      {{ else }}
+      {{/* Display doc version selector menu for "docs" or "v#.#-docs" sections */}}
+      {{ if in .Page.Section "docs" }}
       <li class="nav-item dropdown d-none d-lg-block">
         {{ partial "navbar-version-selector.html" . }}
       </li>
       {{ end }}
       {{ $p := . }}
       {{ range .Site.Menus.main }}
-      <li class="nav-item mr-4 mb-2 mb-lg-0">
         {{ $active := or ($p.IsMenuCurrent "main" .) ($p.HasMenuCurrent "main" .) }}
         {{ with .Page }}
-        {{ $active = or $active ( $.IsDescendant .)  }}
+        {{ $active = or $active ( $.IsDescendant .) }}
         {{ end }}
-        <a class="nav-link{{if $active }} active{{end}}" href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL | relLangURL }}{{ end }}"><span{{if $active }} class="active"{{end}}>{{ .Name }}</span></a>
-      </li>
+        {{/* Skip adding "Documentation" when version selector is added */}}
+        {{ if or (not (in $p.Section "docs")) (ne .Name "Documentation" ) }}
+        <li class="nav-item mr-4 mb-2 mb-lg-0">
+          <a class="nav-link{{if $active }} active{{end}}" href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL | relLangURL }}{{ end }}"><span{{if $active }} class="active"{{end}}>{{ .Name }}</span></a>
+        {{ end }}
       {{ end }}
       {{ if  (gt (len .Site.Home.Translations) 1) }}
       <li class="nav-item dropdown d-none d-lg-block">
