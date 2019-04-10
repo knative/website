@@ -9,14 +9,6 @@ apache_license = "https://www.apache.org/licenses/LICENSE-2.0"
 # GitHub repository
 github_repo = "https://github.com/knative/docs"
 
-
-# Non-docs params
-# Content section path values. The directory folder of the other
-# non-docs sections that appear in the main nav bar (site banner).
-sec_blog = "blog"
-sec_community = "community"
-sec_contrib = "contributing"
-
 # Pre-release section path value ("master" docs directory folder)
 master = "development"
 
@@ -30,12 +22,15 @@ version = "v0.5"
 # Doc versions params
 # Create a separate [[versions]] set for every version / doc set branch
 # Use the ghbranchname param for specifying the GitHub branchname ->
-# Example: [thisisalink](https://github.com/..../tree/{{< params "ghbranchname" >}}/....)
+# Example:
+#   [thisisalink](https://github.com/.../tree/{{< params "ghbranchname" >}}/...)
 #
 # [[versions]] - Defines a single "version" of the Knative docs
 #   version - Intuitive version label (ie. visible in menus)
-#   ghbranchname - Name of branch of the doc version in GitHub (https://github.com/knative/docs/branches)
-#   url - Fully qualified website URL to the doc version (ie. https://www.knative.dev/[dirpath])
+#   ghbranchname - Name of branch of the doc version in GitHub
+#                  (https://github.com/knative/docs/branches)
+#   url - Fully qualified website URL to the doc version
+#         (ie. https://www.knative.dev/[dirpath])
 #   dirpath - The content folder name of the doc version
 #           - Latest release is always set to "docs"
 #           - Past/archived releases change to "v#.#-docs",
