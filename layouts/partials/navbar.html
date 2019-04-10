@@ -19,7 +19,7 @@
         {{ $active = or $active ( $.IsDescendant .) }}
         {{ end }}
         {{/* Skip adding "Documentation" when version selector is added */}}
-        {{ if or (not (in $p.Section "docs")) (ne .Name "Documentation" ) }}
+        {{ if or (not (in $p.Section "docs")) (ne .Name "Documentation") }}
         <li class="nav-item mr-4 mb-2 mb-lg-0">
           <a class="nav-link{{if $active }} active{{end}}" href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL | relLangURL }}{{ end }}"><span{{if $active }} class="active"{{end}}>{{ .Name }}</span></a>
         {{ end }}
