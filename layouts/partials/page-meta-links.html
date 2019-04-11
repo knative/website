@@ -1,27 +1,37 @@
 
+{{ $master := .Site.Params.masterfolder }}
 {{ if .Path }}
   {{ $pageSection := .Page.Section }}
   {{ $.Scratch.Set "filepath" .Path }}
+  {{ $.Scratch.Set "gh_branch" ($.Param "latest_github_branch") }}
+  {{ $gh_repo := ($.Param "github_repo") }}
+
+  {{/* Better to open to the README.md in github repo */}}
   {{ if eq (printf "%s" .File) "_index" }}
     {{ $.Scratch.Set "filepath" (replace (printf "%s" .Path) "_index" "README") }}
   {{ end }}
-  {{ if ne $pageSection "docs" }}
+
+  {{/* Replace all site paths for the docs versions to just 'docs' */}}
+  {{ if in $pageSection "docs" }}
     {{ $.Scratch.Set "filepath" (replaceRE "v[0-9].[0-9]-docs" "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
-  {{ if eq $pageSection .Site.Params.master }}
-    {{ $.Scratch.Set "filepath" (replaceRE "development" "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
+  {{ if eq $pageSection $master }}
+   {{ $.Scratch.Set "filepath" (replaceRE (printf "%s" $master) "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
 
-  {{ $.Scratch.Set "gh_branch" ($.Param "github_branch") }}
-  {{ range .Site.Params.versions }}
-    {{ if eq $pageSection .dirpath }}
-      {{ $.Scratch.Set "gh_branch" .ghbranchname }}
+  {{/* Find the github branch for the corresponding docs version otherwise set to master */}}
+  {{ if in $pageSection "docs" }}
+    {{ range .Site.Params.versions }}
+      {{ if eq $pageSection .dirpath }}
+        {{ $.Scratch.Set "gh_branch" .ghbranchname }}
+      {{ end }}
     {{ end }}
+  {{ else }}
+    {{ $.Scratch.Set "gh_branch" "master" }}
   {{ end }}
-
-  {{ $gh_repo := ($.Param "github_repo") }}
 
   {{ if $gh_repo }}
+    {{ if ne $pageSection "blog" }}
     <div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
     {{ $editURL := printf "%s/edit/%s/%s" $gh_repo ($.Scratch.Get "gh_branch") ($.Scratch.Get "filepath") }}
     {{ $issuesURL := printf "%s/issues/new?title=%s(%s)&labels=kind%2Fbug&template=bug-in-existing-docs.md" $gh_repo (htmlEscape $.Title) (htmlEscape $.Path)}}
@@ -30,4 +40,5 @@
     </div>
   {{ end }}
 
+  {{ end }}
 {{ end }}

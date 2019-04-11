@@ -2,7 +2,7 @@
 {{ $.Scratch.Set "docLabel" "Documentation " }}
 {{ $.Scratch.Set "releaseLabel" "Release: " }}
 {{ $masterMainLabel := "Pre-release" }}
-{{ $masterDropLabel := .Site.Params.master }}
+{{ $masterDropLabel := .Site.Params.masterfolder }}
 
 {{/* set defaults for version and dropdown menu highlighting */}}
 {{ $.Scratch.Set "activeVersion" .Site.Params.version }}

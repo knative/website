@@ -10,12 +10,12 @@ apache_license = "https://www.apache.org/licenses/LICENSE-2.0"
 github_repo = "https://github.com/knative/docs"
 
 # Pre-release section path value ("master" docs directory folder)
-master = "development"
+masterfolder = "development"
 
 # Default docs params
 # Latest Knative docs release/version - Default values (for Docsy Template)
 # Default GitHub branch
-github_branch = "release-0.5"
+latest_github_branch = "release-0.5"
 # Default website version
 version = "v0.5"
 
