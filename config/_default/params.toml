@@ -96,35 +96,87 @@ breadcrumb_disable = false
 [links]
 # End user relevant links. These will show up on left side of footer and in the community page if you have one.
 [[links.user]]
-  name = "Knative User Group"
+  name = "Knative Blog"
+  url = "../blog"
+  external = "false"
+  icon = "fa fa-comments"
+        desc = "Read release announcements, events, and articles"
+[[links.user]]
+  name = "Knative users Group"
   url = "https://groups.google.com/forum/#!forum/knative-users"
-  icon = "fa fa-envelope"
+  external = "true"
+  icon = "fa fa-users"
         desc = "Discussion and help from your fellow users"
 [[links.user]]
   name ="Twitter"
   url = "https://twitter.com/KnativeProject"
+  external = "true"
   icon = "fab fa-twitter"
         desc = "Follow us on Twitter to get the latest news!"
 [[links.user]]
-  name = "Stack Overflow Questions"
+  name = "Stack Overflow questions"
   url = "https://stackoverflow.com/questions/tagged/*knative*"
+  external = "true"
   icon = "fab fa-stack-overflow"
         desc = "Knative tagged questions and curated answers"
 # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
 [[links.developer]]
-  name = "Knative GitHub Repo"
+  name = "Knative GitHub repo"
   url = "https://github.com/knative"
+  external = "true"
   icon = "fab fa-github"
         desc = "Development takes place here!"
 [[links.developer]]
-  name = "Knative Slack Channels"
+  name = "Knative Slack channels"
   url = "https://knative.slack.com/"
+  external = "true"
   icon = "fab fa-slack"
         desc = "Chat with other project developers"
 [[links.developer]]
-  name = "Knative Developer Group"
+  name = "Knative developers Group"
   url = "https://groups.google.com/forum/#!forum/knative-dev"
-  icon = "fa fa-envelope"
+  external = "true"
+  icon = "fa fa-users"
         desc = "Discuss development issues around the project"
-
-
+[[links.usecode]]
+  name = "Community code samples"
+  url = "./samples/"
+  external = "false"
+  icon = "fa fa-code"
+        desc = "Community owned and maintained code samples"
+[[links.usecode]]
+  name = "Build"
+  url = "../docs/build/samples/"
+  external = "false"
+  icon = "fa fa-code"
+        desc = "Code samples for the Build component"
+[[links.usecode]]
+  name = "Eventing"
+  url = "../docs/eventing/samples/"
+  external = "false"
+  icon = "fa fa-code"
+        desc = "Code samples for the Eventing component"
+[[links.usecode]]
+  name = "Serving"
+  url = "../docs/serving/samples/"
+  external = "false"
+  icon = "fa fa-code"
+        desc = "Code samples for the Serving component"
+[[links.usecode]]
+  name = "All"
+  url = "../docs/samples/"
+  external = "false"
+  icon = "fa fa-list"
+  desc = "See a list of all code samples"
+[[links.sharecode]]
+  name = "Contribute code samples"
+  url = "./samples/"
+  external = "false"
+  icon = "fa fa-share"
+        desc = "Share your samples with the community"
+[[links.sharecode]]
+  name = "Link existing code samples"
+  url = "./samples/"
+  external = "false"
+  icon = "fa fa-link"
+        desc = "If your sample exists elsewhere, add a link to it!"
