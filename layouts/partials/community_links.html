@@ -2,27 +2,53 @@
 
 <section class="row td-box td-box--height-auto">
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-<h2>Learn and Connect</h2>		
+<h2>Learn and connect</h2>
 <p>Using or want to use {{ .Site.Title }}? Find out more here:
 {{ with index $links "user"}}
 {{ template "community-links-list"  . }}
 {{ end }}
 </div>
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-<h2>Develop and Contribute</h2>
+<h2>Develop and contribute</h2>
 <p>If you want to get more involved by contributing to {{ .Site.Title }}, join us here:
 {{ with index $links "developer"}}
 {{ template "community-links-list"  . }}
 {{ end }}
-<p>You can find out how to contribute to these docs in our <a href="/docs/contribution-guidelines/">Contribution Guidelines</a>.
+<p>Learn how to become a contributor with our <a href="../contributing/">Contribution Guidelines</a>.
 </div>
+</section>
+
+<section class="row td-box--2 td-box--height-auto" style="margin-top: -80px">
+    <div class="col">
+          <h2 class="row justify-content-center">Code samples</h2>
+          <br>
+      <div class="row justify-content-left">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+          <div class="d-flex"><h3>Use and run</h3></div>
+            <p>Learn about Knative and get started with a code sample:
+            {{ with index $links "usecode"}}
+            {{ template "community-links-list"  . }}
+            {{ end }}
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="d-flex"><h3>Share your expertise</h3></div>
+            <p>Do you have a Knative code sample that demonstrates a use-case or product
+            integration that will help someone learn about Knative?</p>
+            <p>Contribute to the community:</p>
+            {{ with index $links "sharecode"}}
+            {{ template "community-links-list"  . }}
+            {{ end }}
+          <p><a href="../contributing/contributing">Learn how to contribute...</a>
+        </div>
+      </div>
+  </div>
 </section>
 
 {{ define "community-links-list" }}
 <ul>
  {{ range . }}
  <li title="{{ .name }}">
-   <a target="_blank" href="{{ .url }}"><i class="{{ .icon }}"></i> {{ .name }}:</a> {{ .desc }}
+   <a {{ if eq .external "true" }}target="_blank" {{ end }}href="{{ .url }}"><i class="{{ .icon }}"></i> {{ .name }}:</a> {{ .desc }}
  </li>
   {{ end }}
 </ul>
