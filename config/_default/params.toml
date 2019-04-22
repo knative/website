@@ -179,4 +179,4 @@ breadcrumb_disable = false
   url = "./samples/"
   external = "false"
   icon = "fa fa-link"
-        desc = "If your sample exists elsewhere, add a link to it!"
+        desc = "Link to your Knative samples that live on another site"

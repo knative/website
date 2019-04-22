@@ -18,23 +18,23 @@
 </div>
 </section>
 
-<section class="row td-box td-box--2" style="margin-top: -80px">
+<section class="row td-box--2 td-box--height-auto" style="margin-top: -80px">
     <div class="col">
           <h2 class="row justify-content-center">Code samples</h2>
           <br>
-      <div class="row justify-content-center">
+      <div class="row justify-content-left">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-          <div class="d-flex justify-content-center"><h3>Use and run</h3></div>
+          <div class="d-flex"><h3>Use and run</h3></div>
             <p>Learn about Knative and get started with a code sample:
             {{ with index $links "usecode"}}
             {{ template "community-links-list"  . }}
             {{ end }}
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <div class="d-flex justify-content-center"><h3>Share your expertise</h3></div>
+            <div class="d-flex"><h3>Share your expertise</h3></div>
             <p>Do you have a Knative code sample that demonstrates a use-case or product
             integration that will help someone learn about Knative?</p>
-            <p>Share your knowledge with the community:</p>
+            <p>Contribute to the community:</p>
             {{ with index $links "sharecode"}}
             {{ template "community-links-list"  . }}
             {{ end }}
