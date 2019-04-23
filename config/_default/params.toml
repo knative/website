@@ -1,6 +1,9 @@
 # Knative DEFAULT Site Params
 # Default site parameters, see "PRODUCTION" and "STAGING" for environment specific overrides
 
+[permalinks]
+  docs = "/v0.5-docs/"
+
 commonsLicense = "Creative Commons Attribution 4.0 License"
 commons_license = "https://creativecommons.org/licenses/by/4.0/"
 apacheLicense = "Apache 2.0 License"
@@ -96,12 +99,6 @@ breadcrumb_disable = false
 [links]
 # End user relevant links. These will show up on left side of footer and in the community page if you have one.
 [[links.user]]
-  name = "Knative Blog"
-  url = "../blog"
-  external = "false"
-  icon = "fa fa-comments"
-        desc = "Read release announcements, events, and articles"
-[[links.user]]
   name = "Knative users Group"
   url = "https://groups.google.com/forum/#!forum/knative-users"
   external = "true"
@@ -119,6 +116,7 @@ breadcrumb_disable = false
   external = "true"
   icon = "fab fa-stack-overflow"
         desc = "Knative tagged questions and curated answers"
+
 # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
 [[links.developer]]
   name = "Knative GitHub repo"
@@ -138,6 +136,8 @@ breadcrumb_disable = false
   external = "true"
   icon = "fa fa-users"
         desc = "Discuss development issues around the project"
+
+# Community page links.
 [[links.usecode]]
   name = "Community code samples"
   url = "./samples/"
@@ -176,7 +176,7 @@ breadcrumb_disable = false
         desc = "Share your samples with the community"
 [[links.sharecode]]
   name = "Link existing code samples"
-  url = "./samples/"
+  url = "../docs/samples/#external-code-samples"
   external = "false"
   icon = "fa fa-link"
         desc = "Link to your Knative samples that live on another site"
