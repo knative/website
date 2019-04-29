@@ -27,7 +27,7 @@ limitations under the License.
                     }
 
                     var query = $(this).val();
-                    var searchPage = "https://www.knative.dev/search/?q=" + query;
+                    var searchPage = "https://knative.dev/search/?q=" + query;
                     document.location = searchPage;
 
                     return false;
