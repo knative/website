@@ -1,9 +1,6 @@
 # Knative DEFAULT Site Params
 # Default site parameters, see "PRODUCTION" and "STAGING" for environment specific overrides
 
-[permalinks]
-  docs = "/v0.5-docs/"
-
 commonsLicense = "Creative Commons Attribution 4.0 License"
 commons_license = "https://creativecommons.org/licenses/by/4.0/"
 apacheLicense = "Apache 2.0 License"
@@ -46,7 +43,7 @@ version = "v0.5"
 [[versions]]
   version = "v0.5"
   ghbranchname = "release-0.5"
-  url = "https://www.knative.dev/docs/"
+  url = "https://knative.dev/docs/"
   dirpath = "docs"
 
 # Archived versions
@@ -56,13 +53,13 @@ version = "v0.5"
 [[versions]]
   version = "v0.4"
   ghbranchname = "release-0.4"
-  url = "https://www.knative.dev/v0.4-docs/"
+  url = "https://knative.dev/v0.4-docs/"
   dirpath = "v0.4-docs"
 
 [[versions]]
   version = "v0.3"
   ghbranchname = "release-0.3"
-  url = "https://www.knative.dev/v0.3-docs/"
+  url = "https://knative.dev/v0.3-docs/"
   dirpath = "v0.3-docs"
 
 [[versions]]
@@ -84,7 +81,7 @@ version = "v0.5"
 [[versions]]
   version = "development"
   ghbranchname = "master"
-  url = "https://www.knative.dev/development/"
+  url = "https://knative.dev/development/"
   dirpath = "development"
 
 
