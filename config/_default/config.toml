@@ -4,7 +4,7 @@
 # To build with these settings, you run: "hugo"
 # Also see "production" and "staging" environment settings.
 
-baseURL = "https://www.knative.dev/"
+baseURL = "https://knative.dev/"
 title = "Knative"
 configDir = "config"
 canonifyURLs = "true"
