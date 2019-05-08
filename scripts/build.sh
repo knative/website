@@ -57,39 +57,42 @@ echo 'Build type:' "$CONTEXT"
 echo 'Building docs from branch:' "$BRANCH"
 echo 'Commit HEAD:' "$HEAD"
 echo 'Commit SHA:' "$COMMIT_REF"
-# Not useful
+# Other Netlify flags that aren't currently useful
 #echo 'Repo:' "$REPOSITORY_URL"
 # Doesnt seem to like multiple repos and always returns false
 #echo 'Pull Request:' "$PULL_REQUEST"
 #echo 'GitHub ID:' "$REVIEW_ID"
 
 echo '------ PROCESSING SOURCE FILES ------'
-# Connect the separate site source and docs source repos
-# Prevent clone error (git clone fails if directory exists)
-# This forces a complete build of the site for each request
-echo 'Deleting content dir...'
+# Pull in content from the separate community source and docs source repos
+# (make it look like they live in the content folder of knative/website )
+# Use a temp directory and move files around to prevent git clone error (fails if directory exists)
+# Note: This forces a complete build of all versions of all files in the site
+
+# Make sure nothings there from the last build and start from scratch
 rm -rf content/en
 
-# Get latest source from https://github.com/knative/docs
-echo 'Cloning docs source from the' "$BRANCH" 'branch of https://github.com/knative/docs...'
+# Get latest source from:
+# - https://github.com/knative/docs
+# - https://github.com/knative/community
+echo 'Cloning Knative documentation from their source repositories.'
 # MASTER
-echo 'Getting community, blog, and contributor content from master branch'
+echo 'Getting blog posts and contributor samples from knative/docs master branch'
 git clone -b master https://github.com/knative/docs.git content/en
 echo 'Getting pre-release development docs from master branch'
-# Content in "docs" folder of the 'master' branch contains "pre-release" content:
+# Move "pre-release" docs content into the 'development' folder:
 mv content/en/docs content/en/development
-# BRANCHES (only branches in knative/docs currently supported)
-echo 'Getting the latest docs release from' "$BRANCH" 'branch'
+# COMMUNITY
+echo 'Getting Knative contributor guidelines from knative/community'
+git clone -b master https://github.com/knative/community.git temp/communtiy
+# Move files into existing "contributing" folder (includes site's '_index.md' section definition)
+echo 'Move content into contributing folder'
+mv temp/communtiy/* content/en/contributing
+# DOCS BRANCHES
+# Get versions of released docs from their branches in knative/docs
+echo 'Begin fetching all version of the docs...'
+echo 'Getting the latest release from ' "$BRANCH" ' branch'
 git clone -b "$BRANCH" https://github.com/knative/docs.git temp/release/latest
-# Only copy and keep the "docs" folder from all branched releases:
-mv temp/release/latest/docs content/en/docs
-echo 'Getting the archived docs releases'
-git clone -b "release-0.4" https://github.com/knative/docs.git temp/release/v0.4
-mv temp/release/v0.4/docs content/en/v0.4-docs
-git clone -b "release-0.3" https://github.com/knative/docs.git temp/release/v0.3
-mv temp/release/v0.3/docs content/en/v0.3-docs
-# Delete temp directory (clear out old copies of shared content: blog, contributing, community)
-rm -rf temp
 
 ###############################################################
 # Template for next release:
@@ -97,6 +100,23 @@ rm -rf temp
 #mv temp/release/[VERSION#]/docs content/en/[VERSION#]-docs
 ###############################################################
 
+# Only copy and keep the "docs" folder from all branched releases:
+mv temp/release/latest/docs content/en/docs
+echo 'Getting the archived docs releases'
+git clone -b "release-0.4" https://github.com/knative/docs.git temp/release/v0.4
+mv temp/release/v0.4/docs content/en/v0.4-docs
+git clone -b "release-0.3" https://github.com/knative/docs.git temp/release/v0.3
+mv temp/release/v0.3/docs content/en/v0.3-docs
+echo 'Moving cloned files into their v#.#-docs website folders'
+# CLEANUP
+# Delete temporary directory
+# (clear out unused files, including archived-copies/past-versions of blog posts and contributor samples)
+echo 'Cleaning up temp directory'
+rm -rf temp
+
+# MAKE RELATIVE LINKS WORK
+# We want users to be able view and use the source files in GitHub as well as on the site.
+# Therefore, the following changes need to be made to all docs files prior to Hugo site build.
 # Convert GitHub enabled source, into HUGO supported content:
 #  - For all 'content/*.md' files:
 #    - Skip/assume any Markdown link with fully qualified HTTP(s) URL is 'external'
@@ -113,14 +133,15 @@ rm -rf temp
 #  - Skip GitHub files:
 #    - .git* files
 #    - non-docs directories
-echo 'Converting all GitHub links in source for Hugo build...'
+echo 'Converting all GitHub links in source files for Hugo build...'
 find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' ! -name '*serving-api.md' ! -name '*eventing-sources-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/test/*' ! -path '*/vendor/*' -exec sed -i '/](/ { /\!\[/ !s#(\.\.\/#(../../#g; /\!\[/ !s#(\.\/#(../#g; /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 find . -type f -path '*/content/*README.md' -exec sed -i '/](/ { /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 
-
-echo 'Copying override content into content folder'
+# GET HANDCRAFTED SITE LANDING PAGE
+echo 'Move override files into the content folder'
 cp -rfv content-override/* content/
 
+# BUILD MARKDOWN
 # Start HUGO build
 hugo
 
