@@ -1,22 +1,29 @@
 
 {{ $master := .Site.Params.masterfolder }}
 {{ if .Path }}
+  {{/* Set default values */}}
   {{ $pageSection := .Page.Section }}
   {{ $.Scratch.Set "filepath" .Path }}
   {{ $.Scratch.Set "gh_branch" ($.Param "latest_github_branch") }}
-  {{ $gh_repo := ($.Param "github_repo") }}
+  {{ $.Scratch.Set "gh_repo" ($.Param "github_docsrepo") }}
 
-  {{/* Better to open to the README.md in github repo */}}
-  {{ if eq (printf "%s" .File) "_index" }}
-    {{ $.Scratch.Set "filepath" (replace (printf "%s" .Path) "_index" "README") }}
-  {{ end }}
-
-  {{/* Replace all site paths for the docs versions to just 'docs' */}}
+  {{/* Set the right filepaths to match whats in the repo */}}
+  {{/* Replace all 'v.#.#-docs' to just 'docs' */}}
   {{ if in $pageSection "docs" }}
     {{ $.Scratch.Set "filepath" (replaceRE "v[0-9].[0-9]-docs" "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
+  {{/* Point to 'master' for pre-release content */}}
   {{ if eq $pageSection $master }}
    {{ $.Scratch.Set "filepath" (replaceRE (printf "%s" $master) "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
+  {{ end }}
+  {{/* Remove the "contributing" from path for knative/community content */}}
+  {{ if in $pageSection "contributing" }}
+    {{ $.Scratch.Set "filepath" (replaceRE "contributing\\/" "" (printf "%s" ($.Scratch.Get "filepath"))) }}
+  {{ end }}
+
+  {{/* Better to open to the README.md in github repo */}}
+  {{ if eq (printf "%s" .File) "_index" }}
+    {{ $.Scratch.Set "filepath" (replaceRE "_index" "README" ($.Scratch.Get "filepath")) }}
   {{ end }}
 
   {{/* Find the github branch for the corresponding docs version otherwise set to master */}}
@@ -30,13 +37,22 @@
     {{ $.Scratch.Set "gh_branch" "master" }}
   {{ end }}
 
-  {{ if $gh_repo }}
+  {{ if ($.Scratch.Get "gh_repo") }}
   <div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+    {{/* Show different links for each website section */}}
     {{ if ne $pageSection "blog" }}
-    {{ $editURL := printf "%s/edit/%s/%s" $gh_repo ($.Scratch.Get "gh_branch") ($.Scratch.Get "filepath") }}
-    {{ $issuesURL := printf "%s/issues/new?title=%s(%s)&labels=kind%2Fbug&template=bug-in-existing-docs.md" $gh_repo (htmlEscape $.Title) (htmlEscape $.Path)}}
+
+    {{/* DOCS or COMMUNITY section */}}
+    {{/* Default to knative/docs repo OR use knative/community repo for CONTRIB info */}}
+    {{ if eq $pageSection "contributing" }}
+      {{ $.Scratch.Set "gh_repo" ($.Param "github_communityrepo") }}
+    {{ end }}
+    {{ $editURL := printf "%s/edit/%s/%s" ($.Scratch.Get "gh_repo") ($.Scratch.Get "gh_branch") ($.Scratch.Get "filepath") }}
+    {{ $issuesURL := printf "%s/issues/new?title=%s(%s)&labels=kind%2Fbug&template=bug-in-existing-docs.md" ($.Scratch.Get "gh_repo") (htmlEscape $.Title) (htmlEscape $.Path)}}
     <a href="{{ $editURL }}" target="_blank"><i class="fa fa-edit fa-fw"></i> {{ T "post_edit_this" }}</a>
     <a href="{{ $issuesURL }}" target="_blank"><i class="fab fa-github fa-fw"></i> {{ T "post_create_issue" }}</a>
+
+    {{/* BLOG section - Show Post link */}}
     {{ else if (eq $pageSection "blog")}}
     {{ if eq .Dir "blog/" }}
     {{ $.Scratch.Set "blogsec" "Knative " }}

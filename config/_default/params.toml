@@ -6,10 +6,11 @@ commons_license = "https://creativecommons.org/licenses/by/4.0/"
 apacheLicense = "Apache 2.0 License"
 apache_license = "https://www.apache.org/licenses/LICENSE-2.0"
 
-# GitHub repository
-github_repo = "https://github.com/knative/docs"
+# GitHub repositories
+github_docsrepo = "https://github.com/knative/docs"
+github_communityrepo = "https://github.com/knative/community"
 
-# Pre-release section path value ("master" docs directory folder)
+# Pre-release section path value ("master" docs directory folder on website)
 masterfolder = "development"
 
 # Default docs params
