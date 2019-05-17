@@ -55,7 +55,7 @@ version = "v0.6"
   version = "v0.5"
   ghbranchname = "release-0.5"
   url = "https://knative.dev/v0.5-docs/"
-  dirpath = "docs"
+  dirpath = "v0.5-docs"
   
 [[versions]]
   version = "v0.4"
