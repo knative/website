@@ -4,7 +4,7 @@
 set -e
 
 # Set default branch (latest docs release)
-DEFAULTBRANCH="release-0.5"
+DEFAULTBRANCH="release-0.6"
 BRANCH="$DEFAULTBRANCH"
 
 # Get and use specified branch name otherwise, use default (latest release)
@@ -103,6 +103,8 @@ git clone -b "$BRANCH" https://github.com/knative/docs.git temp/release/latest
 # Only copy and keep the "docs" folder from all branched releases:
 mv temp/release/latest/docs content/en/docs
 echo 'Getting the archived docs releases'
+git clone -b "release-0.5" https://github.com/knative/docs.git temp/release/v0.5
+mv temp/release/v0.5/docs content/en/v0.5-docs
 git clone -b "release-0.4" https://github.com/knative/docs.git temp/release/v0.4
 mv temp/release/v0.4/docs content/en/v0.4-docs
 git clone -b "release-0.3" https://github.com/knative/docs.git temp/release/v0.3
