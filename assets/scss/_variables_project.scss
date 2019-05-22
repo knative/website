@@ -3,3 +3,21 @@
 Add styles or override variables from the theme here.
 
 */
+
+footer.py-5 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 5rem !important;
+}
+
+.link-on-dark {
+    color: #7db9ff !important;
+}
+
+.link-on-dark:hover {
+    color: #0290ff !important;
+}
+
+.fa-ul > li {
+    position: relative;
+    padding-bottom: 2px;
+}
