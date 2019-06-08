@@ -3,14 +3,14 @@
   command = "./scripts/build.sh"
 
 [context.production.environment]
-  HUGO_VERSION = "0.53"
+  HUGO_VERSION = "0.55.6"
   HUGO_ENV = "production"
 
 [context.deploy-preview.environment]
-  HUGO_VERSION = "0.53"
+  HUGO_VERSION = "0.55.6"
   HUGO_ENV = "development"
 
 [context.branch-deploy.environment]
-  HUGO_VERSION = "0.53"
+  HUGO_VERSION = "0.55.6"
   HUGO_ENV = "development"
 
