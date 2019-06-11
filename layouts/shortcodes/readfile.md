@@ -5,7 +5,7 @@
   {{ $.Scratch.Set "filepath" ( .Get "file" ) }}
 {{ end }}
 {{ if eq (.Get "markdown") "true" }}
-  {{ $.Scratch.Get "filepath" | readFile | markdownify }}
+  {{ readFile ($.Scratch.Get "filepath") }}
 {{ else }}
   {{ $.Scratch.Get "filepath" | readFile | safeHTML }}
 {{ end }}
