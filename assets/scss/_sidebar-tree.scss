@@ -45,6 +45,7 @@
 
         .active {
             font-weight: $font-weight-bold;
+            
         }
 
         a {
@@ -70,6 +71,7 @@
 
         &.active {
             font-weight: $font-weight-bold;
+            color:$knative-darker;
         }
     }
 
