@@ -70,6 +70,11 @@
     .nav-link {
         text-transform: none;
         font-weight: $font-weight-bold;
+        .active {
+            border-top: 1px solid;
+            border-color: $knative-lighter;
+            padding-top: 5px;
+        }    
     }
 
     .td-search-input {
