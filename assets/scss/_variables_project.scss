@@ -7,6 +7,7 @@ Add styles or override variables from the theme here.
 footer.py-5 {
     padding-top: 1.5rem !important;
     padding-bottom: 5rem !important;
+    z-index: 50;
 }
 
 .link-on-dark {
