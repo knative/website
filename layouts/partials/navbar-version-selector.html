@@ -33,7 +33,7 @@
   {{ end }}
 {{ end }}
   {{/* set current version label */}}
-  <span class="d-none d-lg-inline d-xl-inline">{{ printf "%s" ($.Scratch.Get "docLabel") }}</span>
+  <span class="d-none d-lg-inline d-xl-inline active">{{ printf "%s" ($.Scratch.Get "docLabel") }}</span>
   <span class="d-sm-inline d-md-inline d-lg-none d-xl-none">{{ printf "%s" ($.Scratch.Get "releaseLabel") }}</span>
 </a>
 {{/* generate dropdown menu */}}
