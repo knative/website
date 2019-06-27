@@ -6,7 +6,10 @@ commonsLicense = "Creative Commons Attribution 4.0"
 commons_license = "https://creativecommons.org/licenses/by/4.0/"
 apacheLicense = "Apache 2.0"
 apache_license = "https://www.apache.org/licenses/LICENSE-2.0"
+knativeLicense = "Knative Licensing"
 knative_license = "https://github.com/knative/docs/blob/master/LICENSE"
+privacyPolicy = "Privacy Policy"
+privacy_policy = "https://policies.google.com/privacy"
 
 # GitHub repositories
 github_docsrepo = "https://github.com/knative/docs"
