@@ -3,7 +3,6 @@
   <div class="container-fluid mx-sm-5">
     <div class="row">
       <div class="col-6 col-sm-4 text-xs-center order-sm-2">
-
         {{ with $links }}
         {{ with index . "user"}}
         {{ template "footer-links-block"  . }}
@@ -12,7 +11,6 @@
         <h6 class="text-white">Knative users</h6>
       </div>
       <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
-
         {{ with $links }}
         {{ with index . "developer"}}
         {{ template "footer-links-block"  . }}
@@ -20,11 +18,17 @@
         {{ end }}
         <h6 class="text-white">Knative developers</h6>
       </div>
+      <!-- Override for Knative licensing START -->
       <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
-        {{ with .Site.Params.copyright }}<small class="text-white">&copy; {{ now.Year}} {{ .}} {{ T "footer_all_rights_reserved" }}</small>{{ end }}
-        {{ with .Site.Params.privacy_policy }}<small class="ml-1"><a href="{{ . }}">{{ T "footer_privacy_policy" }}</a></small>{{ end }}
-        {{ with .Site.GetPage "about" }}<p class="mt-2"><a href="{{ .RelPermalink }}">{{ .Title }}</a></p>{{ end }}
+        {{ if .Site.Params.commonsLicense }}<small class="text-white">
+          {{ if .Site.Params.knative_license }}
+          <p>&copy; {{ now.Year }} {{ .Site.Params.knativeAuthors }} |  <b><a class="text-white" href="{{ .Site.Params.knative_license }}">{{ .Site.Params.knativeLicense }}</a></b> | <b><a class="text-white" href="{{ .Site.Params.privacy_policy }}">{{ .Site.Params.privacyPolicy }}</a></b><br>
+          <a class="text-white d-none d-lg-none d-xl-inline" href="{{ .Site.Params.commons_license }}">{{ .Site.Params.commonsLicense }}</a><span class="text-white d-none d-md-none d-lg-none d-xl-inline">, </span><a class="text-white d-none  d-md-none d-lg-none d-xl-inline" href="{{ .Site.Params.apache_license }}">{{ .Site.Params.apacheLicense }}</a></p>
+          {{ end }}
+        </small>
+        {{ end }}
       </div>
+      <!-- END -->
     </div>
   </div>
 </footer>
