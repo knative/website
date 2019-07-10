@@ -49,7 +49,7 @@ version = "v0.7"
 [[versions]]
   version = "v0.7"
   ghbranchname = "release-0.7"
-  url = "https://knative.dev/docs/"
+  url = "/docs/"
   dirpath = "docs"
 
 # Archived versions
@@ -57,27 +57,27 @@ version = "v0.7"
 # Prefix all past versions with release # "v#.#-docs"
 
 [[versions]]
-version = "v0.6"
-ghbranchname = "release-0.6"
-url = "https://knative.dev/v0.6-docs/"
-dirpath = "v0.6-docs"
+  version = "v0.6"
+  ghbranchname = "release-0.6"
+  url = "/v0.6-docs/"
+  dirpath = "v0.6-docs"
 
 [[versions]]
   version = "v0.5"
   ghbranchname = "release-0.5"
-  url = "https://knative.dev/v0.5-docs/"
+  url = "/v0.5-docs/"
   dirpath = "v0.5-docs"
 
 [[versions]]
   version = "v0.4"
   ghbranchname = "release-0.4"
-  url = "https://knative.dev/v0.4-docs/"
+  url = "/v0.4-docs/"
   dirpath = "v0.4-docs"
 
 [[versions]]
   version = "v0.3"
   ghbranchname = "release-0.3"
-  url = "https://knative.dev/v0.3-docs/"
+  url = "/v0.3-docs/"
   dirpath = "v0.3-docs"
 
 [[versions]]
