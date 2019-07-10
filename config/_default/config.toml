@@ -54,6 +54,28 @@ pygmentsStyle = "tango"
  # First one is picked as the Twitter card image if not set on page.
  #images = "/docs/images/...."
 
+[menu]
+
+  [[menu.main]]
+    name = "Documentation"
+    url = "/docs/"
+    weight = 10
+
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 30
+
+  [[menu.main]]
+    name = "Community"
+    url = "/community/"
+    weight = 40
+
+  [[menu.main]]
+    name = "Contributing"
+    url = "/contributing/"
+    weight = 60
+
 # Configure how URLs look like per section.
 [permalinks]
 blog = "/:section/:year/:month/:day/:slug/"
