@@ -105,8 +105,8 @@ find . -type f -path '*/content/*/*/README.md'  ! -path '*/v0.7-docs/*' ! -path 
 # GET HANDCRAFTED SITE LANDING PAGE
 if "$LOCALBUILD"
 then
-  echo 'Skip/dont the site override files (including the main index page for knative.dev)'
+  echo 'Note: Skipping the site override files for local builds (including the main index page for knative.dev)'
 else
-  echo 'Copy the override files into the /content/ folder'
+  echo 'Copying the override files into the /content/ folder'
   cp -rfv content-override/* content/
 fi
