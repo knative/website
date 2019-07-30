@@ -14,6 +14,8 @@ privacy_policy = "https://policies.google.com/privacy"
 # GitHub repositories
 github_docsrepo = "https://github.com/knative/docs"
 github_communityrepo = "https://github.com/knative/community"
+github_eventingrepo = "https://github.com/knative/eventing"
+github_servingrepo = "https://github.com/knative/serving"
 
 # Pre-release section path value ("master" docs directory folder on website)
 masterfolder = "development"
