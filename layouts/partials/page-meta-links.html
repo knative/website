@@ -22,7 +22,8 @@
   {{ end }}
 
   {{/* Open to the README.md in github repo */}}
-  {{ if eq (printf "%s" .File) "index" }}
+  {{ if in (printf "%s" .File) "index.md" }}
+    {{ $.Scratch.Set "filepath" (replaceRE "_index" "README" ($.Scratch.Get "filepath")) }}
     {{ $.Scratch.Set "filepath" (replaceRE "index" "README" ($.Scratch.Get "filepath")) }}
   {{ end }}
 
