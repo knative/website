@@ -33,12 +33,12 @@ while getopts f:b:a: arg; do
   echo '------ BUILDING DOCS FROM: ------'
   case $arg in
     f)
-      echo '"${OPTARG}" FORK'
+      echo "${OPTARG}" 'FORK'
       # Set specified knative/docs repo fork
       FORK="${OPTARG}"
       ;;
     b)
-      echo '"${OPTARG}" BRANCH'
+      echo "${OPTARG}" 'BRANCH'
       # Set specified branch
       BRANCH="${OPTARG}"
       ;;

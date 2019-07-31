@@ -22,8 +22,6 @@ set -e
 #
 # You can also build and preview changes in other Forks and Branches.
 # See details about optional settings and flags below.
-#
-
 
 LOCALBUILD="true"
 

@@ -13,32 +13,28 @@ then
 echo '------ RUNNING A LOCAL BUILD ------'
 fi
 
-# Make sure that nothing exists in the /content/ folder from the last build
+# Clean slate: Make sure that nothing from a past build exists in the /content/ or /temp/ folders
 rm -rf content/en
+rm -rf temp
+echo 'Cloning Knative documentation from their source repositories.'
 
 if "$BUILDALLRELEASES"
 then
-  echo '------ BUILDING ALL RELEASES ------'
-  # Get latest source from:
+  echo '------ BUILDING ALL DOC RELEASES FROM' "$FORK" '------'
+  # Build Knative docs from:
   # - https://github.com/"$FORK"/docs
-  # - https://github.com/"$FORK"/community
-  echo 'Cloning Knative documentation from their source repositories.'
+  # - https://github.com/knative/community
+  echo '------ Cloning Pre-release docs (master) ------'
   # MASTER
   echo 'Getting blog posts and community owned samples from knative/docs master branch'
   git clone -b master https://github.com/"$FORK"/docs.git content/en
   echo 'Getting pre-release development docs from master branch'
   # Move "pre-release" docs content into the 'development' folder:
   mv content/en/docs content/en/development
-  # COMMUNITY
-  echo 'Getting Knative contributor guidelines from knative/community'
-  git clone -b master https://github.com/knative/community.git temp/communtiy
-  # Move files into existing "contributing" folder (includes site's '_index.md' section definition)
-  echo 'Move content into contributing folder'
-  mv temp/communtiy/* content/en/contributing
   # DOCS BRANCHES
+  echo '------ Cloning all docs releases ------'
   # Get versions of released docs from their branches in "$FORK"/docs
-  echo 'Begin fetching all version of the docs...'
-  echo 'Getting the latest release from the ' "$BRANCH" 'of ' "$FORK"
+  echo 'Getting the latest release from the' "$BRANCH" 'branch of' "$FORK"
   git clone -b "$BRANCH" https://github.com/"$FORK"/docs.git temp/release/latest
 
   ###############################################################
@@ -59,16 +55,24 @@ then
   git clone -b "release-0.3" https://github.com/"$FORK"/docs.git temp/release/v0.3
   mv temp/release/v0.3/docs content/en/v0.3-docs
   echo 'Moving cloned files into their v#.#-docs website folders'
-  # CLEANUP
+else
+  echo '------ BUILDING ONLY FROM YOUR LOCAL KNATIVE/DOCS CLONE ------'
+  pwd
+  cp -r ../docs content/en/
+fi
+
+echo '------ Cloning contributor docs ------'
+# COMMUNITY
+echo 'Getting Knative contributor guidelines from the master branch of knative/community'
+git clone -b master https://github.com/knative/community.git temp/community
+# Move files into existing "contributing" folder
+mv temp/community/* content/en/contributing
+
+# CLEANUP
   # Delete temporary directory
   # (clear out unused files, including archived-copies/past-versions of blog posts and contributor samples)
   echo 'Cleaning up temp directory'
   rm -rf temp
-else
-  echo 'BUILDING ONLY FROM YOUR LOCAL KNATIVE/DOCS CLONE'
-  pwd
-  cp -r ../docs content/en/
-fi
 
 # MAKE RELATIVE LINKS WORK
 # We want users to be able view and use the source files in GitHub as well as on the site.
@@ -94,13 +98,17 @@ echo 'Converting all links in GitHub source files to Hugo supported relative lin
 find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' -exec sed -i '/](/ { s#(\.\.\/#(../../#g; s#(\.\/#(../#g; /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 find . -type f -path '*/content/*/*/README.md' -exec sed -i '/](/ { /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 
-# Releases v0.6 and earlier use the "readfile" shortcodes to hide all the README.md files
+# Releases v0.7 and earlier doc releases:
+#use the "readfile" shortcodes to hide all the README.md files
 # (by nesting them within the _index.md files)
-echo 'Converting all README.md to index.md for "pre-release" and later releases'
-# The newer doc releases have changed to renaming all "README.md" files to "index.md",
-# and exclude the lower-level _index.md files (nor the related nested "readfile" shortcodes)
-# TEST ON MASTER BRANCH ONLY (cherry-pick to 0.7 after testing)
-find . -type f -path '*/content/*/*/README.md'  ! -path '*/v0.7-docs/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' -exec bash -c 'mv "$1" "${1/\README/\index}"' -- {} \;
+echo 'Converting all README.md to index.md for "pre-release" and 0.8 or later doc releases'
+# v0.8 or later doc releases:
+# Rename "README.md" files to "index.md" and avoid unnecessary lower-level _index.md files
+# (to prevent nested shortcodes that can result in double markdown processing)
+# Skip the following README.md files (do not convert them to index.md):
+#  - content/en/README.md
+#  - content/en/contributing/README.md
+find . -type f -path '*/content/*/*/README.md' ! -path '*/contributing/*' ! -path '*/v0.7-docs/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' -exec bash -c 'mv "$1" "${1/\README/\index}"' -- {} \;
 
 # GET HANDCRAFTED SITE LANDING PAGE
 if "$LOCALBUILD"
