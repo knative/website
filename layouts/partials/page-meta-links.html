@@ -21,9 +21,10 @@
     {{ $.Scratch.Set "filepath" (replaceRE "contributing\\/" "" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
 
-  {{/* Better to open to the README.md in github repo */}}
-  {{ if eq (printf "%s" .File) "_index" }}
+  {{/* Open to the README.md in github repo */}}
+  {{ if in (printf "%s" .File) "index.md" }}
     {{ $.Scratch.Set "filepath" (replaceRE "_index" "README" ($.Scratch.Get "filepath")) }}
+    {{ $.Scratch.Set "filepath" (replaceRE "index" "README" ($.Scratch.Get "filepath")) }}
   {{ end }}
 
   {{/* Find the github branch for the corresponding docs version otherwise set to master */}}
@@ -47,10 +48,26 @@
     {{ if eq $pageSection "contributing" }}
       {{ $.Scratch.Set "gh_repo" ($.Param "github_communityrepo") }}
     {{ end }}
-    {{ $editURL := printf "%s/edit/%s/%s" ($.Scratch.Get "gh_repo") ($.Scratch.Get "gh_branch") ($.Scratch.Get "filepath") }}
-    {{ $issuesURL := printf "%s/issues/new?title=%s(%s)&labels=kind%2Fbug&template=bug-in-existing-docs.md" ($.Scratch.Get "gh_repo") (htmlEscape $.Title) (htmlEscape $.Path)}}
+
+    {{ $editURL := printf "%s/tree/%s/%s" ($.Scratch.Get "gh_repo") ($.Scratch.Get "gh_branch") ($.Scratch.Get "filepath") }}
     <a href="{{ $editURL }}" target="_blank"><i class="fa fa-edit fa-fw"></i> {{ T "post_edit_this" }}</a>
+
+    {{ $issuesURL := printf "%s/issues/new?title=%s(%s)&labels=kind%2Fbug&template=bug-in-existing-docs.md" ($.Scratch.Get "gh_repo") (htmlEscape $.Title) (htmlEscape $.Path) }}
     <a href="{{ $issuesURL }}" target="_blank"><i class="fab fa-github fa-fw"></i> {{ T "post_create_issue" }}</a>
+
+    {{/* Determine the Knative component */}}
+    {{ if or (eq $pageSection "docs") (eq $pageSection "development") }}
+      {{ if in (printf "%s" ($.Scratch.Get "filepath")) "/serving/" }}
+        {{ $.Scratch.Set "gh_repo" (printf "%s/issues/new" ($.Param "github_servingrepo")) }}
+      {{ end }}
+      {{ if in (printf "%s" ($.Scratch.Get "filepath")) "/eventing" }}
+        {{ $.Scratch.Set "gh_repo" (printf "%s/issues/new" ($.Param "github_eventingrepo")) }}
+      {{ end }}
+
+      {{ if ne (printf "%s" ($.Scratch.Get "gh_repo")) ($.Param "github_docsrepo") }}
+      <a href="{{ $.Scratch.Get "gh_repo" }}" target="_blank"><i class="fab fa-github fa-fw"></i> {{ T "post_create_project_issue" }}</a>
+      {{ end }}
+    {{ end }}
 
     {{/* BLOG section - Show Post link */}}
     {{ else if (eq $pageSection "blog")}}

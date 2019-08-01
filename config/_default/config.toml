@@ -4,7 +4,6 @@
 # To build with these settings, you run: "hugo"
 # Also see "production" and "staging" environment settings.
 
-baseURL = "https://knative.dev/"
 title = "Knative"
 configDir = "config"
 canonifyURLs = "true"
@@ -24,7 +23,7 @@ ignoreFiles = [
   "docs/docs/reference/build.md",
   "docs/docs/reference/serving.md",
   "docs/docs/reference/eventing/eventing.md",
-  "docs/docs/reference/eventing/eventing-sources.md" ]
+  "docs/docs/reference/eventing/eventing-contrib-resources.md" ]
 
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
 theme = ["docsy"]
