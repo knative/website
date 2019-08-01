@@ -98,17 +98,17 @@ echo 'Converting all links in GitHub source files to Hugo supported relative lin
 find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' -exec sed -i '/](/ { s#(\.\.\/#(../../#g; s#(\.\/#(../#g; /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 find . -type f -path '*/content/*/*/README.md' -exec sed -i '/](/ { /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 
-# Releases v0.7 and earlier doc releases:
+# Releases v0.6 and earlier doc releases:
 #use the "readfile" shortcodes to hide all the README.md files
 # (by nesting them within the _index.md files)
-echo 'Converting all README.md to index.md for "pre-release" and 0.8 or later doc releases'
-# v0.8 or later doc releases:
+echo 'Converting all README.md to index.md for "pre-release" and 0.7 or later doc releases'
+# v0.7 or later doc releases:
 # Rename "README.md" files to "index.md" and avoid unnecessary lower-level _index.md files
 # (to prevent nested shortcodes that can result in double markdown processing)
 # Skip the following README.md files (do not convert them to index.md):
 #  - content/en/README.md
 #  - content/en/contributing/README.md
-find . -type f -path '*/content/*/*/README.md' ! -path '*/contributing/*' ! -path '*/v0.7-docs/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' -exec bash -c 'mv "$1" "${1/\README/\index}"' -- {} \;
+find . -type f -path '*/content/*/*/README.md' ! -path '*/contributing/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' -exec bash -c 'mv "$1" "${1/\README/\index}"' -- {} \;
 
 # GET HANDCRAFTED SITE LANDING PAGE
 if "$LOCALBUILD"
