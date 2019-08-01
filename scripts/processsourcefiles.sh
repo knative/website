@@ -108,7 +108,8 @@ echo 'Converting all README.md to index.md for "pre-release" and 0.7 or later do
 # Skip the following README.md files (do not convert them to index.md):
 #  - content/en/README.md
 #  - content/en/contributing/README.md
-find . -type f -path '*/content/*/*/README.md' ! -path '*/contributing/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' -exec bash -c 'mv "$1" "${1/\README/\index}"' -- {} \;
+#  - content/en/reference/README.md
+find . -type f -path '*/content/*/*/README.md' ! -path '*/contributing/*' ! -path '*/reference/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' -exec bash -c 'mv "$1" "${1/\README/\index}"' -- {} \;
 
 # GET HANDCRAFTED SITE LANDING PAGE
 if "$LOCALBUILD"
