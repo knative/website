@@ -95,8 +95,13 @@ mv temp/community/* content/en/contributing
 #    - .git* files
 #    - non-docs directories
 echo 'Converting all links in GitHub source files to Hugo supported relative links...'
-find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' -exec sed -i '/](/ { s#(\.\.\/#(../../#g; s#(\.\/#(../#g; /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
-find . -type f -path '*/content/*/*/README.md' -exec sed -i '/](/ { /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
+find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' \
+    ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' \
+    ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' \
+    ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
+    -exec sed -i '/](/ { s#(\.\.\/#(../../#g; s#(\.\/#(../#g; /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
+find . -type f -path '*/content/*/*/README.md' ! -name '_index.md' \
+    -exec sed -i '/](/ { /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 
 # Releases v0.6 and earlier doc releases:
 #use the "readfile" shortcodes to hide all the README.md files
@@ -105,11 +110,18 @@ echo 'Converting all README.md to index.md for "pre-release" and 0.7 or later do
 # v0.7 or later doc releases:
 # Rename "README.md" files to "index.md" and avoid unnecessary lower-level _index.md files
 # (to prevent nested shortcodes that can result in double markdown processing)
-# Skip the following README.md files (do not convert them to index.md):
-#  - content/en/README.md
+# Skip the following README.md files (do not convert them to index.md)
+# either because that README.md is for GitHub only, or to prevent conflicts
+# with the require _index.md file (Hugo's site section definition file):
+#  - all README.md files that with corresponding _index.md files
 #  - content/en/contributing/README.md
 #  - content/en/reference/README.md
-find . -type f -path '*/content/*/*/README.md' ! -path '*/contributing/*' ! -path '*/reference/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' -exec bash -c 'mv "$1" "${1/\README/\index}"' -- {} \;
+find . -type f -path '*/content/*' -name 'README.md' \
+     ! -path '*/contributing/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' \
+     ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' \
+     ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
+    -execdir bash -c 'if [ -e _index.md ]; then echo "skip $1"; else mv "$1" "${1/\README/\index}"; fi' -- {} \;
+
 
 # GET HANDCRAFTED SITE LANDING PAGE
 if "$LOCALBUILD"
