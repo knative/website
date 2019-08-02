@@ -116,7 +116,7 @@ echo 'Converting all README.md to index.md for "pre-release" and 0.7 or later do
 #  - all README.md files that with corresponding _index.md files
 #  - content/en/contributing/README.md
 #  - content/en/reference/README.md
-find . -type f -path '*/content/*' -name 'README.md' \
+find . -type f -path '*/content/*/*/*' -name 'README.md' \
      ! -path '*/contributing/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' \
      ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' \
      ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
