@@ -120,14 +120,8 @@ find . -type f -path '*/content/*/*/*' -name 'README.md' \
      ! -path '*/contributing/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' \
      ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' \
      ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
-    -execdir bash -c 'if [ -e _index.md ]; then echo "skip $1"; else mv "$1" "${1/\README/\index}"; fi' -- {} \;
-
+    -execdir bash -c 'if [ -e _index.md ]; then echo "_index.md exists - skipping ${PWD#*/}"; else mv "$1" "${1/\README/\index}"; fi' -- {} \;
 
 # GET HANDCRAFTED SITE LANDING PAGE
-if "$LOCALBUILD"
-then
-  echo 'Note: Skipping the site override files for local builds (including the main index page for knative.dev)'
-else
-  echo 'Copying the override files into the /content/ folder'
-  cp -rfv content-override/* content/
-fi
+echo 'Copying the override files into the /content/ folder'
+cp -rfv content-override/* content/
