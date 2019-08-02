@@ -101,7 +101,7 @@ version = "v0.7"
 [[versions]]
   version = "development"
   ghbranchname = "master"
-  url = "https://knative.dev/development/"
+  url = "/development/"
   dirpath = "development"
 
 
