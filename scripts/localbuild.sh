@@ -87,6 +87,9 @@ while getopts f:b:a: arg; do
   esac
 done
 
+# Create the require "content" folder
+mkdir -p content
+
 source scripts/processsourcefiles.sh
 
 # BUILD MARKDOWN
