@@ -1,8 +1,11 @@
 {{/* In page TOC for landing pages (_index.md/.html) that exclude "readfile". */}}
-{{ if not (.HasShortcode "readfile") }}
+{{ if or (not (.HasShortcode "readfile")) ($.Page.Params.showlandingtoc) }}
 <div>
+  <b>Table of contents</b>
   <div>
+    <ul class="td-sidebar-nav" style="margin-bottom: 0;">
     {{ template "inpage-toc" (dict "page" . "section" .CurrentSection) }}
+    </ul>
   </div>
 </div>
 {{ end }}
@@ -10,21 +13,20 @@
 {{ $s := .section }}
 {{ $p := .page }}
 {{ $active := eq $p.CurrentSection $s }}
-{{ if not $active }}<ul class="td-sidebar-nav__section" style="margin-bottom: 0">
-  <li style="list-style: none">
-    <a  href="{{ $s.RelPermalink }}">{{ $s.LinkTitle }}</a>
+{{ if not $active }}
+  <li style="list-style: circle; padding-top:10px;">
+    <a href="{{ $s.RelPermalink }}">{{ $s.LinkTitle }}</a>
   </li>
-  <ul class="td-sidebar-link__sections">{{ end }}
-      {{ $pages := (union $s.Pages $s.Sections).ByWeight }}
-      {{ range $pages }}
-      {{ if .IsPage }}
-    <li style="list-style: none">
+  <ul>{{ end }}
+    {{ $pages := (union $s.Pages $s.Sections).ByWeight }}
+    {{ range $pages }}
+    {{ if .IsPage }}
+    <li style="list-style: circle; padding-top:10px;">
       <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-      {{ else }}
+    {{ else }}
       {{ template "inpage-toc" (dict "page" $p "section" . ) }}
-      {{ end }}
+    {{ end }}
     </li>
-      {{ end }}
+    {{ end }}
   </ul>
-{{ if not $active }}</ul>{{ end }}
 {{ end }}
