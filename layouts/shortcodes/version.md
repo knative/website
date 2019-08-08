@@ -6,7 +6,7 @@
 {{- if (.Get "override") -}}
   {{- $.Scratch.Set "release-version" (.Get "override") -}}
 {{- else -}}
-{{/* Use version based on the directory path (see .dirpath in config.toml) */}}
+{{/* Use version based on the directory path (see .dirpath in config/_default/params.toml) */}}
   {{- range .Site.Params.versions -}}
     {{- if eq $pageSection .dirpath -}}
       {{- $.Scratch.Set "release-version" .version -}}
