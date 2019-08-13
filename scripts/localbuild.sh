@@ -7,18 +7,30 @@ set -e
 # THIS FILE IS USED TO RUN LOCAL SITE BUILDS #
 ##############################################
 
-# Requirements:
-# (1) HUGO installed
-# (2) Local builds require both the knative/website and knative/docs repos
-#     cloned into the same folder on your local machine.
-#
 # USAGE:
-# From the root of the knative/website clone, run:
+# 1. Install Hugo: https://www.docsy.dev/docs/getting-started/#install-hugo
 #
-#   scripts/localbuild.sh
+# 2. Optional: Install PostCSS if you want to change the sites CSS and need to build those changes locally.
+#    https://www.docsy.dev/docs/getting-started/#install-postcss
+#
+# 3. Clone the knative/docs repo:
+#    `git clone https://github.com/knative/docs.git`
+#
+# 4. Clone the knative/website repo, including the Docsy theme submodule:
+#    `git clone --recurse-submodules https://github.com/knative/website.git`
+#
+# 5. From the root of the knative/website clone, run:
+#    `scripts/localbuild.sh`
+#
+# 6. If you change content in your knative/docs repo clone, you rebuild your local
+#    site by stopping the localhost (CTRL C) and running `scripts/localbuild.sh` again.
 #
 # By default, the command locally runs a Hugo build of your knative/website and
 # knative/docs clones (including any local changes).
+#
+# All files from you local knative/docs repo clone are copied into the 'content'
+# folder of your knative/website repo clone, and then they are processed in the
+# same way that they are process on the Netlify host server.
 #
 # You can also build and preview changes in other Forks and Branches.
 # See details about optional settings and flags below.
@@ -86,6 +98,9 @@ while getopts f:b:a: arg; do
       ;;
   esac
 done
+
+# Create the require "content" folder
+mkdir -p content
 
 source scripts/processsourcefiles.sh
 
