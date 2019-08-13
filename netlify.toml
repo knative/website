@@ -14,3 +14,9 @@
   HUGO_VERSION = "0.55.6"
   HUGO_ENV = "development"
 
+# Site redirects
+[[redirects]]
+  from = "/docs/build/*"
+  to = "/docs/build"
+  status = 301
+
