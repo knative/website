@@ -35,6 +35,7 @@ then
   echo '------ Cloning all docs releases ------'
   # Get versions of released docs from their branches in "$FORK"/docs
   echo 'Getting the latest release from the' "$BRANCH" 'branch of' "$FORK"
+  # Latest version is defined in website/scripts/docs-version-settings.sh
   git clone -b "$BRANCH" https://github.com/"$FORK"/docs.git temp/release/latest
 
   ###############################################################
@@ -46,6 +47,8 @@ then
   # Only copy and keep the "docs" folder from all branched releases:
   mv temp/release/latest/docs content/en/docs
   echo 'Getting the archived docs releases'
+  git clone -b "release-0.7" https://github.com/"$FORK"/docs.git temp/release/v0.7
+  mv temp/release/v0.7/docs content/en/v0.7-docs
   git clone -b "release-0.6" https://github.com/"$FORK"/docs.git temp/release/v0.6
   mv temp/release/v0.6/docs content/en/v0.6-docs
   git clone -b "release-0.5" https://github.com/"$FORK"/docs.git temp/release/v0.5

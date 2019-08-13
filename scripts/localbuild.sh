@@ -79,12 +79,12 @@ while getopts f:b:a: arg; do
   echo '------ BUILDING DOCS FROM: ------'
   case $arg in
     f)
-      echo '"${OPTARG}" FORK'
+      echo "${OPTARG}" 'FORK'
       # Set GitHub repo, where your knative/docs fork exist
       FORK="${OPTARG}"
       ;;
     b)
-      echo '"${OPTARG}" BRANCH'
+      echo "${OPTARG}" 'BRANCH'
       # Set the name of the remote branch in your knative/docs fork
       BRANCH="${OPTARG}"
       ;;
