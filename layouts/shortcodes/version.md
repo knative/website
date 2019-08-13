@@ -4,19 +4,21 @@
 {{- $.Scratch.Set "release-version" .Site.Params.version -}}
 {{/* Use the specified version override (not directory based) */}}
 {{- if (.Get "override") -}}
-  {{- $.Scratch.Set "release-version" (.Get "override") -}}
+{{- $.Scratch.Set "release-version" (.Get "override") -}}
 {{- else -}}
 {{/* Use version based on the directory path (see .dirpath in config/_default/params.toml) */}}
-  {{- range .Site.Params.versions -}}
-    {{- if eq $pageSection .dirpath -}}
-      {{- $.Scratch.Set "release-version" .version -}}
-    {{- end -}}
-  {{- end -}}
-  {{/* If a patch value is specified then append that, otherwise use '.0' */}}
-  {{- if (.Get "patch") -}}
-    {{- $.Scratch.Add "release-version" (.Get "patch") -}}
-  {{- else -}}
-    {{- $.Scratch.Add "release-version" ".0" -}}
-  {{- end -}}
+{{- range .Site.Params.versions -}}
+{{- if eq $pageSection .dirpath -}}
+{{- $.Scratch.Set "release-version" .version -}}
+{{- end -}}
+{{- end -}}
+{{/* If a patch value is specified then append that, otherwise use '.0' */}}
+{{- if (.Get "patch") -}}
+{{- $.Scratch.Add "release-version" (.Get "patch") -}}
+{{- else -}}
+{{- if ne $pageSection "development" -}}
+{{- $.Scratch.Add "release-version" ".0" -}}
+{{- end -}}
+{{- end -}}
 {{- end -}}
 {{- $.Scratch.Get "release-version" -}}
