@@ -16,7 +16,41 @@
 
 # Site redirects
 [[redirects]]
-  from = "/docs/build/*"
+  from = "/docs/build/auth"
   to = "/docs/build"
   status = 301
-
+  
+[[redirects]]
+  from = "/docs/build/build-templates"
+  to = "/docs/build"
+  status = 301
+   
+[[redirects]]
+  from = "/docs/build/builder-contract"
+  to = "/docs/build"
+  status = 301
+   
+[[redirects]]
+  from = "/docs/build/builds"
+  to = "/docs/build"
+  status = 301
+   
+[[redirects]]
+  from = "/docs/build/installing-build-component"
+  to = "/docs/build"
+  status = 301
+   
+[[redirects]]
+  from = "/docs/build/personas"
+  to = "/docs/build"
+  status = 301
+  
+[[redirects]]
+  from = "/docs/build/samples"
+  to = "/docs/build"
+  status = 301
+  
+  [[redirects]]
+  from = "/docs/reference/build-api"
+  to = "/docs/build"
+  status = 301
