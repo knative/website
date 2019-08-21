@@ -1,6 +1,5 @@
 [build]
   publish = "public"
-  command = "./scripts/build.sh"
 
 [context.production.environment]
   HUGO_VERSION = "0.55.6"
