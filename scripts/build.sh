@@ -4,30 +4,45 @@
 # THIS FILE IS USED BY THE NETLIFY SERVER TO RUN AND PUBLISH DOC BUILDS #
 #########################################################################
 
-# See options below for configuring this file in your own repo fork for use
-# with your own personal Netlify account (to build your own site preview).
+# By default, builds all docs releases from the knative/docs repo.
+# Will also extract PR details from webhooks and then build and publish 
+# content based on the Fork and Branch of the corresponding PR.
+
+# Create a Netlify build webhook and then add it to your GitHub repo fork
+# for continuous builds and PR previews.
+# (https://www.netlify.com/docs/webhooks/)
+
+# Requirement: You fork must include all releases and maintain the same
+# branch names and structure as the knative/docs repo. Otherwise, set up
+# your build using the flag: BUILDALLRELEASES="FALSE"
+
+# See all options below for configuring this file to work both your own
+# knative/website and knative/docs forks and your own personal Netlify 
+# account (to set up your own doc preview builds).
 
 # Quit on error
 set -e
 
+# Get and set default values
 source scripts/docs-version-settings.sh
 
 BUILDALLRELEASES="true"
 BRANCH="$DEFAULTBRANCH"
 FORK="$DEFAULTFORK"
 
-# Get and use specified fork and branch name.
-# By default, build all releases from knative/docs.
+# Manually specify your fork and branch for all builds.
 #
-# OPTIONAL: Configure your knative/website fork to build from your knative/docs
-#           fork (for example, use a personal Netlify account from previews).
+# OPTIONAL: Manually configure your knative/website fork to build from your 
+#           knative/docs fork by default.
+#           (For example, if you have a personal Netlify account and want 
+#            to easily click the "Deploy" button from the Netlify UI.)
+#
 #           Example:
-#           In the netlify.toml config file of your knative/website fork, you
-#           can add the '-f' and '-b' flags and values to the build command:
+#           On the Netlify > Settings > Build & Deploy > Continuous Deployment
+#           of your personal account, you can manually set the build command
+#           and add include the '-f' and '-b' flags:
 #
-#            [build]
-#             publish = "public"
-#             command = "./scripts/build.sh -f repofork -b branchname"
+#           Build command: [./scripts/build.sh -f repofork -b branchname]
 #
 while getopts f:b:a: arg; do
   echo '------ BUILDING DOCS FROM: ------'
@@ -55,65 +70,77 @@ while getopts f:b:a: arg; do
   esac
 done
 
-# If a webhook requested the build, find and use that repo fork and branch name
-# Check for webhook payload
+# If a webhook triggered the build, get repo fork and branch name
 if [[ $INCOMING_HOOK_BODY || $INCOMING_HOOK_TITLE || $INCOMING_HOOK_URL ]]
 then
-# First look for "merged" content
-MERGEDPR=$(echo "$INCOMING_HOOK_BODY" | grep -o '\"merged\"\:true\,' || true)
-# If a merged PR if found, then deploy production site (www.knative.dev)
-if [[ $MERGEDPR ]]
-then
-echo '------ PR' "$PULL_REQUEST" 'MERGED ------'
-echo 'Running production build...'
+  echo '------ BUILD REQUEST FROM KNATIVE/DOCS WEBHOOK ------'
+  echo 'Webhook Title:' "$INCOMING_HOOK_TITLE"
+  echo 'Webhook URL:' "$INCOMING_HOOK_URL"
+  echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
+
+  # Retrieve the repo URL and fork name
+  CLONEURL=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"clone_url\"\:\".*git\"' | sed -e 's/.*\"clone_url\"\:\"//;s/git\".*/git/' || true)
+  FORK=$(echo "$CLONEURL" | sed -e 's/https\:\/\/github.com\///;s/\/docs.git//')
+
+  # If webhook is from a "PULL REQUEST" event
+  if echo "$INCOMING_HOOK_BODY" | grep -q -m 1 '\"pull_request\"'
+  then
+    # Get PR number
+    PULL_REQUEST=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"number\"\:.*\,\"pull_request\"' | sed -e 's/\"number\"\://;s/\,\"pull_request\"//' || true)
+    # If PR was merged, then run default build and deploy production site (www.knative.dev)
+    MERGEDPR=$(echo "$INCOMING_HOOK_BODY" | grep -o '\"merged\"\:true\,' || : )
+    if [ "$MERGEDPR" ]
+    then
+      echo '------ PR' "$PULL_REQUEST" 'MERGED ------'
+      echo 'Running production build - publishing new changes'
+    else
+      # If PR has not been merged, get branch info for preview build
+      BRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"ref\"\:\".*\"\,\"sha\"' | sed -e 's/\"\,\"sha\".*//;s/.*\"ref\"\:\"//' || true)
+    fi
+  else
+    # Webhook from "PUSH event"
+    # If the event was from someone's fork, then get their branchname
+    if [ "$FORK" != "knative" ]
+    then
+      BRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 ':"refs\/heads\/.*\"\,\"before\"' | sed -e 's/.*:\"refs\/heads\///;s/\"\,\"before\".*//' || true)
+    fi
+  fi
 else
-echo '------ BUILD REQUEST FROM WEBHOOK ------'
-echo 'Webhook Title:' "$INCOMING_HOOK_TITLE"
-echo 'Webhook URL:' "$INCOMING_HOOK_URL"
-echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
-# Getting branch from webhook
-echo 'Parsing Webhook request for branch name'
-# Check if webhook request came from an PR
-PULLREQUEST=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"pull_request\"' || true)
-if [[ $PULLREQUEST ]]
-then
-# Webhook from a PR
-GETPRBRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"head\"\:{\"label\":.*\"ref\"\:\".*\"\,\"sha' || true)
-BRANCH1=$(echo "$GETPRBRANCH" | sed -e 's/\"\,\"sha\"\:.*//;s/.*\"ref\"\:\"//')
-else
-# Webhook from a 'git push'
-GETRELEASEBRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o ':"refs\/heads\/.*\"\,\"before\":' || true)
-BRANCH=$(echo "$GETRELEASEBRANCH" | sed -e 's/:\"refs\/heads\///;s/\"\,\"before\"://')
-fi
-fi
-else
-echo 'Running default branch build'
+  echo 'Full production build triggered - Building docs content from HEAD'
 fi
 
 echo '------ BUILD DETAILS ------'
 echo 'Build type:' "$CONTEXT"
-echo 'Building docs from branch:' "$BRANCH"
+echo 'Building content from:' "$CLONEURL"
+echo 'Using Branch:' "$BRANCH"
 echo 'Commit HEAD:' "$HEAD"
 echo 'Commit SHA:' "$COMMIT_REF"
 # Other Netlify flags that aren't currently useful
 #echo 'Repo:' "$REPOSITORY_URL"
-# Doesnt seem to like multiple repos and always returns false
-#echo 'Pull Request:' "$PULL_REQUEST"
+# Doesnt seem to like multiple repos and always returns false when not overriden (see above)
+echo 'Pull Request:' "$PULL_REQUEST"
 #echo 'GitHub ID:' "$REVIEW_ID"
 
+echo '------ WHEN BUILD SUCCESSFULLY COMPLETES ------'
+# Only show published site if build triggered by PR merge
+if [ "$MERGEDPR" ]
+then
+echo '------ CONTENT PUBLISHED ------'
+echo 'View published content at:' "$URL"
+else
+echo '------ PREVIEW CHANGES ------'
+# Gets overritten and shows only latest build
+#echo 'Shared staging URL:' "$DEPLOY_PRIME_URL"
+echo 'View staged content (unique to only this build):' "$DEPLOY_URL"
+fi
+
+# Process the source files
 source scripts/processsourcefiles.sh
 
 # BUILD MARKDOWN
 # Start HUGO build
 cd themes/docsy && git submodule update -f --init && cd ../.. && hugo
 
-# Only show published site if build triggered by PR merge
-if [[ $MERGEDPR ]]
-then
-echo '------ CONTENT PUBLISHED ------'
-echo 'Merged content will be live at:' "$URL"
-else
-echo '------ PREVIEW CHANGES ------'
-echo 'Shared staging URL:' "$DEPLOY_PRIME_URL"
-echo 'URL unique to this build:' "$DEPLOY_URL"
-fi
+echo '------ BUILD SUCCESSFUL ------'
+echo 'VIEW STAGED CONTENT:' "$DEPLOY_URL"
+echo '------------------------------'
