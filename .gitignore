@@ -2,3 +2,4 @@ node_modules/
 public/
 content/
 resources/
+.DS_Store
