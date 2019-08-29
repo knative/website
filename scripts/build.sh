@@ -29,6 +29,7 @@ source scripts/docs-version-settings.sh
 BUILDALLRELEASES="true"
 BRANCH="$DEFAULTBRANCH"
 FORK="$DEFAULTFORK"
+LOCALBUILD="false"
 
 # Manually specify your fork and branch for all builds.
 #
@@ -79,7 +80,7 @@ then
   echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
 
   # Retrieve the repo URL and fork name
-  CLONEURL=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"clone_url\"\:\".*git\"' | sed -e 's/.*\"clone_url\"\:\"//;s/git\".*/git/' || true)
+  CLONEURL=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"clone_url\"\:\".*\.git\"\,\"svn_url\"' | head -1 | sed -e 's/.*\"clone_url\"\:\"//;s/\.git\".*/\.git/' || true)
   FORK=$(echo "$CLONEURL" | sed -e 's/https\:\/\/github.com\///;s/\/docs.git//')
 
   # If webhook is from a "PULL REQUEST" event
