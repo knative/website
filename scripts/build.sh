@@ -112,8 +112,11 @@ fi
 
 echo '------ BUILD DETAILS ------'
 echo 'Build type:' "$CONTEXT"
+if [ $CLONEURL ]
+then
 echo 'Building content from:' "$CLONEURL"
 echo 'Using Branch:' "$BRANCH"
+fi
 echo 'Commit HEAD:' "$HEAD"
 echo 'Commit SHA:' "$COMMIT_REF"
 # Other Netlify flags that aren't currently useful
