@@ -79,9 +79,18 @@ then
   echo 'Webhook URL:' "$INCOMING_HOOK_URL"
   echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
 
-  # Retrieve the repo URL and fork name
-  CLONEURL=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"clone_url\"\:\".*\.git\"\,\"svn_url\"' | head -1 | sed -e 's/.*\"clone_url\"\:\"//;s/\.git\".*/\.git/' || true)
-  FORK=$(echo "$CLONEURL" | sed -e 's/https\:\/\/github.com\///;s/\/docs.git//')
+  # Retrieve the repo/fork URL
+  CLONEURL=$(echo "$INCOMING_HOOK_BODY" | grep -o  '\"clone_url\"\:\".*\.git\"\,\"svn_url\"' | sed -e 's/.*\"clone_url\"\:\"//;s/\.git\".*/\.git/;s/https\:\/\/github\.com\/knative\/docs.git//' | sort -u || true)
+  # Check if PR was opened from within the knative/docs repo (not suppose to do that but just incase)
+  if [ $CLONEURL ]
+  then
+    # If its a fork, retrieve the forkname
+    FORK=$(echo "$CLONEURL" | sed -e 's/https\:\/\/github.com\///;s/\/docs.git//')
+  else
+    # Otherwise, set to the knative/docs repo
+    CLONEURL="https://github.com/knative/docs.git"
+    FORK="knative"
+  fi
 
   # If webhook is from a "PULL REQUEST" event
   if echo "$INCOMING_HOOK_BODY" | grep -q -m 1 '\"pull_request\"'
@@ -112,8 +121,12 @@ fi
 
 echo '------ BUILD DETAILS ------'
 echo 'Build type:' "$CONTEXT"
+# Don't show if its a PUSH event
+if [ $CLONEURL ]
+then
 echo 'Building content from:' "$CLONEURL"
 echo 'Using Branch:' "$BRANCH"
+fi
 echo 'Commit HEAD:' "$HEAD"
 echo 'Commit SHA:' "$COMMIT_REF"
 # Other Netlify flags that aren't currently useful
