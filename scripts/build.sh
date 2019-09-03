@@ -5,7 +5,7 @@
 #########################################################################
 
 # By default, builds all docs releases from the knative/docs repo.
-# Will also extract PR details from webhooks and then build and publish 
+# Will also extract PR details from webhooks and then build and publish
 # content based on the Fork and Branch of the corresponding PR.
 
 # Create a Netlify build webhook and then add it to your GitHub repo fork
@@ -17,7 +17,7 @@
 # your build using the flag: BUILDALLRELEASES="FALSE"
 
 # See all options below for configuring this file to work both your own
-# knative/website and knative/docs forks and your own personal Netlify 
+# knative/website and knative/docs forks and your own personal Netlify
 # account (to set up your own doc preview builds).
 
 # Quit on error
@@ -33,9 +33,9 @@ LOCALBUILD="false"
 
 # Manually specify your fork and branch for all builds.
 #
-# OPTIONAL: Manually configure your knative/website fork to build from your 
+# OPTIONAL: Manually configure your knative/website fork to build from your
 #           knative/docs fork by default.
-#           (For example, if you have a personal Netlify account and want 
+#           (For example, if you have a personal Netlify account and want
 #            to easily click the "Deploy" button from the Netlify UI.)
 #
 #           Example:
@@ -79,33 +79,24 @@ then
   echo 'Webhook URL:' "$INCOMING_HOOK_URL"
   echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
 
-  # Retrieve the repo/fork URL
-  CLONEURL=$(echo "$INCOMING_HOOK_BODY" | grep -o  '\"clone_url\"\:\".*\.git\"\,\"svn_url\"' | sed -e 's/.*\"clone_url\"\:\"//;s/\.git\".*/\.git/;s/https\:\/\/github\.com\/knative\/docs.git//' | sort -u || true)
-  # Check if PR was opened from within the knative/docs repo (not suppose to do that but just incase)
-  if [ $CLONEURL ]
-  then
-    # If its a fork, retrieve the forkname
-    FORK=$(echo "$CLONEURL" | sed -e 's/https\:\/\/github.com\///;s/\/docs.git//')
-  else
-    # Otherwise, set to the knative/docs repo
-    CLONEURL="https://github.com/knative/docs.git"
-    FORK="knative"
-  fi
-
   # If webhook is from a "PULL REQUEST" event
   if echo "$INCOMING_HOOK_BODY" | grep -q -m 1 '\"pull_request\"'
   then
     # Get PR number
     PULL_REQUEST=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"number\"\:.*\,\"pull_request\"' | sed -e 's/\"number\"\://;s/\,\"pull_request\"//' || true)
-    # If PR was merged, then run default build and deploy production site (www.knative.dev)
+    # Retrieve the fork and branch from PR webhook
+    FORK_BRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"label\"\:\".*\"\,\"ref\"' | sed -e 's/\"label\"\:\"knative\:.*//;s/\"label\"\:\"//;s/\"\,\"ref\".*//' || true)
+    # Extract just the fork name
+    FORK=$(echo "$FORK_BRANCH" | sed -e 's/\:.*//')
+    # If PR was merged, just run default build and deploy production site (www.knative.dev)
     MERGEDPR=$(echo "$INCOMING_HOOK_BODY" | grep -o '\"merged\"\:true\,' || : )
     if [ "$MERGEDPR" ]
     then
       echo '------ PR' "$PULL_REQUEST" 'MERGED ------'
       echo 'Running production build - publishing new changes'
     else
-      # If PR has not been merged, get branch info for preview build
-      BRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"ref\"\:\".*\"\,\"sha\"' | sed -e 's/\"\,\"sha\".*//;s/.*\"ref\"\:\"//' || true)
+      # If PR was not merged, extract the branch name (to use for preview build)
+      BRANCH=$(echo "$FORK_BRANCH" | sed -e 's/.*\://')
     fi
   else
     # Webhook from "PUSH event"
@@ -121,10 +112,9 @@ fi
 
 echo '------ BUILD DETAILS ------'
 echo 'Build type:' "$CONTEXT"
-# Don't show if its a PUSH event
-if [ $CLONEURL ]
+if [ "$FORK" != "knative" ]
 then
-echo 'Building content from:' "$CLONEURL"
+echo 'Building content from:' "$FORK"
 echo 'Using Branch:' "$BRANCH"
 fi
 echo 'Commit HEAD:' "$HEAD"
