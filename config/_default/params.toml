@@ -1,6 +1,21 @@
 # Knative DEFAULT Site Params
-# Default site parameters, see "PRODUCTION" and "STAGING" for environment specific overrides
+# Default site parameters, see "PRODUCTION" "STAGING" and "LOCAL" for environment specific overrides
 
+# Default site parameters
+
+# Set default to "master" branch (see environment specific config for overrides)
+latest_github_branch = "master"
+# Default website version
+version = "development"
+
+# Section labels for versions
+doclabel = "Documentation "
+releaselabel = "Release: "
+masterlabel = "Pre-release"
+# Pre-release section path value ("master" docs directory folder on website)
+masterfolder = "development"
+
+# Footer content
 knativeAuthors = "The Knative Authors"
 commonsLicense = "Creative Commons Attribution 4.0"
 commons_license = "https://creativecommons.org/licenses/by/4.0/"
@@ -17,113 +32,12 @@ github_communityrepo = "https://github.com/knative/community"
 github_eventingrepo = "https://github.com/knative/eventing"
 github_servingrepo = "https://github.com/knative/serving"
 
-# Pre-release section path value ("master" docs directory folder on website)
-masterfolder = "development"
-
-# Default docs params
-# Latest Knative docs release/version - Default values (for Docsy Template)
-# Default GitHub branch
-latest_github_branch = "release-0.9"
-# Default website version
-version = "v0.9"
-
-# Doc versions params
-# Create a separate [[versions]] set for every version / doc set branch
-# Use the ghbranchname param for specifying the GitHub branchname ->
-# Example:
-#   [thisisalink](https://github.com/.../tree/{{< params "ghbranchname" >}}/...)
-#
-# [[versions]] - Defines a single "version" of the Knative docs
-#   version - Intuitive version label (ie. visible in menus)
-#   ghbranchname - Name of branch of the doc version in GitHub
-#                  (https://github.com/knative/docs/branches)
-#   url - Fully qualified website URL to the doc version
-#         (ie. https://www.knative.dev/[dirpath])
-#   dirpath - The content folder name of the doc version
-#           - Latest release is always set to "docs"
-#           - Past/archived releases change to "v#.#-docs",
-#             where # is the MAJOR and MINOR semantic version values
-
-# Latest version
-################
-# Set to "docs" path
-
-[[versions]]
-  version = "v0.9"
-  ghbranchname = "release-0.9"
-  url = "/docs/"
-  dirpath = "docs"
-
-# Archived versions
-###################
-# Prefix all past versions with release # "v#.#-docs"
-
-[[versions]]
-  version = "v0.8"
-  ghbranchname = "release-0.8"
-  url = "/v0.8-docs/"
-  dirpath = "v0.8-docs"
-
-[[versions]]
-  version = "v0.7"
-  ghbranchname = "release-0.7"
-  url = "/v0.7-docs/"
-  dirpath = "v0.7-docs"
-
-[[versions]]
-  version = "v0.6"
-  ghbranchname = "release-0.6"
-  url = "/v0.6-docs/"
-  dirpath = "v0.6-docs"
-
-[[versions]]
-  version = "v0.5"
-  ghbranchname = "release-0.5"
-  url = "/v0.5-docs/"
-  dirpath = "v0.5-docs"
-
-[[versions]]
-  version = "v0.4"
-  ghbranchname = "release-0.4"
-  url = "/v0.4-docs/"
-  dirpath = "v0.4-docs"
-
-[[versions]]
-  version = "v0.3"
-  ghbranchname = "release-0.3"
-  url = "/v0.3-docs/"
-  dirpath = "v0.3-docs"
-
-[[versions]]
-  version = "v0.2"
-  ghbranchname = "release-0.2"
-  url = "https://github.com/knative/docs/tree/release-0.2"
-  dirpath = "github-repo"
-
-[[versions]]
-  version = "v0.1"
-  ghbranchname = "release-0.1"
-  url = "https://github.com/knative/docs/tree/release-0.1"
-  dirpath = "github-repo"
-
-# Pre-release version
-###################
-# In-development (pre-release) content - "master" branch
-
-[[versions]]
-  version = "development"
-  ghbranchname = "master"
-  url = "/development/"
-  dirpath = "development"
-
-
 # User interface configuration
 [ui]
 # Set to true to display the nav bar in compact state (collapse menu).
 sidebar_menu_compact = true
 #  Set to true to disable breadcrumb navigation.
 breadcrumb_disable = false
-
 
 [links]
 # End user relevant links. These will show up on left side of footer and in the community page if you have one.
@@ -209,3 +123,4 @@ breadcrumb_disable = false
   external = "false"
   icon = "fa fa-link"
         desc = "Link to your Knative samples that live on another site"
+

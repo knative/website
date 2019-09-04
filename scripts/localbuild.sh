@@ -25,17 +25,15 @@ set -e
 # 6. If you change content in your knative/docs repo clone, you rebuild your local
 #    site by stopping the localhost (CTRL C) and running `scripts/localbuild.sh` again.
 #
-# By default, the command locally runs a Hugo build of your knative/website and
+# By default, the command locally runs a Hugo build of using your local knative/website and
 # knative/docs clones (including any local changes).
 #
-# All files from you local knative/docs repo clone are copied into the 'content'
+# All files from you local knative/docs clone are copied into the 'content'
 # folder of your knative/website repo clone, and then they are processed in the
 # same way that they are process on the Netlify host server.
 #
-# You can also build and preview changes in other Forks and Branches.
+# You can also build and preview changes from other remote Forks and Branches.
 # See details about optional settings and flags below.
-
-LOCALBUILD="true"
 
 # Retrieve the default docs version
 source scripts/docs-version-settings.sh
@@ -43,19 +41,25 @@ source scripts/docs-version-settings.sh
 BRANCH="$DEFAULTBRANCH"
 FORK="$DEFAULTFORK"
 
+# Set local build default values
+BUILDENVIRONMENT="local"
+BUILDALLRELEASES="false"
+BUILDSINGLEBRANCH="false"
+PRBUILD="false"
+
+
 # OPTIONS:
 #
-# (1) Override the default repo, branch, or both for your local builds/testing.
-#     These settings clone from the defined repo and branch, and then locally
-#     build those docs to allow you to locally preview changes from remote
-#     forks/branches.
+# (1) Specify a remote repo fork, branch, or both, to build that content locally.
+#     The specified repo and branch are cloned and built locally to allow you to
+#     preview changes in remote forks and branches.
 #
 #     USAGE: Append the -f repofork and/or the -b branchname to the command.
 #            Example:
 #                    ./scripts/build.sh -f repofork -b branchname
 #
 # (2) Run a complete local build of the knative.dev site. Clones all the content
-#     from the remote repo, including all docs releases.
+#     from knative/docs repo, including all branches.
 #
 #     USAGE: Append the -a true to the command.
 #            Example:
@@ -64,37 +68,48 @@ FORK="$DEFAULTFORK"
 #
 # Examples:
 #  - Default local build:
-#    ./scripts/build.sh
+#    ./scripts/localbuild.sh
 #
 #  - Clone all docs releases from knative/docs and then run local build:
-#    ./scripts/build.sh -a true
+#    ./scripts/localbuild.sh -a true
 #
-#  - Locally build content from remote repo:
-#    ./scripts/build.sh -f repofork -b branchname
+#  - Locally build content from specified fork and branch:
+#    ./scripts/localbuild.sh -f repofork -b branchname
 #
-#  - Locally build all versions from remote repo ():
-#    ./scripts/build.sh -f  -b branchname -a true
+#  - Locally build a specific version from $FORK:
+#    ./scripts/localbuild.sh -b branchname 
 #
 while getopts f:b:a: arg; do
-  echo '------ BUILDING DOCS FROM: ------'
   case $arg in
     f)
-      echo "${OPTARG}" 'FORK'
-      # Set GitHub repo, where your knative/docs fork exist
+	  echo '--- BUILDING FROM ---'
+      echo 'FORK:' "${OPTARG}"
+      # Build remote content locally
+      # Set the GitHub repo name of your knative/docs fork you want built.
       FORK="${OPTARG}"
+      # Retrieve content from remote repo
+      BUILDSINGLEBRANCH="true"
       ;;
     b)
-      echo "${OPTARG}" 'BRANCH'
-      # Set the name of the remote branch in your knative/docs fork
+      echo 'USING BRANCH:' "${OPTARG}"
+      # Build remote content locally
+      # Set the branch name that you want built.
       BRANCH="${OPTARG}"
+      # Retrieve content from remote repo branch
+      BUILDSINGLEBRANCH="true"
       ;;
     a)
-      echo 'BUILDING ALL RELEASES FROM REMOTE'
-      # If 'true', all knative/docs branches from the specified fork ($FORK)
-      # are built. REQUIRED: All branches must exist in the specified $FORK and
-      # the names of each branch must match the branches in the knative/docs
-      # repo ('release-0.X'). For example: 'release-0.7', 'release-0.6', etc...
+      echo 'BUILDING ALL RELEASES FROM KNATIVE/DOCS'
+      # If 'true', all knative/docs branches are built to mimic a 
+      # "production" build. 
+      # REQUIRED: If you specify a fork ($FORK), all of the same branches 
+      # (with the same branch names) that are built in knative.dev must
+      # also exist and be available in the that $FORK (ie, 'release-0.X'). 
+      # See /config/production/params.toml for the list of the branches
+      # their names that are currently built in knative.dev.
       BUILDALLRELEASES="${OPTARG}"
+      BUILDENVIRONMENT="production"
+      BUILDSINGLEBRANCH="false"
       ;;
   esac
 done
@@ -102,8 +117,11 @@ done
 # Create the require "content" folder
 mkdir -p content
 
+# Process the source files
 source scripts/processsourcefiles.sh
 
 # BUILD MARKDOWN
+# TEST
+echo "$BUILDENVIRONMENT"
 # Start HUGO build
-hugo server -b ""
+hugo server --baseURL "" --environment "$BUILDENVIRONMENT"

@@ -1,7 +1,7 @@
 {{/* Prefix labels for menus */}}
-{{ $.Scratch.Set "docLabel" "Documentation " }}
-{{ $.Scratch.Set "releaseLabel" "Release: " }}
-{{ $masterMainLabel := "Pre-release" }}
+{{ $.Scratch.Set "docLabel" .Site.Params.doclabel }}
+{{ $.Scratch.Set "releaseLabel" .Site.Params.releaselabel }}
+{{ $masterMainLabel := .Site.Params.masterlabel }}
 {{ $masterDropLabel := .Site.Params.masterfolder }}
 
 {{/* set defaults for version and dropdown menu highlighting */}}
