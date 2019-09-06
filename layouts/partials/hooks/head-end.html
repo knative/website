@@ -1,22 +1,5 @@
 <meta name="google-site-verification" content="knbzameE514X1-2MyT4a18Bzc49Jbzdd7NipLte_9A8" />
 <!-- Webmaster Central ownership verification using "HTML tag" method -->
 <!-- https://www.google.com/webmasters/verification/details?hl=en&siteUrl=http://knative.dev/ -->
-<script src="/js/js.cookie.js"></script>
-<script>
-// if no cookie, show cookie consent
-$(document).ready(function() {
-  if ( Cookies.get('site-cookie') == null ) {
-  $("#cookieModal").modal('show');
-  }
-});
-function acceptcookie() {
-   $( "#cookieModal" ).modal('hide');
-   // set the cookie for 12 mns
-   Cookies.set('site-cookie', 'accepted', { expires: 365 });
-}
-function optout() {
-  $( "#opt-out" ).show('toggle');
-}
-</script>
-
+<script src="/js/cookie-consent.js"></script>
 
