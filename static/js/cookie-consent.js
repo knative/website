@@ -4,7 +4,7 @@ $.getScript("/js/js.cookie.js");
 // Get cookie consent if the UTC time zone is within the EU+ and user has not consented previously (no cookie exists)
 $(document).ready(function() {
   // Show consent dialog if within EU time zone and either the cookie expired or does not exist
-  if ( Cookies.get('site-cookie') == null ) {
+  if ( typeof(Cookies) == 'undefined' || Cookies.get('site-cookie') == null ) {
     if (testEUtimezone()) {
       toggleconsent();
     }
