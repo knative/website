@@ -30,6 +30,7 @@ BRANCH="$DEFAULTBRANCH"
 FORK="$DEFAULTFORK"
 
 # Set build default values
+BUILDENVIRONMENT="production"
 BUILDALLRELEASES="true"
 BUILDSINGLEBRANCH="false"
 LOCALBUILD="false"
@@ -107,13 +108,17 @@ then
     else
       # If PR was not merged, extract the branch name (to use for preview build)
       BRANCH=$(echo "$FORK_BRANCH" | sed -e 's/.*\://')
+      # Use "Staging" environment settings (config/staging)
+      BUILDENVIRONMENT="staging"
     fi
   else
     # Webhook from "PUSH event"
-    # If the event was from someone's fork, then get their branchname (otherwise use default: "latest knative release branch")
+    # If the event was from someone's fork, then get their branchname
     if [ "$FORK" != "knative" ]
     then
       BRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 ':"refs\/heads\/.*\"\,\"before\"' | sed -e 's/.*:\"refs\/heads\///;s/\"\,\"before\".*//' || true)
+      # Use "Staging" environment settings (config/staging)
+      BUILDENVIRONMENT="staging"
     fi
   fi
 else
@@ -122,6 +127,7 @@ fi
 
 echo '------ BUILD DETAILS ------'
 echo 'Build type:' "$CONTEXT"
+echo 'Build environment:' "$BUILDENVIRONMENT"
 if [ "$PRBUILD" = "true" ]
 then
 # Builds only the content from the PR
@@ -158,7 +164,7 @@ source scripts/processsourcefiles.sh
 
 # BUILD MARKDOWN
 # Start HUGO build
-cd themes/docsy && git submodule update -f --init && cd ../.. && hugo
+cd themes/docsy && git submodule update -f --init && cd ../.. && hugo --environment "$BUILDENVIRONMENT" 
 
 echo '------ BUILD SUCCESSFUL ------'
 echo 'VIEW STAGED CONTENT:' "$DEPLOY_URL"

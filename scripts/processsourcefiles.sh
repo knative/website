@@ -66,9 +66,9 @@ then
   echo '------ BUILDING CONENT FROM REMOTE ------'
   echo 'The /docs/ section is built from the' "$BRANCH" 'branch of' "$FORK"
   git clone --quiet -b "$BRANCH" https://github.com/"$FORK"/docs.git content/en
+else
 # DEFAULT: LOCAL BUILD
 # Assumes that knative/docs and knative/website are cloned to the same directory.
-else
   echo '------ BUILDING ONLY FROM YOUR LOCAL KNATIVE/DOCS CLONE ------'
   pwd
   cp -r ../docs content/en/
@@ -127,8 +127,8 @@ echo 'Converting all README.md to index.md for "pre-release" and 0.7 or later do
 # (and to prevent deeply nested shortcodes ==> double markdown processing issues)
 #
 # Some README.md files should not be converted to index.md, either because that README.md 
-# a file that is used only in the GitHub repo, or to prevent conflicts Hugo build 
-# conflicts (index.md and _index.md files in the same directory is not supported).
+# is a file that's used only in the GitHub repo, or to prevent Hugo build conflicts
+# (index.md and _index.md files in the same directory is not supported).
 #
 # Do not convert the following README.md files to index.md:
 #  - files in doc releases v0.6 and earlier
