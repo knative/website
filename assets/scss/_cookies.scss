@@ -1,0 +1,57 @@
+// Override bootstrap modal for cookie consent
+
+.modal.custom .modal-dialog {
+  margin: 0;  
+  position: fixed;
+  right: 35px;
+  top: 35px;
+  left: 35px;
+  max-width: $modal-xl;
+  .modal-body {
+    padding-bottom: 0;
+    background: rgba(195,195,195,1.0); 
+
+  }
+  .consent-buttons {
+    text-align: right;
+   }
+  .opt-out {
+    text-align: center;
+    display: none;
+  }
+}
+
+// For cookie-notice.html partial
+
+.cookienotice {
+  display: none; 
+  overflow: hidden;
+  outline: 0; 
+  .close{
+    position: relative;
+    margin-top: 0;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    top: 0;
+    right: 0;
+  }
+  position: fixed;
+  padding: 5px;
+  padding-top: 15px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(195,195,195,1.0); 
+  z-index: 1000;  
+  text-align: center;
+  .ok-button {
+    position: relative;
+    right: 0;
+    margin-left: 15px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+    background-color: #6695ca;
+    color: #fff!important;
+  }
+}
