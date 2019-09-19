@@ -23,9 +23,9 @@ masterfolder = "development"
 # Default docs params
 # Latest Knative docs release/version - Default values (for Docsy Template)
 # Default GitHub branch
-latest_github_branch = "release-0.8"
+latest_github_branch = "release-0.9"
 # Default website version
-version = "v0.8"
+version = "v0.9"
 
 # Doc versions params
 # Create a separate [[versions]] set for every version / doc set branch
@@ -49,14 +49,20 @@ version = "v0.8"
 # Set to "docs" path
 
 [[versions]]
-  version = "v0.8"
-  ghbranchname = "release-0.8"
+  version = "v0.9"
+  ghbranchname = "release-0.9"
   url = "/docs/"
   dirpath = "docs"
 
 # Archived versions
 ###################
 # Prefix all past versions with release # "v#.#-docs"
+
+[[versions]]
+  version = "v0.8"
+  ghbranchname = "release-0.8"
+  url = "/v0.8-docs/"
+  dirpath = "v0.8-docs"
 
 [[versions]]
   version = "v0.7"
