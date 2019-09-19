@@ -23,6 +23,7 @@ ignoreFiles = [
   "/*/reference/build.md",
   "/*/reference/serving.md",
   "/*/reference/eventing/eventing.md",
+  "/*/reference/eventing/eventing-contrib.md",
   "/*/reference/eventing/eventing-sources.md",
   "/*/reference/eventing/eventing-contrib-resources.md" ]
 
