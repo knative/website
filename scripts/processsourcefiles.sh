@@ -47,6 +47,8 @@ then
   # Only copy and keep the "docs" folder from all branched releases:
   mv temp/release/latest/docs content/en/docs
   echo 'Getting the archived docs releases'
+  git clone -b "release-0.8" https://github.com/"$FORK"/docs.git temp/release/v0.8
+  mv temp/release/v0.8/docs content/en/v0.8-docs
   git clone -b "release-0.7" https://github.com/"$FORK"/docs.git temp/release/v0.7
   mv temp/release/v0.7/docs content/en/v0.7-docs
   git clone -b "release-0.6" https://github.com/"$FORK"/docs.git temp/release/v0.6
