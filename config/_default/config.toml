@@ -31,7 +31,6 @@ ignoreFiles = [
 theme = ["docsy"]
 
 # Language settings
-contentDir = "content/en"
 defaultContentLanguage = "en"
 # TODO: Investigate if this should be true when other nls exist?
 defaultContentLanguageInSubdir = false
