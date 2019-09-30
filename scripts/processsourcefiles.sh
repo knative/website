@@ -3,40 +3,38 @@
 #######################################################################################
 
 echo '------ PROCESSING SOURCE FILES ------'
-# Pull in content from the separate community source and docs source repos
-# (make it look like they live in the content folder of knative/website )
-# Use a temp directory and move files around to prevent git clone error (fails if directory exists)
-# Note: This forces a complete build of all versions of all files in the site
-
-if "$LOCALBUILD"
-then
-echo '------ RUNNING A LOCAL BUILD ------'
-fi
+# Default to a local build. Otherwise, retreives content from the specified source repos. 
+# All builds copy or clone the content into the "content" folder of knative/webiste before starting the Hugo build.
+# A temp directory is used and move files around and prevent git clone errors (fails if directory exists).
 
 # Clean slate: Make sure that nothing from a past build exists in the /content/ or /temp/ folders
 rm -rf content/en
 rm -rf temp
-echo 'Cloning Knative documentation from their source repositories.'
 
-if "$BUILDALLRELEASES"
+if [ "$BUILDALLRELEASES" = "true" ]
 then
-  echo '------ BUILDING ALL DOC RELEASES FROM' "$FORK" '------'
+# PRODUCTION BUILD (ALL RELEASES)
+# Full build for knative.dev (config/production). Contributors can also use this for personal builds.
+  echo '------ BUILDING ALL DOC RELEASES ------'
   # Build Knative docs from:
   # - https://github.com/"$FORK"/docs
   # - https://github.com/knative/community
-  echo '------ Cloning Pre-release docs (master) ------'
+
+  # Build all branches (assumes $FORK contains all docs versions)
+  echo '------ Cloning Community and Pre-release docs (master) ------'
   # MASTER
   echo 'Getting blog posts and community owned samples from knative/docs master branch'
-  git clone -b master https://github.com/"$FORK"/docs.git content/en
+  git clone --quiet -b master https://github.com/"$FORK"/docs.git content/en
   echo 'Getting pre-release development docs from master branch'
   # Move "pre-release" docs content into the 'development' folder:
   mv content/en/docs content/en/development
   # DOCS BRANCHES
   echo '------ Cloning all docs releases ------'
   # Get versions of released docs from their branches in "$FORK"/docs
-  echo 'Getting the latest release from the' "$BRANCH" 'branch of' "$FORK"
+  echo 'The /docs/ section is built from the' "$BRANCH" 'branch of' "$FORK"
   # Latest version is defined in website/scripts/docs-version-settings.sh
-  git clone -b "$BRANCH" https://github.com/"$FORK"/docs.git temp/release/latest
+  # If this is a PR build, then build that content as the latest release (assume PR preview builds are always from "latest")
+  git clone --quiet -b "$BRANCH" https://github.com/"$FORK"/docs.git temp/release/latest
 
   ###############################################################
   # Template for next release:
@@ -46,21 +44,31 @@ then
 
   # Only copy and keep the "docs" folder from all branched releases:
   mv temp/release/latest/docs content/en/docs
-  echo 'Getting the archived docs releases'
-  git clone -b "release-0.8" https://github.com/"$FORK"/docs.git temp/release/v0.8
+
+  echo 'Getting the archived docs releases from branches in:' "$FORK"'/docs'
+  git clone --quiet -b "release-0.8" https://github.com/"$FORK"/docs.git temp/release/v0.8
   mv temp/release/v0.8/docs content/en/v0.8-docs
-  git clone -b "release-0.7" https://github.com/"$FORK"/docs.git temp/release/v0.7
+  git clone --quiet -b "release-0.7" https://github.com/"$FORK"/docs.git temp/release/v0.7
   mv temp/release/v0.7/docs content/en/v0.7-docs
-  git clone -b "release-0.6" https://github.com/"$FORK"/docs.git temp/release/v0.6
+  git clone --quiet -b "release-0.6" https://github.com/"$FORK"/docs.git temp/release/v0.6
   mv temp/release/v0.6/docs content/en/v0.6-docs
-  git clone -b "release-0.5" https://github.com/"$FORK"/docs.git temp/release/v0.5
+  git clone --quiet -b "release-0.5" https://github.com/"$FORK"/docs.git temp/release/v0.5
   mv temp/release/v0.5/docs content/en/v0.5-docs
-  git clone -b "release-0.4" https://github.com/"$FORK"/docs.git temp/release/v0.4
+  git clone --quiet -b "release-0.4" https://github.com/"$FORK"/docs.git temp/release/v0.4
   mv temp/release/v0.4/docs content/en/v0.4-docs
-  git clone -b "release-0.3" https://github.com/"$FORK"/docs.git temp/release/v0.3
+  git clone --quiet -b "release-0.3" https://github.com/"$FORK"/docs.git temp/release/v0.3
   mv temp/release/v0.3/docs content/en/v0.3-docs
   echo 'Moving cloned files into their v#.#-docs website folders'
+elif [ "$BUILDSINGLEBRANCH" = "true" ]
+then
+# SINGLE REMOTE BRANCH BUILD
+# Build only the content from $FORK and $BRANCH
+  echo '------ BUILDING CONENT FROM REMOTE ------'
+  echo 'The /docs/ section is built from the' "$BRANCH" 'branch of' "$FORK"
+  git clone --quiet -b "$BRANCH" https://github.com/"$FORK"/docs.git content/en
 else
+# DEFAULT: LOCAL BUILD
+# Assumes that knative/docs and knative/website are cloned to the same directory.
   echo '------ BUILDING ONLY FROM YOUR LOCAL KNATIVE/DOCS CLONE ------'
   pwd
   cp -r ../docs content/en/
@@ -69,15 +77,15 @@ fi
 echo '------ Cloning contributor docs ------'
 # COMMUNITY
 echo 'Getting Knative contributor guidelines from the master branch of knative/community'
-git clone -b master https://github.com/knative/community.git temp/community
+git clone --quiet -b master https://github.com/knative/community.git temp/community
 # Move files into existing "contributing" folder
 mv temp/community/* content/en/contributing
 
 # CLEANUP
-  # Delete temporary directory
-  # (clear out unused files, including archived-copies/past-versions of blog posts and contributor samples)
-  echo 'Cleaning up temp directory'
-  rm -rf temp
+# Delete temporary directory
+# (clear out unused files, including archived-copies/past-versions of blog posts and contributor samples)
+echo 'Cleaning up temp directory'
+rm -rf temp
 
 # MAKE RELATIVE LINKS WORK
 # We want users to be able view and use the source files in GitHub as well as on the site.
@@ -108,17 +116,23 @@ find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' 
 find . -type f -path '*/content/*/*/README.md' ! -name '_index.md' \
     -exec sed -i '/](/ { /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
 
-# Releases v0.6 and earlier doc releases:
-#use the "readfile" shortcodes to hide all the README.md files
-# (by nesting them within the _index.md files)
+# HIDE README FROM URLS
+# For SEO, dont use "README" in the URL 
+# (convert them to index.md or nest them within _index.md section file using "readfile")
+# v0.6 and earlier doc releases:
+# Use the "readfile" shortcodes to nest README.md files within the _index.md files.
 echo 'Converting all README.md to index.md for "pre-release" and 0.7 or later doc releases'
 # v0.7 or later doc releases:
-# Rename "README.md" files to "index.md" and avoid unnecessary lower-level _index.md files
-# (to prevent nested shortcodes that can result in double markdown processing)
-# Skip the following README.md files (do not convert them to index.md)
-# either because that README.md is for GitHub only, or to prevent conflicts
-# with the require _index.md file (Hugo's site section definition file):
-#  - all README.md files that with corresponding _index.md files
+# Rename "README.md" files to "index.md" to avoid unnecessary lower-level _index.md files
+# (and to prevent deeply nested shortcodes ==> double markdown processing issues)
+#
+# Some README.md files should not be converted to index.md, either because that README.md 
+# is a file that's used only in the GitHub repo, or to prevent Hugo build conflicts
+# (index.md and _index.md files in the same directory is not supported).
+#
+# Do not convert the following README.md files to index.md:
+#  - files in doc releases v0.6 and earlier
+#  - README.md files in folders that also include _index.md files
 #  - content/en/contributing/README.md
 #  - content/en/reference/README.md
 find . -type f -path '*/content/*/*/*' -name 'README.md' \

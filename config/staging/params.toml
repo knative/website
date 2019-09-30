@@ -1,9 +1,25 @@
-# Knative STAGING Site Params (adds to (or can override) Site "_default")
-# Use STAGING for development, like inflight PR reviews and content testing
+# Knative "staging" Site Params (adds to (or can override) Site "config/_default")
+# Use for development, like inflight PR reviews and content testing.
 
 # Usage notes:
-# To build with these settings, you run: "hugo --environment staging"
-# Hugo build then uses every setting defined in "config/_default" and then merge
-# all settings defined here for "staging" on top of all those define for "_default".
+# To build with these settings, you use must specify the Hugo environment to 
+# "staging" (hugo -e staging). Or configure the environment in Netlify.
+# The build uses every setting defined in "config/_default" and then merges or
+# overrides all the settings defined here.
 
+# Default docs params for "staging" environment
+
+# Staging environment version
+version =  "Preview"
+# Section labels for versions
+doclabel = "Pull Request: "
+releaselabel = "Pull Request: "
+
+# Set PRs to build to the "docs" path
+
+[[versions]]
+  version = "Preview"
+  ghbranchname = "PR"
+  url = "/docs/"
+  dirpath = "docs"
 
