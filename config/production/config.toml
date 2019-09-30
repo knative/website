@@ -1,4 +1,4 @@
-# Knative PRODUCTION Site Configuration (adds to or overrides "_default")
+# Knative "production" Site Configuration (adds to or overrides "_default")
 
 # Usage notes:
 # To build with these settings, you run: "hugo --config production"

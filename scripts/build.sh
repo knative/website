@@ -88,7 +88,7 @@ then
   # If webhook is from a "PULL REQUEST" event
   if echo "$INCOMING_HOOK_BODY" | grep -q -m 1 '\"pull_request\"'
   then
-  # Build only the content in the PR using the "Staging" environment settings (config/staging)
+  # Build only the content in the PR using the "staging" environment settings (config/staging)
     PRBUILD="true"
     BUILDSINGLEBRANCH="true"
     BUILDALLRELEASES="false"

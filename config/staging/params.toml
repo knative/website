@@ -1,5 +1,5 @@
-# Knative STAGING Site Params (adds to (or can override) Site "_default")
-# Use STAGING for development, like inflight PR reviews and content testing.
+# Knative "staging" Site Params (adds to (or can override) Site "config/_default")
+# Use for development, like inflight PR reviews and content testing.
 
 # Usage notes:
 # To build with these settings, you use must specify the Hugo environment to 

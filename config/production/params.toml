@@ -1,6 +1,6 @@
-# Knative PRODUCTION Site Params (adds to (or can override) Site "_default")
+# Knative "production" Site Params (adds to (or can override) Site "config/_default")
 
-# Only add Google Custom Search and Feedback links to PRODUCTION
+# Only add Google Custom Search and Feedback links to "production"
 
 # Create ID at https://cse.google.com/cse/
 # Google Custom Search Engine ID. Remove or comment out to disable search.

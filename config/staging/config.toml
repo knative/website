@@ -1,10 +1,8 @@
-# Knative STAGING Site Configuration (adds to or overrides "_default")
+# Knative "staging" Site Configuration (adds to or overrides "config/_default")
 
 # Usage notes:
-# To build with these settings, you run: "hugo --environment staging"
+# To build with these settings, see "scripts/build.sh"
 # Hugo build then uses every setting defined in "config/_default" and then merge
 # all settings defined here for "staging" on top of all those define for "_default".
 
 baseURL = ""
-title = "Knative STAGING"
-

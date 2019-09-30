@@ -1,5 +1,5 @@
-# Knative LOCALBUILD Site Params (adds to (or can override) Site "_default")
-# Use LOCALBUILD for local content testing
+# Knative "local" Site Params (adds to (or can override) Site "config/_default")
+# Use for local content testing
 
 # Usage notes:
 # To build with these settings, you use the "scripts/localbuild.sh" build script.
