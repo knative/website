@@ -121,7 +121,5 @@ mkdir -p content
 source scripts/processsourcefiles.sh
 
 # BUILD MARKDOWN
-# TEST
-echo "$BUILDENVIRONMENT"
 # Start HUGO build
 hugo server --baseURL "" --environment "$BUILDENVIRONMENT"
