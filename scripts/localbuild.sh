@@ -9,6 +9,7 @@ set -e
 
 # USAGE:
 # 1. Install Hugo: https://www.docsy.dev/docs/getting-started/#install-hugo
+#    If using OSX then install gnu-sed: https://daoyuan.li/a-normal-sed-on-mac/
 #
 # 2. Optional: Install PostCSS if you want to change the sites CSS and need to build those changes locally.
 #    https://www.docsy.dev/docs/getting-started/#install-postcss
