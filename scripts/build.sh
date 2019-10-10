@@ -164,7 +164,7 @@ source scripts/processsourcefiles.sh
 
 # BUILD MARKDOWN
 # Start HUGO build
-cd git submodule update -f --init && npm install postcss-cli && cd ../.. && hugo --environment "$BUILDENVIRONMENT" 
+cd themes/docsy && git submodule update -f --init && cd ../.. && hugo --environment "$BUILDENVIRONMENT"
 
 echo '------ BUILD SUCCESSFUL ------'
 echo 'VIEW STAGED CONTENT:' "$DEPLOY_URL"
