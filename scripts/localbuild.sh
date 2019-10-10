@@ -9,21 +9,25 @@ set -e
 
 # USAGE:
 # 1. Install Hugo: https://www.docsy.dev/docs/getting-started/#install-hugo
-#    If using OSX then install gnu-sed: https://daoyuan.li/a-normal-sed-on-mac/
+#  
+# 2. For Mac OSX: The script uses the `gnu` version of `sed`. To install `gnu-sed`, you use brew:
+#    1. Run `brew install gnu-sed`
+#    2. Add it to your `PATH`. For example, add the following line to your `~/.bash_profile`:
+#      `PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"`
 #
-# 2. Optional: Install PostCSS if you want to change the sites CSS and need to build those changes locally.
+# 3. Optional: Install PostCSS if you want to change the sites CSS and need to build those changes locally.
 #    https://www.docsy.dev/docs/getting-started/#install-postcss
 #
-# 3. Clone the knative/docs repo:
+# 4. Clone the knative/docs repo:
 #    `git clone https://github.com/knative/docs.git`
 #
-# 4. Clone the knative/website repo, including the Docsy theme submodule:
+# 5. Clone the knative/website repo, including the Docsy theme submodule:
 #    `git clone --recurse-submodules https://github.com/knative/website.git`
 #
-# 5. From the root of the knative/website clone, run:
+# 6. From the root of the knative/website clone, run:
 #    `scripts/localbuild.sh`
 #
-# 6. If you change content in your knative/docs repo clone, you rebuild your local
+# 7. If you change content in your knative/docs repo clone, you rebuild your local
 #    site by stopping the localhost (CTRL C) and running `scripts/localbuild.sh` again.
 #
 # By default, the command locally runs a Hugo build of using your local knative/website and
