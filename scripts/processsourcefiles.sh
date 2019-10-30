@@ -46,6 +46,8 @@ then
   mv temp/release/latest/docs content/en/docs
 
   echo 'Getting the archived docs releases from branches in:' "$FORK"'/docs'
+  git clone --quiet -b "release-0.9" https://github.com/"$FORK"/docs.git temp/release/v0.9
+  mv temp/release/v0.8/docs content/en/v0.9-docs
   git clone --quiet -b "release-0.8" https://github.com/"$FORK"/docs.git temp/release/v0.8
   mv temp/release/v0.8/docs content/en/v0.8-docs
   git clone --quiet -b "release-0.7" https://github.com/"$FORK"/docs.git temp/release/v0.7
