@@ -45,7 +45,7 @@ version = "v0.10"
 # Set to "docs" path
 
 [[versions]]
-  version = "v0.9"
+  version = "v0.10"
   ghbranchname = "release-0.10"
   url = "/docs/"
   dirpath = "docs"
