@@ -19,9 +19,9 @@ no = 'Sorry to hear that. Please <a href="https://github.com/knative/docs/issues
 # Default docs params for "production" environment
 
 # Production GitHub branch
-latest_github_branch = "release-0.9"
+latest_github_branch = "release-0.10"
 # Default website version
-version = "v0.9"
+version = "v0.10"
 
 # Doc versions params
 # Create a separate [[versions]] set for every version / doc set branch
@@ -45,14 +45,20 @@ version = "v0.9"
 # Set to "docs" path
 
 [[versions]]
-  version = "v0.9"
-  ghbranchname = "release-0.9"
+  version = "v0.10"
+  ghbranchname = "release-0.10"
   url = "/docs/"
   dirpath = "docs"
 
 # Archived versions
 ###################
 # Prefix all past versions with release # "v#.#-docs"
+
+[[versions]]
+  version = "v0.9"
+  ghbranchname = "release-0.9"
+  url = "/v0.9-docs/"
+  dirpath = "v0.9-docs"
 
 [[versions]]
   version = "v0.8"
