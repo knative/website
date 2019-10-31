@@ -19,3 +19,9 @@
   to = "/docs/"
   status = 301
 
+# Enable permanent links to a release (link persists after release is archived)
+# This should be updated each release to the latest version number
+[[redirects]]
+  from = "/v0.10-docs/*"
+  to = "/docs/:splat"
+  status = 200
