@@ -16,13 +16,6 @@ enable = true
 yes = 'Glad to hear it! Please <a href="https://github.com/knative/docs/issues/new/?title=Page%20is%20helpful&labels=kind%2Fmeta">tell us how we can improve</a>.'
 no = 'Sorry to hear that. Please <a href="https://github.com/knative/docs/issues/new/?title=Page%20needs%20improvement&labels=kind%2Fmeta">tell us how we can improve</a>.'
 
-# Default docs params for "production" environment
-
-# Production GitHub branch
-latest_github_branch = "release-0.10"
-# Default website version
-version = "v0.10"
-
 # Doc versions params
 # Create a separate [[versions]] set for every version / doc set branch
 # Use the ghbranchname param for specifying the GitHub branchname ->

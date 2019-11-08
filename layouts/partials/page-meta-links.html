@@ -1,4 +1,5 @@
-
+{{/* Show only on production site (not local builds since we can't determine version) */}}
+{{ if not .Site.IsServer }}
 {{ $master := .Site.Params.masterfolder }}
 {{ if .Path }}
   {{/* Set default values */}}
@@ -56,7 +57,7 @@
     <a href="{{ $issuesURL }}" target="_blank"><i class="fab fa-github fa-fw"></i> {{ T "post_create_issue" }}</a>
 
     {{/* Determine the Knative component */}}
-    {{ if or (eq $pageSection "docs") (eq $pageSection "development") }}
+    {{ if or (eq $pageSection "docs") (eq $pageSection .Site.Params.masterfolder) }}
       {{ if in (printf "%s" ($.Scratch.Get "filepath")) "/serving/" }}
         {{ $.Scratch.Set "gh_repo" (printf "%s/issues/new" ($.Param "github_servingrepo")) }}
       {{ end }}
@@ -82,4 +83,5 @@
     {{ end }}
   </div>
   {{ end }}
+{{ end }}
 {{ end }}

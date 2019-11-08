@@ -3,10 +3,10 @@
 
 # Default site parameters
 
-# Set default to "master" branch (see environment specific config for overrides)
-latest_github_branch = "master"
-# Default website version
-version = "development"
+# GitHub branch (latest release)
+latest_github_branch = "release-0.10"
+# Default version (latest release)
+version = "v0.10"
 
 # Section labels for versions
 doclabel = "Documentation "
