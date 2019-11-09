@@ -70,13 +70,18 @@ echo '------ Cloning contributor docs ------'
 echo 'Getting Knative contributor guidelines from the master branch of knative/community'
 git clone --quiet -b master https://github.com/knative/community.git temp/community
 # Move files into existing "contributing" folder
-mv temp/community/* content/en/contributing
+mv temp/community/* content/en/community/contributing
 
 # CLEANUP
 # Delete temporary directory
 # (clear out unused files, including archived-copies/past-versions of blog posts and contributor samples)
 echo 'Cleaning up temp directory'
 rm -rf temp
+
+###################################################
+# Process fully-qualified hard coded URLs that link
+# between the knative/docs and knative/community repos
+source scripts/convert-repo-ulrs.sh
 
 #########################################################
 # Process content in .md files (MAKE RELATIVE LINKS WORK)
@@ -109,7 +114,7 @@ find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' 
     -exec sed -i '/](/ { s#(\.\.\/#(../../#g; s#(\.\/#(../#g; }' {} +
 # Convert all relative links from README.md to index.html
 find . -type f -path '*/content/*.md' ! -name '_index.md' \
-    -exec sed -i '/](/ { /(http/ !s#README\.md#index.html#g; /(http/ !s#\.md##g }' {} +
+    -exec sed -i '/](/ { /http/ !{s#README\.md#index.html#g;s#\.md##g} }' {} +
 
 ###############################################
 # Process file names (HIDE README.md FROM URLS)
@@ -122,7 +127,7 @@ find . -type f -path '*/content/*.md' ! -name '_index.md' \
 #     (and to prevent deeply nested shortcodes ==> double markdown processing issues).
 #     The "readfile" shortcodes are still used but only at the top level.
 #
-echo 'Converting all README.md to index.md for "pre-release" and 0.7 or later doc releases'
+echo 'Converting all standalone README.md files to index.md...'
 # Some README.md files should not be converted to index.md, either because that README.md 
 # is a file that's used only in the GitHub repo, or to prevent Hugo build conflicts
 # (index.md and _index.md files in the same directory is not supported).
