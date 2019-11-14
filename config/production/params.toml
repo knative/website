@@ -73,47 +73,17 @@ version = "v0.10"
   dirpath = "v0.7-docs"
 
 [[versions]]
-  version = "v0.6"
-  ghbranchname = "release-0.6"
-  url = "/v0.6-docs/"
-  dirpath = "v0.6-docs"
-
-[[versions]]
-  version = "v0.5"
-  ghbranchname = "release-0.5"
-  url = "/v0.5-docs/"
-  dirpath = "v0.5-docs"
-
-[[versions]]
-  version = "v0.4"
-  ghbranchname = "release-0.4"
-  url = "/v0.4-docs/"
-  dirpath = "v0.4-docs"
-
-[[versions]]
-  version = "v0.3"
-  ghbranchname = "release-0.3"
-  url = "/v0.3-docs/"
-  dirpath = "v0.3-docs"
-
-[[versions]]
-  version = "v0.2"
-  ghbranchname = "release-0.2"
-  url = "https://github.com/knative/docs/tree/release-0.2"
-  dirpath = "github-repo"
-
-[[versions]]
-  version = "v0.1"
-  ghbranchname = "release-0.1"
-  url = "https://github.com/knative/docs/tree/release-0.1"
-  dirpath = "github-repo"
+  version = "Archives"
+  ghbranchname = ""
+  url = "https://github.com/knative/docs/branches"
+  dirpath = ""
 
 # Pre-release version
 ###################
 # In-development (pre-release) content - "master" branch
 
 [[versions]]
-  version = "development"
+  version = "Pre-release"
   ghbranchname = "master"
   url = "/development/"
   dirpath = "development"

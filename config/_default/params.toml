@@ -9,10 +9,12 @@ latest_github_branch = "master"
 version = "development"
 
 # Section labels for versions
+# Current release
 doclabel = "Documentation "
 releaselabel = "Release: "
+# Pre-release
 masterlabel = "Pre-release"
-# Pre-release section path value ("master" docs directory folder on website)
+# section path value ("master" docs directory folder on website)
 masterfolder = "development"
 
 # Footer content

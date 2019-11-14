@@ -14,8 +14,31 @@
   HUGO_ENV = "staging"
 
 # Site redirects
+
+# Redirect all deprecated Knative Build component pages
 [[redirects]]
   from = "/docs/build/*"
+  to = "/docs/"
+  status = 301
+
+# Redirect archived versions to the latest
+[[redirects]]
+  from = "/v0.6-docs/*"
+  to = "/docs/"
+  status = 301
+
+[[redirects]]
+  from = "/v0.5-docs/*"
+  to = "/docs/"
+  status = 301
+
+[[redirects]]
+  from = "/v0.4-docs/*"
+  to = "/docs/"
+  status = 301
+
+[[redirects]]
+  from = "/v0.3-docs/*"
   to = "/docs/"
   status = 301
 
