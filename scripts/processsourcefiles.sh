@@ -35,32 +35,21 @@ then
   # Latest version is defined in website/scripts/docs-version-settings.sh
   # If this is a PR build, then build that content as the latest release (assume PR preview builds are always from "latest")
   git clone --quiet -b "$BRANCH" https://github.com/"$FORK"/docs.git temp/release/latest
-
-  ###############################################################
-  # Template for next release:
-  #git clone -b "release-[VERSION#]" https://github.com/"$FORK"/docs.git temp/release/[VERSION#]
-  #mv temp/release/[VERSION#]/docs content/en/[VERSION#]-docs
-  ###############################################################
-
   # Only copy and keep the "docs" folder from all branched releases:
   mv temp/release/latest/docs content/en/docs
-
   echo 'Getting the archived docs releases from branches in:' "$FORK"'/docs'
+    ###############################################################
+    # Template for next release:
+    #git clone -b "release-[VERSION#]" https://github.com/"$FORK"/docs.git temp/release/[VERSION#]
+    #mv temp/release/[VERSION#]/docs content/en/[VERSION#]-docs
+    ###############################################################
   git clone --quiet -b "release-0.9" https://github.com/"$FORK"/docs.git temp/release/v0.9
   mv temp/release/v0.9/docs content/en/v0.9-docs
   git clone --quiet -b "release-0.8" https://github.com/"$FORK"/docs.git temp/release/v0.8
   mv temp/release/v0.8/docs content/en/v0.8-docs
   git clone --quiet -b "release-0.7" https://github.com/"$FORK"/docs.git temp/release/v0.7
   mv temp/release/v0.7/docs content/en/v0.7-docs
-  git clone --quiet -b "release-0.6" https://github.com/"$FORK"/docs.git temp/release/v0.6
-  mv temp/release/v0.6/docs content/en/v0.6-docs
-  git clone --quiet -b "release-0.5" https://github.com/"$FORK"/docs.git temp/release/v0.5
-  mv temp/release/v0.5/docs content/en/v0.5-docs
-  git clone --quiet -b "release-0.4" https://github.com/"$FORK"/docs.git temp/release/v0.4
-  mv temp/release/v0.4/docs content/en/v0.4-docs
-  git clone --quiet -b "release-0.3" https://github.com/"$FORK"/docs.git temp/release/v0.3
-  mv temp/release/v0.3/docs content/en/v0.3-docs
-  echo 'Moving cloned files into their v#.#-docs website folders'
+
 elif [ "$BUILDSINGLEBRANCH" = "true" ]
 then
 # SINGLE REMOTE BRANCH BUILD
