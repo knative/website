@@ -15,13 +15,18 @@
 
 # Site redirects
 
-# Redirect all deprecated Knative Build component pages
-[[redirects]]
-  from = "/docs/build/*"
-  to = "/docs/"
-  status = 301
+################
+# These should be updated each release 
 
-# Redirect archived versions to the latest
+# Update to the latest version number
+# Enable permanent links to a release (link persists after release is archived)
+[[redirects]]
+  from = "/v0.10-docs/*"
+  to = "/docs/:splat"
+  status = 200
+
+# Update to include the recently archived version
+# Redirects all previously published versions to the latest
 [[redirects]]
   from = "/v0.6-docs/*"
   to = "/docs/"
@@ -42,3 +47,11 @@
   to = "/docs/"
   status = 301
 
+#################
+# Static redirects
+
+# Redirect all deprecated Knative Build component pages
+[[redirects]]
+  from = "/docs/build/*"
+  to = "/docs/"
+  status = 301
