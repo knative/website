@@ -14,14 +14,44 @@
   HUGO_ENV = "staging"
 
 # Site redirects
-[[redirects]]
-  from = "/docs/build/*"
-  to = "/docs/"
-  status = 301
 
+################
+# These should be updated each release 
+
+# Update to the latest version number
 # Enable permanent links to a release (link persists after release is archived)
-# This should be updated each release to the latest version number
 [[redirects]]
   from = "/v0.10-docs/*"
   to = "/docs/:splat"
   status = 200
+
+# Update to include the recently archived version
+# Redirects all previously published versions to the latest
+[[redirects]]
+  from = "/v0.6-docs/*"
+  to = "/docs/"
+  status = 301
+
+[[redirects]]
+  from = "/v0.5-docs/*"
+  to = "/docs/"
+  status = 301
+
+[[redirects]]
+  from = "/v0.4-docs/*"
+  to = "/docs/"
+  status = 301
+
+[[redirects]]
+  from = "/v0.3-docs/*"
+  to = "/docs/"
+  status = 301
+
+#################
+# Static redirects
+
+# Redirect all deprecated Knative Build component pages
+[[redirects]]
+  from = "/docs/build/*"
+  to = "/docs/"
+  status = 301
