@@ -43,12 +43,12 @@ then
     #git clone -b "release-[VERSION#]" https://github.com/"$FORK"/docs.git temp/release/[VERSION#]
     #mv temp/release/[VERSION#]/docs content/en/[VERSION#]-docs
     ###############################################################
+  git clone --quiet -b "release-0.10" https://github.com/"$FORK"/docs.git temp/release/v0.10
+  mv temp/release/v0.10/docs content/en/v0.10-docs
   git clone --quiet -b "release-0.9" https://github.com/"$FORK"/docs.git temp/release/v0.9
   mv temp/release/v0.9/docs content/en/v0.9-docs
   git clone --quiet -b "release-0.8" https://github.com/"$FORK"/docs.git temp/release/v0.8
   mv temp/release/v0.8/docs content/en/v0.8-docs
-  git clone --quiet -b "release-0.7" https://github.com/"$FORK"/docs.git temp/release/v0.7
-  mv temp/release/v0.7/docs content/en/v0.7-docs
 
 elif [ "$BUILDSINGLEBRANCH" = "true" ]
 then

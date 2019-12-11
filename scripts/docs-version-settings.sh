@@ -5,7 +5,7 @@
 ##############################################
 
 # This should be set to the latest docs release/branch
-DEFAULTBRANCH="release-0.10"
+DEFAULTBRANCH="release-0.11"
 
 # An optional value that you can locally override for local builds/testing
 DEFAULTFORK="knative"
