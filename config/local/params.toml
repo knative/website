@@ -8,19 +8,17 @@
 
 # Default docs params for "local" environment
 
-# Local evnvironment version
-version = "Preview"
 # Section labels for versions
-doclabel = "Local Build: "
-releaselabel = "Local Build: "
+doclabel = "Local Preview Build: "
+releaselabel = "Local Preview Build: "
 
 # Local build version
 ################
 # Set to "docs" path
 
 [[versions]]
-  version = "Preview"
-  ghbranchname = "n/a"
+  version = "v0.11"
+  ghbranchname = "master"
   url = "/docs/"
   dirpath = "docs"
 

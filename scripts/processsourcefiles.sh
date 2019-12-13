@@ -78,45 +78,51 @@ mv temp/community/* content/en/contributing
 echo 'Cleaning up temp directory'
 rm -rf temp
 
-# MAKE RELATIVE LINKS WORK
+#########################################################
+# Process content in .md files (MAKE RELATIVE LINKS WORK)
 # We want users to be able view and use the source files in GitHub as well as on the site.
 # Therefore, the following changes need to be made to all docs files prior to Hugo site build.
 # Convert GitHub enabled source, into HUGO supported content:
 #  - For all Markdown files under the /content/ directory:
-#    - Skip any Markdown link with fully qualified HTTP(s) URL is 'external'
+#    - Skip all:
+#      - Markdown link with fully qualified HTTP(s) URL is 'external'
+#      - GitHub file (.git* files)
+#      - non-docs directories
 #    - Ignore Hugo site related files (avoid "readfile" shortcodes):
-#     - _index.md files (Hugo 'section' files)
-#     - API shell files (until those API source builds are modified to include frontmatter)
-#    - Remove all '.md' file extensions from Markdown links
-#    - For SEO convert README to index:
-#      - Replace all in-page URLS from "README.md" to "index.html"
-#      - Rename all files from "README.md" to "index.md"
-#  - For NON-(README.md & _index.md) files:
-#    - Adjust relative links by adding additional depth:
-#      - Convert './' to '../'
-#      - Convert '../' to '../../'
-#  - Skip GitHub files:
-#    - .git* files
-#    - non-docs directories
+#      - _index.md files (Hugo 'section' files)
+#      - API shell files (serving-api.md, eventing-contrib-api.md, eventing-api.md)
+#    - For all remaining Markdown files:
+#      - Remove all '.md' file extensions from within Markdown links "[]()"
+#      - For SEO convert README to index:
+#       - Replace all in-page URLS from "README.md" to "index.html"
+#       - Rename all files from "README.md" to "index.md"
+#      - Adjust relative links by adding additional depth:
+#       - Exclude all README.md & _index.md files
+#       - Convert './' to '../'
+#       - Convert '../' to '../../'
 echo 'Converting all links in GitHub source files to Hugo supported relative links...'
+# Convert relative links to support Hugo
 find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' \
     ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' \
     ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' \
     ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
-    -exec sed -i '/](/ { s#(\.\.\/#(../../#g; s#(\.\/#(../#g; /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
-find . -type f -path '*/content/*/*/README.md' ! -name '_index.md' \
-    -exec sed -i '/](/ { /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
+    -exec sed -i '/](/ { s#(\.\.\/#(../../#g; s#(\.\/#(../#g; }' {} +
+# Convert all relative links from README.md to index.html
+find . -type f -path '*/content/*.md' ! -name '_index.md' \
+    -exec sed -i '/](/ { /(http/ !s#README\.md#index.html#g; /(http/ !s#\.md##g }' {} +
 
-# HIDE README FROM URLS
+###############################################
+# Process file names (HIDE README.md FROM URLS)
 # For SEO, dont use "README" in the URL 
-# (convert them to index.md or nest them within _index.md section file using "readfile")
-# v0.6 and earlier doc releases:
-# Use the "readfile" shortcodes to nest README.md files within the _index.md files.
-echo 'Converting all README.md to index.md for "pre-release" and 0.7 or later doc releases'
-# v0.7 or later doc releases:
-# Rename "README.md" files to "index.md" to avoid unnecessary lower-level _index.md files
-# (and to prevent deeply nested shortcodes ==> double markdown processing issues)
+# (convert them to index.md OR use a "readfile" shortcode to nest them within a _index.md section file)
 #
+# Notes about past docs versions:
+# v0.6 and earlier doc releases: Use the "readfile" shortcodes to nest all README.md files within the _index.md files.
+# v0.7 or later doc releases: Rename "README.md" files to "index.md" to avoid unnecessary lower-level _index.md files
+#     (and to prevent deeply nested shortcodes ==> double markdown processing issues).
+#     The "readfile" shortcodes are still used but only at the top level.
+#
+echo 'Converting all README.md to index.md for "pre-release" and 0.7 or later doc releases'
 # Some README.md files should not be converted to index.md, either because that README.md 
 # is a file that's used only in the GitHub repo, or to prevent Hugo build conflicts
 # (index.md and _index.md files in the same directory is not supported).

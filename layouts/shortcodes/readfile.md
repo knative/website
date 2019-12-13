@@ -24,7 +24,7 @@ Syntax:
 
   Examples:
   * Include a `README.md` in the same folder's `_index.md` file:
-    `{{% readfile file="index.md" %}}`
+    `{{% readfile file="README.md" %}}`
 
     Important: For SEO, all README.md files that are not used by the required
     `_index.md` (Hugo section definition) are renamed to index.md at build time.
@@ -40,7 +40,7 @@ Syntax:
   the Markdown processor and copies in the content as is.
 
   * Example of an HTML source file in same folder as the parent file:
-    `{{< readfile file="HTML.html" >}}`
+    `{{< readfile file="HTML-FILE.html" >}}`
 
 * For code: Use < >, `{{<...>}}` and specify the `code` and `lang` flags to include
   syntax highlighting. See details about the parameter flags below.

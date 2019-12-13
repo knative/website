@@ -9,17 +9,15 @@
 
 # Default docs params for "staging" environment
 
-# Staging environment version
-version =  "Preview"
 # Section labels for versions
-doclabel = "Pull Request: "
-releaselabel = "Pull Request: "
+doclabel = "Pull Request Preview: "
+releaselabel = "Pull Request Preview: "
 
 # Set PRs to build to the "docs" path
 
 [[versions]]
-  version = "Preview"
-  ghbranchname = "PR"
+  version = "v0.11"
+  ghbranchname = "master"
   url = "/docs/"
   dirpath = "docs"
 
