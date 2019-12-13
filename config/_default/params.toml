@@ -1,12 +1,14 @@
 # Knative DEFAULT Site Params
 # Default site parameters, see "config/production" "config/staging" and "config/local" for environment specific overrides
 
+########################
 # Default site parameters
 
 # GitHub branch (latest release)
-latest_github_branch = "release-0.10"
+latest_github_branch = "release-0.11"
 # Default version (latest release)
-version = "v0.10"
+version = "v0.11"
+########################
 
 # Section labels for versions
 # Current release
