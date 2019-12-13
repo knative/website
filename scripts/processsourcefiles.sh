@@ -109,7 +109,7 @@ find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' 
     -exec sed -i '/](/ { s#(\.\.\/#(../../#g; s#(\.\/#(../#g; }' {} +
 # Convert all relative links from README.md to index.html
 find . -type f -path '*/content/*.md' ! -name '_index.md' \
-    -exec sed -i '/](/ { /http/ !s#README\.md#index.html#g; /http/ !s#\.md##g }' {} +
+    -exec sed -i '/](/ { /(http/ !s#README\.md#index.html#g; /(http/ !s#\.md##g }' {} +
 
 ###############################################
 # Process file names (HIDE README.md FROM URLS)

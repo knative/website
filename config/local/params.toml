@@ -20,7 +20,7 @@ releaselabel = "Local Build: "
 
 [[versions]]
   version = "Preview"
-  ghbranchname = "n/a"
+  ghbranchname = "master"
   url = "/docs/"
   dirpath = "docs"
 

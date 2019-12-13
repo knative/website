@@ -19,7 +19,7 @@ releaselabel = "Pull Request: "
 
 [[versions]]
   version = "Preview"
-  ghbranchname = "PR"
+  ghbranchname = "master"
   url = "/docs/"
   dirpath = "docs"
 
