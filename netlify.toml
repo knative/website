@@ -2,15 +2,15 @@
   publish = "public"
 
 [context.production.environment]
-  HUGO_VERSION = "0.56.0"
+  HUGO_VERSION = "0.61.0"
   HUGO_ENV = "production"
 
 [context.deploy-preview.environment]
-  HUGO_VERSION = "0.56.0"
+  HUGO_VERSION = "0.61.0"
   HUGO_ENV = "staging"
 
 [context.branch-deploy.environment]
-  HUGO_VERSION = "0.56.0"
+  HUGO_VERSION = "0.61.0"
   HUGO_ENV = "staging"
 
 # Site redirects
@@ -27,6 +27,7 @@
 
 # Update to include the recently archived version
 # Redirects all previously published versions to the latest
+
 [[redirects]]
   from = "/v0.7-docs/*"
   to = "/docs/"
