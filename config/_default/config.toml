@@ -42,17 +42,15 @@ enableGitInfo = true
 
 disableKinds = ["taxonomy", "taxonomyTerm"]
 
-# Highlighting config
-pygmentsCodeFences = true
-pygmentsUseClasses = false
-# Use the new Chroma Go highlighter in Hugo.
-pygmentsUseClassic = false
-#pygmentsOptions = "linenos=table"
-# See https://help.farbox.com/pygments.html
-pygmentsStyle = "tango"
+# Configure how URLs look like per section.
+[permalinks]
+blog = "/:section/:year/:month/:day/:slug/"
 
- # First one is picked as the Twitter card image if not set on page.
- #images = "/docs/images/...."
+# Image processing configuration.
+[imaging]
+resampleFilter = "CatmullRom"
+quality = 75
+anchor = "smart"
 
 [menu]
 
@@ -75,22 +73,3 @@ pygmentsStyle = "tango"
     name = "Contributing"
     url = "/contributing/"
     weight = 60
-
-# Configure how URLs look like per section.
-[permalinks]
-blog = "/:section/:year/:month/:day/:slug/"
-
-## Configuration for BlackFriday markdown parser: https://github.com/russross/blackfriday
-[blackfriday]
-plainIDAnchors = true
-hrefTargetBlank = true
-angledQuotes = false
-latexDashes = true
-# Needs investigation - opens all links in new tab (canonifyURLs conflict?)
-#hrefTargetBlank = true
-
-# Image processing configuration.
-[imaging]
-resampleFilter = "CatmullRom"
-quality = 75
-anchor = "smart"
