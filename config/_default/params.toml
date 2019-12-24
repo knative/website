@@ -92,12 +92,6 @@ breadcrumb_disable = false
   icon = "fa fa-code"
         desc = "Community owned and maintained code samples"
 [[links.usecode]]
-  name = "Build"
-  url = "../docs/build/samples/"
-  external = "false"
-  icon = "fa fa-code"
-        desc = "Code samples for the Build component"
-[[links.usecode]]
   name = "Eventing"
   url = "../docs/eventing/samples/"
   external = "false"

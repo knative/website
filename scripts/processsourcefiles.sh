@@ -55,7 +55,7 @@ then
 # SINGLE REMOTE BRANCH BUILD
 # Build only the content from $FORK and $BRANCH
   echo '------ BUILDING CONENT FROM REMOTE ------'
-  echo 'The /docs/ section is built from the' "$BRANCH" 'branch of' "$FORK"
+  echo 'The /docs/ section is built from the' "$BRANCH" 'branch of' "$FORK"'/docs'
   git clone --quiet -b "$BRANCH" https://github.com/"$FORK"/docs.git content/en
 else
 # DEFAULT: LOCAL BUILD
@@ -67,8 +67,8 @@ fi
 
 echo '------ Cloning contributor docs ------'
 # COMMUNITY
-echo 'Getting Knative contributor guidelines from the master branch of knative/community'
-git clone --quiet -b master https://github.com/knative/community.git temp/community
+echo 'Getting Knative contributor guidelines from the master branch of' "$FORK"'/community'
+git clone --quiet -b master https://github.com/"$FORK"/community.git temp/community
 # Move files into existing "contributing" folder
 mv temp/community/* content/en/community/contributing
 
