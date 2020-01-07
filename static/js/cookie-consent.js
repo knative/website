@@ -1,21 +1,21 @@
-// Use local copy of JavaScript Cookie v2.2.1
-$.getScript("/js/js.cookie.js");
-
 // Get cookie consent if the UTC time zone is within the EU+ and user has not consented previously (no cookie exists)
 // Wait for page to fully load before checking
 $(window).on('load', function(){
-  // If the cookie expired or does not exist
-  if ( typeof(Cookies) == 'undefined' || Cookies.get('site-cookie') == null ){
-    // if within EU time zone show consent dialog
-    if (testEUtimezone()){
-      toggleconsent();
+  // Use local copy of JavaScript Cookie v2.2.1
+  $.getScript('/js/js.cookie.js', function() {
+    // If the cookie expired or does not exist
+    if ( typeof(Cookies) == 'undefined' || Cookies.get('site-cookie') == null ){
+      // if within EU time zone show consent dialog
+      if (testEUtimezone()){
+        toggleconsent();
+      } else {
+        // otherwise show notice
+        $(".cookienotice").show();
+      }
     } else {
-      // otherwise show notice
-      $(".cookienotice").show();
+      console.log("You have already consented to cookie usage");
     }
-  } else {
-    console.log("You have already consented to cookie usage");
-  }
+  });
 });
 // Use UTC to determine if the time zone resides in or around the EU (within UTC -1 to +6)
 function testEUtimezone(){
