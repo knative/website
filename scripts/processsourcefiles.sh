@@ -3,7 +3,7 @@
 #######################################################################################
 
 echo '------ PROCESSING SOURCE FILES ------'
-# Default to a local build. Otherwise, retreives content from the specified source repos. 
+# Default to a local build. Otherwise, retreives content from the specified source repos.
 # All builds copy or clone the content into the "content" folder of knative/webiste before starting the Hugo build.
 # A temp directory is used and move files around and prevent git clone errors (fails if directory exists).
 
@@ -60,22 +60,33 @@ then
 else
 # DEFAULT: LOCAL BUILD
 # Assumes that knative/docs and knative/website are cloned to the same directory.
+  LOCALBUILD="truescr"
   echo '------ BUILDING ONLY FROM YOUR LOCAL KNATIVE/DOCS CLONE ------'
+  echo 'Copying local clone of knative/docs into the /docs folder under:'
   pwd
   cp -r ../docs content/en/
+  if [ -d "../community" ]; then
+    echo 'Also copying the local clone of knative/community into the /community/contributing folder.'
+    cp -r ../community content/en/community/contributing
+  else
+    echo 'A local clone of knative/community is not found, skipping that content.'
+  fi
 fi
 
-echo '------ Cloning contributor docs ------'
-# COMMUNITY
-echo 'Getting Knative contributor guidelines from the master branch of' "$FORK"'/community'
-git clone --quiet -b master https://github.com/"$FORK"/community.git temp/community
-# Move files into existing "contributing" folder
-mv temp/community/* content/en/community/contributing
+if [ "$LOCALBUILD" = "false" ]
+then
+  echo '------ Cloning contributor docs ------'
+  # COMMUNITY
+  echo 'Getting Knative contributor guidelines from the master branch of' "$FORK"'/community'
+  git clone --quiet -b master https://github.com/"$FORK"/community.git temp/community
+  # Move files into existing "contributing" folder
+  mv temp/community/* content/en/community/contributing
+fi
 
 # CLEANUP
 # Delete temporary directory
 # (clear out unused files, including archived-copies/past-versions of blog posts and contributor samples)
-echo 'Cleaning up temp directory'
+echo 'Cleaning up temp directory used during this site build.'
 rm -rf temp
 
 ###################################################
@@ -118,7 +129,7 @@ find . -type f -path '*/content/*.md' ! -name '_index.md' \
 
 ###############################################
 # Process file names (HIDE README.md FROM URLS)
-# For SEO, dont use "README" in the URL 
+# For SEO, dont use "README" in the URL
 # (convert them to index.md OR use a "readfile" shortcode to nest them within a _index.md section file)
 #
 # Notes about past docs versions:
@@ -128,7 +139,7 @@ find . -type f -path '*/content/*.md' ! -name '_index.md' \
 #     The "readfile" shortcodes are still used but only at the top level.
 #
 echo 'Converting all standalone README.md files to index.md...'
-# Some README.md files should not be converted to index.md, either because that README.md 
+# Some README.md files should not be converted to index.md, either because that README.md
 # is a file that's used only in the GitHub repo, or to prevent Hugo build conflicts
 # (index.md and _index.md files in the same directory is not supported).
 #
