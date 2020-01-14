@@ -21,15 +21,28 @@ echo '------ CONVERT FULLY QUALIFIED REPO URLS TO RELATIVE ------'
 # - Remove GitHub "tree|blob" paths (ie "/tree/master/" or "/blob/master/")
 #   Note: Assume all links point to the `master` branch.
 # - Exclude issues or pulls URLs:
+#   - https://github.com/knative/(docs|community)/OWNERS*
+#   - https://github.com/knative/(docs|community)/branches
 #   - https://github.com/knative/(docs|community)/issues
+#   - https://github.com/knative/(docs|community)/labels
 #   - https://github.com/knative/(docs|community)/pulls
+# - Skip:
+#   - GitHub file (.git* files)
+#   - Hugo related files
+#   - All non-docs content directories
 
 echo 'Converting all fully-qualified Knative URLs to relative URLs...'
 
-# For URLs in the files of the knative/community repo that point to knative/docs:
-find . -type f -path '*/community/*.md' \
-    -exec sed -i '/](https:\/\/github\.com\/knative\/docs/ { /docs\/issues/ !{ /docs\/pulls/ !{s#(https\:\/\/github\.com\/knative\/docs\/#(/docs/#g}}; s#\/tree\/master\/docs\/#/#g; s#\/blob\/master\/docs\/#/#g; }' {} +
+# Convert fully qualified URLs that point to knative/docs GitHub repo:
+find . -type f -path '*/content/*' -name '*.md' \
+    ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' \
+    ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' \
+    ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
+    -exec sed -i '/](https:\/\/github\.com\/knative\/docs/ { /OWNERS*/ !{ /docs\/branches/ !{ /docs\/issues/ !{ /docs\/pulls/ !{ /docs\/labels/ !{ s#(https\:\/\/github\.com\/knative\/docs#(#g; s#\/tree\/master##g; s#\/blob\/master##g }}}}}}' {} +
 
-# For URLs in the files of the knative/docs repo that point to knative/community:
-find . -type f -path '*/docs/*.md' -path '*/v*\-docs/*.md' \
-    -exec sed -i '/](https:\/\/github\.com\/knative\/community/ { /docs\/issues/ !{ /docs\/pulls/ !{s#(https\:\/\/github\.com\/knative\/community\/#(/community/contributing/#g}}; s#\/tree\/master\/#/#g; s#\/blob\/master\/#/#g; }' {} +
+# Convert fully qualified URLs that point to knative/community GitHub repo:
+find . -type f -path '*/content/*' -name '*.md' \
+    ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' \
+    ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' \
+    ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
+    -exec sed -i '/](https:\/\/github\.com\/knative\/community/ { /OWNERS*/ !{ /docs\/branches/ !{ /community\/issues/ !{ /community\/pulls/ !{ /community\/labels/ !{ s#(https\:\/\/github\.com\/knative\/community#(/community/contributing/#g; s#\/tree\/master##g; s#\/blob\/master##g }}}}}}' {} +

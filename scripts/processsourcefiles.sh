@@ -60,14 +60,14 @@ then
 else
 # DEFAULT: LOCAL BUILD
 # Assumes that knative/docs and knative/website are cloned to the same directory.
-  LOCALBUILD="truescr"
+  LOCALBUILD="true"
   echo '------ BUILDING ONLY FROM YOUR LOCAL KNATIVE/DOCS CLONE ------'
   echo 'Copying local clone of knative/docs into the /docs folder under:'
   pwd
   cp -r ../docs content/en/
   if [ -d "../community" ]; then
     echo 'Also copying the local clone of knative/community into the /community/contributing folder.'
-    cp -r ../community content/en/community/contributing
+    cp -r ../community/* content/en/community/contributing
   else
     echo 'A local clone of knative/community is not found, skipping that content.'
   fi
