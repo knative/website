@@ -10,7 +10,7 @@ on the website.
 
 Continue to sections below for details about knative.dev, or use the following resources to learn about cookies in general:
 
-- Learn about basic site analytics usuage at [https://www.cookiechoices.org/](https://www.cookiechoices.org/).
+- Learn about basic site analytics usuage at: [https://www.cookiechoices.org/](https://www.cookiechoices.org/)
 
 - You can also watch a video about [how Google uses cookies](http://www.google.com/intl/en/policies/technologies/cookies/).
 
@@ -46,7 +46,7 @@ IP address. For more information about the data collected, [view our Privacy Pol
 
 If you prefer to view the Knative docs from within the [knative/docs
 ](https://github.com/knative/docs/tree/master/docs) GitHub repository,
-view details about the cookies and tracking at
+view details about their cookies and tracking at
 [GitHub Privacy Statement](https://help.github.com/en/github/site-policy/github-privacy-statement#what-information-github-collects).
 
 ## Options for opting out
