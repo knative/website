@@ -68,8 +68,3 @@ anchor = "smart"
     name = "Community"
     url = "/community/"
     weight = 40
-
-  [[menu.main]]
-    name = "Contributing"
-    url = "/contributing/"
-    weight = 60

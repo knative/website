@@ -1,5 +1,11 @@
 {{/* In page TOC for landing pages (_index.md/.html) that exclude "readfile". */}}
-{{ if or (not (.HasShortcode "readfile")) ($.Page.Params.showlandingtoc) }}
+{{ $.Scratch.Set "showtoc" "false" }}
+{{ if (eq $.Page.Params.showlandingtoc "true") }}
+  {{ $.Scratch.Set "showtoc" "true" }}
+{{ else if (not (.HasShortcode "readfile")) | and (not (isset $.Page.Params "showlandingtoc")) }}
+  {{ $.Scratch.Set "showtoc" "true" }}
+{{ end }}
+{{ if eq ($.Scratch.Get "showtoc") "true" }}
 <div>
   <b>Table of contents</b>
   <div>

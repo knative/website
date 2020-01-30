@@ -3,7 +3,7 @@
 #######################################################################################
 
 echo '------ PROCESSING SOURCE FILES ------'
-# Default to a local build. Otherwise, retreives content from the specified source repos. 
+# Default to a local build. Otherwise, retreives content from the specified source repos.
 # All builds copy or clone the content into the "content" folder of knative/webiste before starting the Hugo build.
 # A temp directory is used and move files around and prevent git clone errors (fails if directory exists).
 
@@ -55,28 +55,44 @@ then
 # SINGLE REMOTE BRANCH BUILD
 # Build only the content from $FORK and $BRANCH
   echo '------ BUILDING CONENT FROM REMOTE ------'
-  echo 'The /docs/ section is built from the' "$BRANCH" 'branch of' "$FORK"
+  echo 'The /docs/ section is built from the' "$BRANCH" 'branch of' "$FORK"'/docs'
   git clone --quiet -b "$BRANCH" https://github.com/"$FORK"/docs.git content/en
 else
 # DEFAULT: LOCAL BUILD
 # Assumes that knative/docs and knative/website are cloned to the same directory.
+  LOCALBUILD="true"
   echo '------ BUILDING ONLY FROM YOUR LOCAL KNATIVE/DOCS CLONE ------'
+  echo 'Copying local clone of knative/docs into the /docs folder under:'
   pwd
   cp -r ../docs content/en/
+  if [ -d "../community" ]; then
+    echo 'Also copying the local clone of knative/community into the /community/contributing folder.'
+    cp -r ../community/* content/en/community/contributing
+  else
+    echo 'A local clone of knative/community is not found, skipping that content.'
+  fi
 fi
 
-echo '------ Cloning contributor docs ------'
-# COMMUNITY
-echo 'Getting Knative contributor guidelines from the master branch of knative/community'
-git clone --quiet -b master https://github.com/knative/community.git temp/community
-# Move files into existing "contributing" folder
-mv temp/community/* content/en/contributing
+if [ "$LOCALBUILD" = "false" ]
+then
+  echo '------ Cloning contributor docs ------'
+  # COMMUNITY
+  echo 'Getting Knative contributor guidelines from the master branch of' "$FORK"'/community'
+  git clone --quiet -b master https://github.com/"$FORK"/community.git temp/community
+  # Move files into existing "contributing" folder
+  mv temp/community/* content/en/community/contributing
+fi
 
 # CLEANUP
 # Delete temporary directory
 # (clear out unused files, including archived-copies/past-versions of blog posts and contributor samples)
-echo 'Cleaning up temp directory'
+echo 'Cleaning up temp directory used during this site build.'
 rm -rf temp
+
+###################################################
+# Process fully-qualified hard coded URLs that link
+# between the knative/docs and knative/community repos
+source scripts/convert-repo-ulrs.sh
 
 #########################################################
 # Process content in .md files (MAKE RELATIVE LINKS WORK)
@@ -109,11 +125,11 @@ find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' 
     -exec sed -i '/](/ { s#(\.\.\/#(../../#g; s#(\.\/#(../#g; }' {} +
 # Convert all relative links from README.md to index.html
 find . -type f -path '*/content/*.md' ! -name '_index.md' \
-    -exec sed -i '/](/ { /(http/ !s#README\.md#index.html#g; /(http/ !s#\.md##g }' {} +
+    -exec sed -i '/](/ { /http/ !{s#README\.md#index.html#g;s#\.md##g} }' {} +
 
 ###############################################
 # Process file names (HIDE README.md FROM URLS)
-# For SEO, dont use "README" in the URL 
+# For SEO, dont use "README" in the URL
 # (convert them to index.md OR use a "readfile" shortcode to nest them within a _index.md section file)
 #
 # Notes about past docs versions:
@@ -122,8 +138,8 @@ find . -type f -path '*/content/*.md' ! -name '_index.md' \
 #     (and to prevent deeply nested shortcodes ==> double markdown processing issues).
 #     The "readfile" shortcodes are still used but only at the top level.
 #
-echo 'Converting all README.md to index.md for "pre-release" and 0.7 or later doc releases'
-# Some README.md files should not be converted to index.md, either because that README.md 
+echo 'Converting all standalone README.md files to index.md...'
+# Some README.md files should not be converted to index.md, either because that README.md
 # is a file that's used only in the GitHub repo, or to prevent Hugo build conflicts
 # (index.md and _index.md files in the same directory is not supported).
 #

@@ -1,39 +1,74 @@
 {{ $links := .Site.Params.links }}
 
-<section class="row td-box td-box--0">
-		<div class="col-md-1 order-md-1 hidden-xs hidden-sm hidden-md"></div>
-		<div class="col-md-3 col-lg-1 order-xs-first order-sm-first order-md-last text-center ">
-		</div>
-		<div class="col-md-7 col-lg-10 order-xs-2 order-sm-2 order-md-2">
-      <div class="row">
-        <div class="col">
-        <h3>Learn and Connect</h3>
-        <p>Using or want to use {{ .Site.Title }}? Find out more here:
-            {{ with index $links "user"}}
-            {{ template "community-links-list-dark"  . }}
-            {{ end }}
-        </div>
-        <div class="col">
-          <h3>Develop and contribute</h3>
-          <p>If you want to get more involved by contributing to {{ .Site.Title }}, join us here:
-              {{ with index $links "developer"}}
-              {{ template "community-links-list-dark"  . }}
-              {{ end }}
-              <h5>Find out how to contribute to these docs in our
-                <a class="link-on-dark" href="/docs/contribution-guidelines/">Contribution Guidelines</a>.
-              </h5>
-        </div>
+<section class="row td-box td-box--4">
+    <div class="col-md-1 order-md-1 hidden-xs hidden-sm hidden-md"></div>
+    <div class="col-md-2 col-lg-1 order-xs-first order-sm-first order-md-last text-center ">
     </div>
+    <div class="col-md-9 col-lg-10 order-xs-2 order-sm-2 order-md-2">
+      <h1 class="row">Become a member</h1>
     </div>
 </section>
 
 <section class="row td-box td-box--1">
 		<div class="col-md-1 order-md-1 hidden-xs hidden-sm hidden-md"></div>
-		<div class="col-md-3 col-lg-1 order-xs-first order-sm-first order-md-last text-center ">
+		<div class="col-md-2 col-lg-1 order-xs-first order-sm-first order-md-last text-center ">
 		</div>
-		<div class="col-md-7 col-lg-10 order-xs-2 order-sm-2 order-md-2">
-        <h2 class="row justify-content-center" >Code samples</h2>
-        <br>
+		<div class="col-md-9 col-lg-10 order-xs-2 order-sm-2 order-md-2">
+      <div class="row">
+        <div class="col">
+        <h3>Learn and Connect</h3>
+        <p>Using or want to use {{ .Site.Title }}? Find out more here:
+            {{ with index $links "user"}}
+            {{ template "community-links-list-light"  . }}
+            {{ end }}
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="row td-box td-box--4">
+    <div class="col-md-1 order-md-1 hidden-xs hidden-sm hidden-md"></div>
+    <div class="col-md-2 col-lg-1 order-xs-first order-sm-first order-md-last text-center ">
+    </div>
+    <div class="col-md-9 col-lg-10 order-xs-2 order-sm-2 order-md-2">
+      <h1 class="row">Contribute</h1>
+    </div>
+</section>
+
+<section class="row td-box td-box--1">
+    <div class="col-md-1 order-md-1 hidden-xs hidden-sm hidden-md"></div>
+    <div class="col-md-2 col-lg-1 order-xs-first order-sm-first order-md-last text-center ">
+    </div>
+    <div class="col-md-9 col-lg-10 order-xs-2 order-sm-2 order-md-2">
+      <div class="row">
+        <div class="col">
+        <h3>Develop and contribute</h3>
+        <p>If you want to get more involved by contributing to {{ .Site.Title }}, see the
+          <a class="link-on-dark" href="/community/contributing/">
+            Contribution guidelines</a> for details.
+        <p>You can also join us here:
+            {{ with index $links "developer"}}
+            {{ template "community-links-list-light"  . }}
+            {{ end }}
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="row td-box td-box--4">
+    <div class="col-md-1 order-md-1 hidden-xs hidden-sm hidden-md"></div>
+    <div class="col-md-2 col-lg-1 order-xs-first order-sm-first order-md-last text-center ">
+    </div>
+    <div class="col-md-9 col-lg-10 order-xs-2 order-sm-2 order-md-2">
+      <h1 class="row">Share code samples</h1>
+    </div>
+</section>
+
+<section class="row td-box td-box--1">
+    <div class="col-md-1 order-md-1 hidden-xs hidden-sm hidden-md"></div>
+    <div class="col-md-2 col-lg-1 order-xs-first order-sm-first order-md-last text-center ">
+    </div>
+    <div class="col-md-9 col-lg-10 order-xs-2 order-sm-2 order-md-2">
       <div class="row">
         <div class="col">
             <h3>Use and run</h3>
@@ -50,9 +85,6 @@
               {{ with index $links "sharecode"}}
               {{ template "community-links-list-light"  . }}
               {{ end }}
-            <h5>
-              <a href="../contributing/contributing">Learn how to contribute...</a>
-            </h5>
           </div>
         </div>
     </div>
