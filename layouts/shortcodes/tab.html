@@ -6,7 +6,7 @@
 	{{ with .Inner }}
 	{{ $.Parent.Scratch.Add "tabs" (dict "name" $name "content" . ) }}
 	{{ else }}
-	asdf
+	{{- errorf "[%s] %q: tab title does not exist" site.Language.Lang .Page.Path -}}
 	{{ end }}
 {{ else }}
 	{{- errorf "[%s] %q: tab shortcode missing its parent" site.Language.Lang .Page.Path -}}
