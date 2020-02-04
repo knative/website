@@ -15,14 +15,14 @@
   {{ end }}
 </ul>
 
-<div class="tab-content">
+<div class="tab-content" style="border-left: 1px solid lightgray;">
 {{ range $i, $e := $tabs }}
   {{ $id := printf "%s-%d" $tab_set_id $i }}
   {{ $active := "" }}
   {{ if eq $default $e.name }}
-    {{ $active = "active" }}
+    {{ $active = "show active" }}
   {{ end }}
-  <div class="tab-pane {{ $active }}" id="{{ $id }}" role="tabpanel" aria-labelledby="{{ $id }}-tab">
+  <div class="tab-pane fade {{ $active }}" id="{{ $id }}" role="tabpanel" aria-labelledby="{{ $id }}-tab">
     {{ with .content }}
       {{ . }}
     {{ end }}
