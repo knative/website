@@ -28,6 +28,7 @@
             padding: 0;
             margin: 0;
         }
+        font-size: $h6-font-size;
 
         @include media-breakpoint-up(md) {
             & > ul {
@@ -35,17 +36,16 @@
             }
         }
 
-
         padding-left: 0;
     }
 
     &__section-title {
         display: block;
+        font-size: $h5-font-size;
         font-weight: $font-weight-medium;
 
         .active {
-            font-weight: $font-weight-bold;
-            
+            color: $gray-900;
         }
 
         a {
@@ -70,7 +70,6 @@
         }
 
         &.active {
-            font-weight: $font-weight-bold;
             color:$knative-darker;
         }
     }
