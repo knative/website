@@ -74,7 +74,7 @@
             border-top: 1px solid;
             border-color: $knative-lighter;
             padding-top: 5px;
-        }    
+        }
     }
 
     .td-search-input {
@@ -118,4 +118,18 @@
             display: none;
         }
     }
+}
+
+.nav-tabs {
+    max-width: 80%;
+}
+
+.tab-content {
+    max-width: 80%;
+}
+
+.tab-content > .active {
+    border: 1px solid lightgray;
+    border-top-style: hidden;
+    padding: 10px;
 }
