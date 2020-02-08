@@ -1,12 +1,13 @@
 {{ if .Parent }}
 	{{ $name := trim (.Get "name") " " }}
 	{{ if not (.Parent.Scratch.Get "tabs") }}
-	{{ .Parent.Scratch.Set "tabs" slice }}
-	{{ end }}
-	{{ with .Inner }}
-	{{ $.Parent.Scratch.Add "tabs" (dict "name" $name "content" . ) }}
+	  {{ .Parent.Scratch.Set "tabs" slice }}
+        {{ end }}
+        {{ with .Inner }}
+          {{/* Store the content of each tab in a dictionary for the parent to display. */}}
+	  {{ $.Parent.Scratch.Add "tabs" (dict "name" $name "content" . ) }}
 	{{ else }}
-	{{- errorf "[%s] %q: tab title does not exist" site.Language.Lang .Page.Path -}}
+	  {{- errorf "[%s] %q: tab title does not exist" site.Language.Lang .Page.Path -}}
 	{{ end }}
 {{ else }}
 	{{- errorf "[%s] %q: tab shortcode missing its parent" site.Language.Lang .Page.Path -}}
