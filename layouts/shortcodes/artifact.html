@@ -1,3 +1,14 @@
+{{/*
+
+Use this `artifact` shortcode to include the URL to a release artifact in
+a section of documentation.
+
+Parameters:
+* `org="knative"`: OPTIONAL, defaults to "knative".
+* `repo="serving"`: REQUIRED.  The repository within the given organization that is responsible for the published artifact.
+* `file="serving-core.yaml"`: REQUIRED.  The filename of the published artifact.
+
+*/}}
 {{- $org := trim (.Get "org") " " -}}
 {{- if not $org -}}
 {{- $org = "knative" -}}
