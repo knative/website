@@ -1,3 +1,11 @@
+{{/*
+
+Use this `tab` shortcode to add a tab to the parent `tabs`.
+
+Parameters:
+* `name="foo"`: REQUIRED.  The text to appear in the tab heading, and used in conjunction with `tabs.default`.
+
+*/}}
 {{ if .Parent }}
 	{{ $name := trim (.Get "name") " " }}
 	{{ if not (.Parent.Scratch.Get "tabs") }}
