@@ -1,6 +1,6 @@
 {{ $tab_set_id := .Get "name" | default (printf "tabset-%s-%d" (.Page.RelPermalink) (.Page.Scratch.Get "tabset-counter") ) | anchorize }}
 {{ $default := .Get "default" }}
-{{ if .Inner }}{{/* We don't use the inner content, but Hugo will complain if we don't reference it. */}}{{ end }}
+{{ if .Inner }}{{/* complained if not used */}}{{ end }}
 {{ $tabs := .Scratch.Get "tabs" }}
 <ul class="nav nav-tabs" id="{{ $tab_set_id }}" role="tablist">
   {{ range $i, $e := $tabs }}

@@ -16,7 +16,7 @@ defaultMarkdownHandler = "goldmark"
     autoHeadingID = true
   [goldmark.renderer]
     hardWraps = false
-    unsafe = false
+    unsafe = true
     xHTML = false
 
 # Configuration for the Chroma syntax highlighting
