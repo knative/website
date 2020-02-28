@@ -22,11 +22,11 @@
         <h6 class="text-white">Knative developers</h6>
       </div>
       <!-- Override for Knative licensing START -->
-      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+      <div class="col-12 col-sm-4 text-center py-0 order-sm-2">
         {{ if .Site.Params.commonsLicense }}<small class="text-white">
           {{ if .Site.Params.knative_license }}
-          <p>&copy; {{ now.Year }} {{ .Site.Params.knativeAuthors }} |  <b><a class="text-white" href="{{ .Site.Params.knative_license }}">{{ .Site.Params.knativeLicense }}</a></b> | <b><a class="text-white" href="{{ .Site.Params.privacy_policy }}">{{ .Site.Params.privacyPolicy }}</a></b><br>
-          <a class="text-white d-none d-lg-none d-xl-inline" href="{{ .Site.Params.commons_license }}">{{ .Site.Params.commonsLicense }}</a><span class="text-white d-none d-md-none d-lg-none d-xl-inline">, </span><a class="text-white d-none  d-md-none d-lg-none d-xl-inline" href="{{ .Site.Params.apache_license }}">{{ .Site.Params.apacheLicense }}</a></p>
+          <p>&copy; {{ now.Year }} {{ .Site.Params.knativeAuthors }} | <b><a class="text-white" href="{{ .Site.Params.privacy_policy }}">{{ .Site.Params.privacyPolicy }}</a></b> | <b><a class="text-white" href="/about-analytics-cookies/">Cookie Usage</a></b> | <b><a class="text-white" href="{{ .Site.Params.knative_license }}">{{ .Site.Params.knativeLicense }}</a></b><br>
+          <span class="d-none d-lg-inline d-xl-inline" style="white-space:nowrap"><a class="text-white" href="{{ .Site.Params.commons_license }}">{{ .Site.Params.commonsLicense }}</a>, <a class="text-white" href="{{ .Site.Params.apache_license }}">{{ .Site.Params.apacheLicense }}</a></span></p>
           {{ end }}
         </small>
         {{ end }}
