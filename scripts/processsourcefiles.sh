@@ -49,8 +49,6 @@ then
   mv temp/release/v0.11/docs content/en/v0.11-docs
   git clone --quiet -b "release-0.10" https://github.com/"$FORK"/docs.git temp/release/v0.10
   mv temp/release/v0.10/docs content/en/v0.10-docs
-  git clone --quiet -b "release-0.9" https://github.com/"$FORK"/docs.git temp/release/v0.9
-  mv temp/release/v0.9/docs content/en/v0.9-docs
 
 elif [ "$BUILDSINGLEBRANCH" = "true" ]
 then
