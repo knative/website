@@ -28,7 +28,7 @@
 # Update to include the recently archived version
 # Redirects all previously published versions to the latest
 [[redirects]]
-  from = "/v0.12-docs/*"
+  from = "/v0.9-docs/*"
   to = "/docs/"
   status = 301
 
