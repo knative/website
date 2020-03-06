@@ -70,3 +70,8 @@
   from = "/docs/build/*"
   to = "/docs/"
   status = 301
+
+# Redirect Knative AMA form
+[[redirects]]
+ from = "/ama/*"
+ to = "/ama.html"
