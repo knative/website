@@ -6,6 +6,7 @@
 /eventing-operator/* go-get=1 /golang/eventing-operator.html 200
 /observability/* go-get=1 /golang/observability.html 200
 /networking/* go-get=1 /golang/networking.html 200
+/net-contour/* go-get=1 /golang/net-certmanager.html 200
 /net-contour/* go-get=1 /golang/net-contour.html 200
 /net-kourier/* go-get=1 /golang/net-kourier.html 200
 /net-istio/* go-get=1 /golang/net-istio.html 200
