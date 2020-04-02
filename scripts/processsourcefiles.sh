@@ -30,6 +30,10 @@ then
   mv content/en/docs content/en/development
   # DOCS BRANCHES
   echo '------ Cloning all docs releases ------'
+
+  # TODO(Evan): Avoid the need for `mv` above and make the below just ap
+  # set of clone + symlink commands
+
   # Get versions of released docs from their branches in "$FORK"/docs
   echo 'The /docs/ section is built from the' "$BRANCH" 'branch of' "$FORK"
   # Latest version is defined in website/scripts/docs-version-settings.sh
@@ -43,12 +47,13 @@ then
     #git clone -b "release-[VERSION#]" https://github.com/"$FORK"/docs.git temp/release/[VERSION#]
     #mv temp/release/[VERSION#]/docs content/en/[VERSION#]-docs
     ###############################################################
-  git clone --quiet -b "release-0.12" https://github.com/"$FORK"/docs.git temp/release/v0.12
-  mv temp/release/v0.12/docs content/en/v0.12-docs
-  git clone --quiet -b "release-0.11" https://github.com/"$FORK"/docs.git temp/release/v0.11
-  mv temp/release/v0.11/docs content/en/v0.11-docs
-  git clone --quiet -b "release-0.10" https://github.com/"$FORK"/docs.git temp/release/v0.10
-  mv temp/release/v0.10/docs content/en/v0.10-docs
+  mkdir -p docs  # -p won't fail if the file exists
+  for r in $(seq 13 10); do 
+    CLONE="docs/release-0.${r}"
+    if [[ -e "$CLONE" ]]; then echo "Skipping ${CLONE}, already exists"; continue; fi
+    git clone --quiet -b "release-0.${r}" "https://github.com/${FORK}/docs.git" "$CLONE"
+    ln -s "content/en/v0.${r}-docs" "${CLONE}/docs"
+  done
 
 elif [ "$BUILDSINGLEBRANCH" = "true" ]
 then
@@ -64,6 +69,9 @@ else
   echo '------ BUILDING ONLY FROM YOUR LOCAL KNATIVE/DOCS CLONE ------'
   echo 'Copying local clone of knative/docs into the /docs folder under:'
   pwd
+
+  # TODO(Evan): switch this to just be symlinks?
+
   cp -r ../docs content/en/
   if [ -d "../community" ]; then
     echo 'Also copying the local clone of knative/community into the /community/contributing folder.'
@@ -97,40 +105,14 @@ source scripts/convert-repo-ulrs.sh
 #########################################################
 # Process content in .md files (MAKE RELATIVE LINKS WORK)
 # We want users to be able view and use the source files in GitHub as well as on the site.
-# Therefore, the following changes need to be made to all docs files prior to Hugo site build.
-# Convert GitHub enabled source, into HUGO supported content:
-#  - For all Markdown files under the /content/ directory:
-#    - Skip all:
-#      - Markdown link with fully qualified HTTP(s) URL is 'external'
-#      - GitHub file (.git* files)
-#      - non-docs directories
-#    - Ignore Hugo site related files (avoid "readfile" shortcodes):
-#      - _index.md files (Hugo 'section' files)
-#      - API shell files (serving-api.md, eventing-contrib-api.md, eventing-api.md)
-#    - For all remaining Markdown files:
-#      - Remove all '.md' file extensions from within Markdown links "[]()"
-#      - For SEO convert README to index:
-#       - Replace all in-page URLS from "README.md" to "index.html"
-#       - Rename all files from "README.md" to "index.md"
-#      - Adjust relative links by adding additional depth:
-#       - Exclude all README.md & _index.md files
-#       - Convert './' to '../'
-#       - Convert '../' to '../../'
-echo 'Converting all links in GitHub source files to Hugo supported relative links...'
-# Convert relative links to support Hugo
-find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' \
-    ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' \
-    ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' \
-    ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
-    -exec sed -i '/](/ { s#(\.\.\/#(../../#g; s#(\.\/#(../#g; }' {} +
-# Convert all relative links from README.md to index.html
-find . -type f -path '*/content/*.md' ! -name '_index.md' \
-    -exec sed -i '/](/ { /http/ !{s#README\.md#index.html#g;s#\.md##g} }' {} +
+#
+# See layouts/_default/content.html for how this is done.
 
 ###############################################
 # Process file names (HIDE README.md FROM URLS)
 # For SEO, dont use "README" in the URL
 # (convert them to index.md OR use a "readfile" shortcode to nest them within a _index.md section file)
+# See also https://github.com/gohugoio/hugo/issues/4691 which would resolve this.
 #
 # Notes about past docs versions:
 # v0.6 and earlier doc releases: Use the "readfile" shortcodes to nest all README.md files within the _index.md files.
@@ -152,7 +134,7 @@ find . -type f -path '*/content/*/*/*' -name 'README.md' \
      ! -path '*/contributing/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' \
      ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' \
      ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
-    -execdir bash -c 'if [ -e _index.md ]; then echo "_index.md exists - skipping ${PWD#*/}"; else mv "$1" "${1/\README/\index}"; fi' -- {} \;
+    -execdir bash -c 'if [ -e index.md -o -e _index.md ]; then echo "index.md or _index.md exists - skipping ${PWD#*/}"; else mv "$1" "${1/README/index}"; fi' -- {} \;
 
 # GET HANDCRAFTED SITE LANDING PAGE
 echo 'Copying the override files into the /content/ folder'

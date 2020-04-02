@@ -2,6 +2,9 @@
 # THIS FILE IS USED BY THE 'processsourcefiles.sh' SCRIPT TO CONVERT URLS TO RELATIVE #
 #######################################################################################
 
+# TODO(Evan): move this processing into golang, probably via
+# layouts/_default/content.html and/or shortcodes.
+
 echo '------ CONVERT FULLY QUALIFIED REPO URLS TO RELATIVE ------'
 # Convert fully-qualified URLs that are used in the Knative GitHub repos source files
 # to link from repo to repo, into relative URLs for publishing to the knative.dev site.
