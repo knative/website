@@ -44,7 +44,8 @@ website and docs repo reflected. Note that the script **copies** the data from
 `../docs`, so you'll need to re-run the script to get fresh docs changes to show
 up on the local site.
 
-> @evankanderson is working on fixing this
+> @evankanderson is working on
+> [fixing this](https://github.com/knative/website/issues/158)
 
 ## On a Mac
 
