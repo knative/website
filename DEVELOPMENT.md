@@ -46,7 +46,7 @@ up on the local site.
 
 > @evankanderson is working on fixing this
 
-## On a Moc
+## On a Mac
 
 If you want to develop on a Mac, you'll find two obstacles:
 
