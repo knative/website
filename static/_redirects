@@ -3,6 +3,7 @@
 /client/* go-get=1 /golang/client.html 200
 /eventing/* go-get=1 /golang/eventing.html 200
 /eventing-contrib/* go-get=1 /golang/eventing-contrib.html 200
+/eventing-kafka/* go-get=1 /golang/eventing-kafka.html 200
 /eventing-operator/* go-get=1 /golang/eventing-operator.html 200
 /observability/* go-get=1 /golang/observability.html 200
 /operator/* go-get=1 /golang/operator.html 200
