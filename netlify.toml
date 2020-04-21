@@ -29,19 +29,6 @@
 # Redirects all previously published versions to the latest
 
 [[redirects]]
-  from = "/v0.13-docs/*"
-  to = "/docs/"
-  status = 301
-
-[[redirects]]
-  from = "/v0.12-docs/*"
-  to = "/docs/"
-  status = 301
-[[redirects]]
-  from = "/v0.11-docs/*"
-  to = "/docs/"
-  status = 301
- [[redirects]]
   from = "/v0.10-docs/*"
   to = "/docs/"
   status = 301
