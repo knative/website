@@ -46,7 +46,6 @@
   from = "/v0.10-docs/*"
   to = "/docs/"
   status = 301
-  
 [[redirects]]
   from = "/v0.9-docs/*"
   to = "/docs/"
