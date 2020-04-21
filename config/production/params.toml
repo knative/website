@@ -57,7 +57,6 @@ no = 'Sorry to hear that. Please <a href="https://github.com/knative/docs/issues
   ghbranchname = "release-0.12"
   url = "/v0.12-docs/"
   dirpath = "v0.12-docs"
-  
 [[versions]]
   version = "v0.11"
   ghbranchname = "release-0.11"
