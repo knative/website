@@ -18,3 +18,4 @@
 /serving/* go-get=1 /golang/serving.html 200
 /serving-operator/* go-get=1 /golang/serving-operator.html 200
 /test-infra/* go-get=1 /golang/test-infra.html 200
+/community/contributing/working-groups /community/contributing/working-groups/working-groups 301
