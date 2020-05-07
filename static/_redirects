@@ -5,6 +5,7 @@
 /eventing-contrib/* go-get=1 /golang/eventing-contrib.html 200
 /eventing-kafka/* go-get=1 /golang/eventing-kafka.html 200
 /eventing-operator/* go-get=1 /golang/eventing-operator.html 200
+/eventing-rabbitmq/* go-get=1 /golang/eventing-rabbitmq.html 200
 /observability/* go-get=1 /golang/observability.html 200
 /operator/* go-get=1 /golang/operator.html 200
 /networking/* go-get=1 /golang/networking.html 200
