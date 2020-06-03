@@ -29,7 +29,6 @@
 # We publish LATEST -3 versions to knative.dev, all older versions get redirect
 # back to the latest version in case old bookmarks or articles still point to 
 # one of those "previously published" versions 
-  
 [[redirects]]
   from = "/v0.11-docs/*"
   to = "/docs/"
