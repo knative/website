@@ -75,7 +75,7 @@ breadcrumb_disable = false
         desc = "Development takes place here!"
 [[links.developer]]
   name = "Knative Slack channels"
-  url = "https://knative.slack.com/"
+  url = "https://slack.knative.dev/"
   external = "true"
   icon = "fab fa-slack"
         desc = "Chat with other project developers"
