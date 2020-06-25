@@ -1,6 +1,7 @@
 /build/* go-get=1 /golang/build.html 200
 /caching/* go-get=1 /golang/caching.html 200
 /client/* go-get=1 /golang/client.html 200
+/discovery/* go-get=1 /golang/discovery.html 200
 /eventing/* go-get=1 /golang/eventing.html 200
 /eventing-contrib/* go-get=1 /golang/eventing-contrib.html 200
 /eventing-kafka/* go-get=1 /golang/eventing-kafka.html 200
