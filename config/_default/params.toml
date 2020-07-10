@@ -5,9 +5,9 @@
 # Default site parameters
 
 # GitHub branch (latest release)
-latest_github_branch = "release-0.15"
+latest_github_branch = "release-0.16"
 # Default version (latest release)
-version = "v0.15"
+version = "v0.16"
 ########################
 
 # Section labels for versions

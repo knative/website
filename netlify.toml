@@ -21,7 +21,7 @@
 # Update to the latest version number
 # Enable permanent links to a release (link persists after release is archived)
 [[redirects]]
-  from = "/v0.15-docs/*"
+  from = "/v0.16-docs/*"
   to = "/docs/:splat"
   status = 200
 
@@ -29,6 +29,12 @@
 # We publish LATEST -3 versions to knative.dev, all older versions get redirect
 # back to the latest version in case old bookmarks or articles still point to 
 # one of those "previously published" versions 
+
+[[redirects]]
+  from = "/v0.12-docs/*"
+  to = "/docs/"
+  status = 301
+
 [[redirects]]
   from = "/v0.11-docs/*"
   to = "/docs/"
@@ -38,6 +44,7 @@
   from = "/v0.10-docs/*"
   to = "/docs/"
   status = 301
+
 [[redirects]]
   from = "/v0.9-docs/*"
   to = "/docs/"
