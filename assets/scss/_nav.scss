@@ -26,9 +26,16 @@
     opacity: inherit;
 }
 
-.td-navbar {
+.flip-nav .td-navbar {
     background: $white;
     border-bottom: 1px solid $knative-lighter;
+}
+
+.td-navbar {
+    background: $black;
+    border-bottom: 1px solid $black;
+
+    transition: .3s;
 
     min-height: 4rem;
     margin: 0;
@@ -124,4 +131,16 @@
     border: 1px solid lightgray;
     border-top-style: hidden;
     padding: 10px;
+}
+
+#announcement {
+    padding-top: 100px;
+    padding-bottom: 25px;
+    color: $white;
+    background: $black;
+
+    aside {
+        max-width: 1200px;
+        margin: auto;
+    }
 }
