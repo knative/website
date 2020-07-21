@@ -134,13 +134,8 @@
 }
 
 #announcement {
-    padding-top: 100px;
-    padding-bottom: 25px;
+    padding: 100px 25px 25px 25px;
     color: $white;
     background: $black;
-
-    aside {
-        max-width: 1200px;
-        margin: auto;
-    }
+    text-align: center;
 }
