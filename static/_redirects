@@ -3,6 +3,7 @@
 /client/* go-get=1 /golang/client.html 200
 /discovery/* go-get=1 /golang/discovery.html 200
 /eventing/* go-get=1 /golang/eventing.html 200
+/eventing-autoscaler-keda/* go-get=1 /golang/eventing-autoscaler-keda.html 200
 /eventing-contrib/* go-get=1 /golang/eventing-contrib.html 200
 /eventing-kafka/* go-get=1 /golang/eventing-kafka.html 200
 /eventing-kafka-broker/* go-get=1 /golang/eventing-kafka-broker.html 200
