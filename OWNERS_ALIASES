@@ -1,11 +1,13 @@
 aliases:
   eng-approvers:
-  - evankanderson
-  - mattmoor
-  - vaikas-google
-  - rgregg
-  - mchmarny
   - averikitsch
+  - evankanderson
+  - grantr
+  - markusthoemmes
+  - mattmoor
+  - tcnghia
+  - vaikas
+
   docs-approvers:
   - carieshmarie
   - samodell

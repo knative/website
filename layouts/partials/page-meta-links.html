@@ -51,10 +51,10 @@
     {{ end }}
 
     {{ $editURL := printf "%s/tree/%s/%s" ($.Scratch.Get "gh_repo") ($.Scratch.Get "gh_branch") ($.Scratch.Get "filepath") }}
-    <a href="{{ $editURL }}" target="_blank"><i class="fa fa-edit fa-fw"></i> {{ T "post_edit_this" }}</a>
+    <a href="{{ $editURL }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-edit fa-fw"></i> {{ T "post_edit_this" }}</a>
 
     {{ $issuesURL := printf "%s/issues/new?title=%s(%s)&labels=kind%2Fbug&template=bug-in-existing-docs.md" ($.Scratch.Get "gh_repo") (htmlEscape $.Title) (htmlEscape $.Path) }}
-    <a href="{{ $issuesURL }}" target="_blank"><i class="fab fa-github fa-fw"></i> {{ T "post_create_issue" }}</a>
+    <a href="{{ $issuesURL }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-github fa-fw"></i> {{ T "post_create_issue" }}</a>
 
     {{/* Determine the Knative component */}}
     {{ if or (eq $pageSection "docs") (eq $pageSection .Site.Params.masterfolder) }}

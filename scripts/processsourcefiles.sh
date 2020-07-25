@@ -48,7 +48,7 @@ then
     #mv temp/release/[VERSION#]/docs content/en/[VERSION#]-docs
     ###############################################################
   mkdir -p docs  # -p won't fail if the file exists
-  for r in $(seq 13 10); do
+  for r in $(seq 16 13); do
     CLONE="docs/release-0.${r}"
     if [[ -e "$CLONE" ]]; then echo "Skipping ${CLONE}, already exists"; continue; fi
     git clone --quiet -b "release-0.${r}" "https://github.com/${FORK}/docs.git" "$CLONE"
