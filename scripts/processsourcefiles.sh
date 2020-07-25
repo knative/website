@@ -52,7 +52,7 @@ then
     CLONE="docs/release-0.${r}"
     if [[ -e "$CLONE" ]]; then echo "Skipping ${CLONE}, already exists"; continue; fi
     git clone --quiet -b "release-0.${r}" "https://github.com/${FORK}/docs.git" "$CLONE"
-    ln -s "content/en/v0.${r}-docs" "${CLONE}/docs"
+    ln -s "../../${CLONE}/docs" "content/en/v0.${r}-docs"
   done
 
 elif [ "$BUILDSINGLEBRANCH" = "true" ]
