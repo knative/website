@@ -6,11 +6,11 @@
   HUGO_ENV = "production"
 
 [context.deploy-preview.environment]
-  HUGO_VERSION = "0.61.0"
+  HUGO_VERSION = "0.74.3"
   HUGO_ENV = "staging"
 
 [context.branch-deploy.environment]
-  HUGO_VERSION = "0.61.0"
+  HUGO_VERSION = "0.74.3"
   HUGO_ENV = "staging"
 
 # Site redirects
