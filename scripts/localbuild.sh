@@ -84,7 +84,8 @@ PRBUILD="false"
 #  - Locally build a specific version from $FORK:
 #    ./scripts/localbuild.sh -b branchname 
 #
-while getopts f:b:a: arg; do
+SERVER=""
+while getopts f:b:a:s arg; do
   case $arg in
     f)
 	  echo '--- BUILDING FROM ---'
@@ -116,6 +117,9 @@ while getopts f:b:a: arg; do
       BUILDENVIRONMENT="production"
       BUILDSINGLEBRANCH="false"
       ;;
+    s)
+      echo 'Running hugo in server mode'
+      SERVER="server"
   esac
 done
 
@@ -127,4 +131,11 @@ source scripts/processsourcefiles.sh
 
 # BUILD MARKDOWN
 # Start HUGO build
-hugo server --baseURL "" --environment "$BUILDENVIRONMENT"
+hugo $SERVER --baseURL "" --environment "$BUILDENVIRONMENT"
+
+if [ -z "$SERVER" ]; then
+  echo ''
+  echo '**********     DONE!     **********'
+  echo ''
+  echo 'Content built to files, open the content/en to view the docs.'
+fi
