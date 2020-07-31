@@ -39,13 +39,25 @@
 
 ## Run locally
 
-You should be able to run `./scripts/localbuild.sh` and see your changes to the
-website and docs repo reflected. Note that the script **copies** the data from
-`../docs`, so you'll need to re-run the script to get fresh docs changes to show
-up on the local site.
+You should be able to run `./scripts/localbuild.sh` to generate a copy of the
+docs in the `public/` folder. Note that the build will replace relative
+`.../index.html` links with `.../`, so when browsing the local copy, you may
+need to click on `index.html` files to get where you need to go.
 
-> @evankanderson is working on
-> [fixing this](https://github.com/knative/website/issues/158)
+If you want the old behavior of starting a local webserver, you can run
+`./scripts/localbuild.sh -s`, but see the notes below on the tradeoff:
+
+There are two benefits to preferring to build statically:
+
+- It's easier to read or use tools on the output files, rather than needing to
+  fetch the HTML from the server. This is particularly useful when refactoring
+  the website or doing other complicated rendering.
+
+- It avoids an issue (see below) on Macs, where the default open FD limit is too
+  low for the number of `inotify` calls that hugo wants to keep open.
+
+Additionally, since the script _copies_ your `docs` repo, the live-reload is
+substantilly less useful than re-running the build and using a fresh copy.
 
 ## On a Mac
 
@@ -62,7 +74,7 @@ brew install gnu-sed
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 ```
 
-### File Descriptors
+### File Descriptors in "server mode"
 
 By default, MacOS permits a very small number of open FDs. This will manifest
 as:
