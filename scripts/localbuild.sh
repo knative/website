@@ -137,5 +137,5 @@ if [ -z "$SERVER" ]; then
   echo ''
   echo '**********     DONE!     **********'
   echo ''
-  echo 'Content built to files, open the content/en to view the docs.'
+  echo 'Content built to files, open public/index.html to view the docs.'
 fi
