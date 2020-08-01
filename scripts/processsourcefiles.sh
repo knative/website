@@ -48,17 +48,17 @@ then
       echo "Skipping ${CLONE}, a copy of those archived docs already exists."
       ln -s ../../"$CLONE"/docs content/en/v0."$r"-docs #always recreate symlinks because /content/en always gets wiped out
     else
-     echo 'Getting docs from: release-0.'"${r}"
-     git clone --quiet -b "release-0.${r}" "https://github.com/${FORK}/docs.git" "$CLONE"
-     if [ "$r" = "$LATESTVERSION" ]
-     then  
-       echo 'The /docs/ section is built from:' "$FORK"/release-0.'"${r}"
-       mv "$CLONE"/docs content/en/docs
-       rm -rf "$CLONE" #always get the latest release
-    else
-       # Only use the "docs" folder from all branches/releases
-       ln -s ../../"$CLONE"/docs content/en/v0."$r"-docs
-     fi
+      echo 'Getting docs from: release-0.'"${r}"
+      git clone --quiet -b "release-0.${r}" "https://github.com/${FORK}/docs.git" "$CLONE"
+      if [ "$r" = "$LATESTVERSION" ]
+      then  
+        echo 'The /docs/ section is built from:' "$FORK"'/release-0.'"${r}"
+        mv "$CLONE"/docs content/en/docs
+        rm -rf "$CLONE" #always get the latest release
+      else
+        # Only use the "docs" folder from all branches/releases
+        ln -s ../../"$CLONE"/docs content/en/v0."$r"-docs
+      fi
     fi
     (( r = r + 1 ))
   done
