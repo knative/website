@@ -35,24 +35,32 @@ then
   # set of clone + symlink commands
 
   # Get versions of released docs from their branches in "$FORK"/docs
-  echo 'The /docs/ section is built from the' "$BRANCH" 'branch of' "$FORK"
   # Latest version is defined in website/scripts/docs-version-settings.sh
   # If this is a PR build, then build that content as the latest release (assume PR preview builds are always from "latest")
-  git clone --quiet -b "$BRANCH" https://github.com/"$FORK"/docs.git temp/release/latest
-  # Only copy and keep the "docs" folder from all branched releases:
-  mv temp/release/latest/docs content/en/docs
   echo 'Getting the archived docs releases from branches in:' "$FORK"'/docs'
-    ###############################################################
-    # Template for next release:
-    #git clone -b "release-[VERSION#]" https://github.com/"$FORK"/docs.git temp/release/[VERSION#]
-    #mv temp/release/[VERSION#]/docs content/en/[VERSION#]-docs
-    ###############################################################
   mkdir -p docs  # -p won't fail if the file exists
-  for r in $(seq 16 13); do
+  r=$OLDESTVERSION
+  while [[ $r -le $LATESTVERSION ]]
+  do
     CLONE="docs/release-0.${r}"
-    if [[ -e "$CLONE" ]]; then echo "Skipping ${CLONE}, already exists"; continue; fi
-    git clone --quiet -b "release-0.${r}" "https://github.com/${FORK}/docs.git" "$CLONE"
-    ln -s "../../${CLONE}/docs" "content/en/v0.${r}-docs"
+    if [[ -e "$CLONE" ]]
+    then
+      echo "Skipping ${CLONE}, a copy of those archived docs already exists."
+      ln -s ../../"$CLONE"/docs content/en/v0."$r"-docs #always recreate symlinks because /content/en always gets wiped out
+    else
+     echo 'Getting docs from: release-0.'"${r}"
+     git clone --quiet -b "release-0.${r}" "https://github.com/${FORK}/docs.git" "$CLONE"
+     if [ "$r" = "$LATESTVERSION" ]
+     then  
+       echo 'The /docs/ section is built from:' "$FORK"/release-0.'"${r}"
+       mv "$CLONE"/docs content/en/docs
+       rm -rf "$CLONE" #always get the latest release
+    else
+       # Only use the "docs" folder from all branches/releases
+       ln -s ../../"$CLONE"/docs content/en/v0."$r"-docs
+     fi
+    fi
+    (( r = r + 1 ))
   done
 
 elif [ "$BUILDSINGLEBRANCH" = "true" ]
@@ -85,6 +93,7 @@ if [ "$LOCALBUILD" = "false" ]
 then
   echo '------ Cloning contributor docs ------'
   # COMMUNITY
+  # TODO / Known issue: Auto PR builds will fail if remote fork excludes knative/community -> https://app.netlify.com/sites/knative/deploys
   echo 'Getting Knative contributor guidelines from the master branch of' "$FORK"'/community'
   git clone --quiet -b master https://github.com/"$FORK"/community.git temp/community
   # Move files into existing "contributing" folder
