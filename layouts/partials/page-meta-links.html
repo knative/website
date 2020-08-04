@@ -72,14 +72,14 @@
 
     {{/* BLOG section - Show Post link */}}
     {{ else if (eq $pageSection "blog")}}
-    {{ if eq .Dir "blog/" }}
+    {{ if eq .File.Dir "blog/" }}
     {{ $.Scratch.Set "blogsec" "Knative " }}
     {{ else }}
-    {{ $getfolder := (replace (printf "%s" .Dir) "blog/" "" ) }}
+    {{ $getfolder := (replace (printf "%s" .File.Dir) "blog/" "" ) }}
     {{ $getfolder := (replace (printf "%s" $getfolder) "/" " " ) }}
     {{ $.Scratch.Set "blogsec" $getfolder }}
     {{ end }}
-    <a href="https://github.com/knative/docs/new/master/{{ .Dir }}" target="_blank"><i class="fab fa-github fa-fw"></i>Post to the {{ $.Scratch.Get "blogsec" }}blog</a>
+    <a href="https://github.com/knative/docs/new/master/{{ .File.Dir }}" target="_blank"><i class="fab fa-github fa-fw"></i>Post to the {{ $.Scratch.Get "blogsec" }}blog</a>
     {{ end }}
   </div>
   {{ end }}
