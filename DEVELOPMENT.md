@@ -63,7 +63,7 @@ The two local docs build options:
   Notes: 
   
   - This method does not mirror how knative.dev is generated and therefore is
-    only recommened to for testing how your files reneder. That also means that link
+    only recommened to for testing how your files render. That also means that link
     checking might not be 100% accurate. Hugo builds relative links differently 
     (all links based on the site root vs relative to the file in which the link
     resides - this is part of the Knative specific file processing that is done)
