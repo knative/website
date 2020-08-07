@@ -69,7 +69,7 @@ The two local docs build options:
     resides - this is part of the Knative specific file processing that is done)
     therefore some links will not work between the statically built HTML files. 
     For example, links like `.../index.html` are converted to `.../` for simplicity
-    (servers treat them as the same destination) but when you browsing a local HTML
+    (servers treat them as the same destination) but when you are browsing a local HTML
     file you need to open/click on the individual `index.html` files to get where you want
     to go.
   - This method does however make it easier to read or use local tools on the HTML build
@@ -92,11 +92,11 @@ The two local docs build options:
   
   - This method provides the following local build and test build options:
     - test your locally cloned files
-    - build and test other user's remote forks (ie. locally build their PRs)
+    - build and test other user's remote forks (ie. locally build their PRs `./scripts/build.sh -f repofork -b branchname -s)
     - option to build only a specific branch or all branches (and also from any speicifed fork)
     - fully functioning site links
     - [See all command options in localbuild.sh](https://github.com/knative/website/blob/master/scripts/localbuild.sh)
-  - Hugo's live-reload is not completely utilized due to the requied Knative specific file processing
+  - Hugo's live-reload is not completely utilized due to the required Knative specific file processing
     scripts (you need to rerun `./scripts/localbuild.sh -s` to rebuild and reprocess any changes that you 
     make to the files from within your local knative/docs clone directory). 
     
