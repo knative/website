@@ -109,6 +109,7 @@ Parameters:
 {{ else }}
 
 {{/* If HTML or Markdown. For Markdown`{{%...%}}`,  don't send content to processor again (use safeHTML). */}}
+{{/* Look for part of the Markdown link syntax ']' and remove '.md' or 'README' from within those links. */}}
 {{ $out := $.Scratch.Get "filepath" | readFile }}
 {{ $out = $out | replaceRE "]([^)]+).md" "]$1" }}
 {{ $out = $out | replaceRE "]([^)]+)README" "]$1" }}
