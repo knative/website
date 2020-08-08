@@ -109,7 +109,10 @@ Parameters:
 {{ else }}
 
 {{/* If HTML or Markdown. For Markdown`{{%...%}}`,  don't send content to processor again (use safeHTML). */}}
-{{ $.Scratch.Get "filepath" | readFile | safeHTML }}
+{{ $out := $.Scratch.Get "filepath" | readFile }}
+{{ $out = $out | replaceRE "]([^)]+).md" "]$1" }}
+{{ $out = $out | replaceRE "]([^)]+)README" "]$1" }}
+{{ $out  | safeHTML }}
 
 {{ end }}
 
