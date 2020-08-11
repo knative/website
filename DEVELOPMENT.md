@@ -39,13 +39,75 @@
 
 ## Run locally
 
-You should be able to run `./scripts/localbuild.sh` and see your changes to the
-website and docs repo reflected. Note that the script **copies** the data from
-`../docs`, so you'll need to re-run the script to get fresh docs changes to show
-up on the local site.
+You can use `./scripts/localbuild.sh` to build and test files locally. 
+The script uses Hugo's build and server commands in addition to some Knative
+specific file scripts that enables optimal user experience in GitHub
+(ie. use README.md files, allows our site to use relative linking 
+(not 
+[`rel` or `relref`](https://gohugo.io/content-management/cross-references/#use-ref-and-relref)), 
+etc.) and also meets Hugo/Docsy static site generator
+and template requirements (ie. _index.hmtl files, etc.)
 
-> @evankanderson is working on
-> [fixing this](https://github.com/knative/website/issues/158)
+The two local docs build options:
+
+- Simple/static HTML file generation for viewing how your Markdown renders in HTML:
+
+  Use this to generate a static build of the documentation site into HTML. This
+  uses Hugo's build command [`hugo`](https://gohugo.io/commands/hugo/). 
+  
+  From your clone of knative/website, you run `./scripts/localbuild.sh`. 
+  
+  All of the HTML files are built into the `public/` folder from where you can open,
+  view, and test how each file renders. 
+  
+  Notes: 
+  
+  - This method does not mirror how knative.dev is generated and therefore is
+    only recommened to for testing how your files render. That also means that link
+    checking might not be 100% accurate. Hugo builds relative links differently 
+    (all links based on the site root vs relative to the file in which the link
+    resides - this is part of the Knative specific file processing that is done)
+    therefore some links will not work between the statically built HTML files. 
+    For example, links like `.../index.html` are converted to `.../` for simplicity
+    (servers treat them as the same destination) but when you are browsing a local HTML
+    file you need to open/click on the individual `index.html` files to get where you want
+    to go.
+  - This method does however make it easier to read or use local tools on the HTML build
+    output files (vs. fetching the HTML from the server). For example, it is useful for
+    refactoring/moving content and ensuring that complicated Markdown renders properly.
+  - Using this method also avoids the MacOs specific issue (see below), where the default 
+    open FD limit exceeds the total number of `inotify` calls that Hugo wants to keep open.
+
+- Mimic how knative.dev is built and hosted:
+
+  Use this option to locally build knative.dev. This uses Hugo's local server
+  command [`hugo server`](https://gohugo.io/commands/hugo_server/). 
+  
+  From your clone of knative/website, you run `./scripts/localbuild.sh -s`. 
+  
+  All of the HTML files are temporarily copied into the `content/en/` folder to allow
+  the Hugo server to locally host those files at the URL:port specified in your terminal.  
+  
+  Notes:
+  
+  - This method provides the following local build and test build options:
+    - test your locally cloned files
+    - build and test other user's remote forks (ie. locally build their PRs `./scripts/build.sh -f repofork -b branchname -s)
+    - option to build only a specific branch or all branches (and also from any speicifed fork)
+    - fully functioning site links
+    - [See all command options in localbuild.sh](https://github.com/knative/website/blob/master/scripts/localbuild.sh)
+  - Hugo's live-reload is not completely utilized due to the required Knative specific file processing
+    scripts (you need to rerun `./scripts/localbuild.sh -s` to rebuild and reprocess any changes that you 
+    make to the files from within your local knative/docs clone directory). 
+    
+    Alternatively, if you want to use Hugo's live-reload feature, you can make temporary
+    changes to the copied files within the `content/en/` folder, and then when satisfied, you must
+    copy those changes into the corresponding files of your knative/docs clone. 
+  - Files in `content/en/` are overwritten with a new copy of your local files in your knative/docs
+    clone folder each time that you run this script. Note that the last set of built files remain
+    in `content/en/` for you to run local tools against but are overwritten each time that you rerun the script.
+  - Using this method causes the MacOs specific issue (see below), where the default 
+    open FD limit exceeds the total number of `inotify` calls that the Hugo server wants to keep open.
 
 ## On a Mac
 
@@ -62,7 +124,7 @@ brew install gnu-sed
 PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 ```
 
-### File Descriptors
+### File Descriptors in "server mode"
 
 By default, MacOS permits a very small number of open FDs. This will manifest
 as:
