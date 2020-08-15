@@ -92,7 +92,7 @@ Parameters:
 {{ else }}
 
 {{/* Make relative: Fetch the current directory and then append it to the specified `file=""` value */}}
-{{ $.Scratch.Set "filepath" $.Page.Dir }}
+{{ $.Scratch.Set "filepath" $.Page.File.Dir }}
 {{ $.Scratch.Add "filepath" ( .Get "file" ) }}
 
 {{ end }}
