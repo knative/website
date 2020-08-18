@@ -12,3 +12,4 @@ $(document).ready(function () {
     window.addEventListener('resize', flipNav);
     window.addEventListener('scroll', flipNav);
 });
+
