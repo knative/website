@@ -17,7 +17,7 @@ releaselabel = "Local Preview Build: "
 # Set to "docs" path
 
 [[versions]]
-  version = "v0.14"
+  version = "v0.16"
   ghbranchname = "master"
   url = "/docs/"
   dirpath = "docs"

@@ -61,30 +61,34 @@ PRBUILD="false"
 #
 #     USAGE: Append the -f repofork and/or the -b branchname to the command.
 #            Example:
-#                    ./scripts/build.sh -f repofork -b branchname
+#                    ./scripts/build.sh -f repofork -b branchname -s
 #
 # (2) Run a complete local build of the knative.dev site. Clones all the content
 #     from knative/docs repo, including all branches.
 #
 #     USAGE: Append the -a true to the command.
 #            Example:
-#                    ./scripts/build.sh -a true
+#                    ./scripts/build.sh -a true -s
 #
 #
 # Examples:
-#  - Default local build:
+#  - Default local clone static HTML build:
 #    ./scripts/localbuild.sh
 #
+#  - Local clone build with localhost server:
+#    ./scripts/localbuild.sh -s
+#
 #  - Clone all docs releases from knative/docs and then run local build:
-#    ./scripts/localbuild.sh -a true
+#    ./scripts/localbuild.sh -a true -s
 #
 #  - Locally build content from specified fork and branch:
-#    ./scripts/localbuild.sh -f repofork -b branchname
+#    ./scripts/localbuild.sh -f repofork -b branchname -s
 #
 #  - Locally build a specific version from $FORK:
-#    ./scripts/localbuild.sh -b branchname 
+#    ./scripts/localbuild.sh -b branchname -s
 #
-while getopts f:b:a: arg; do
+SERVER=""
+while getopts f:b:a:s arg; do
   case $arg in
     f)
 	  echo '--- BUILDING FROM ---'
@@ -116,6 +120,9 @@ while getopts f:b:a: arg; do
       BUILDENVIRONMENT="production"
       BUILDSINGLEBRANCH="false"
       ;;
+    s)
+      echo 'Running hugo in server mode'
+      SERVER="server"
   esac
 done
 
@@ -127,4 +134,11 @@ source scripts/processsourcefiles.sh
 
 # BUILD MARKDOWN
 # Start HUGO build
-hugo server --baseURL "" --environment "$BUILDENVIRONMENT"
+hugo $SERVER --baseURL "" --environment "$BUILDENVIRONMENT"
+
+if [ -z "$SERVER" ]; then
+  echo ''
+  echo '**********     DONE!     **********'
+  echo ''
+  echo 'Static HTML files output to public/. Open public/index.html to view these files.'
+fi

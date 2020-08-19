@@ -6,11 +6,11 @@
   HUGO_ENV = "production"
 
 [context.deploy-preview.environment]
-  HUGO_VERSION = "0.61.0"
+  HUGO_VERSION = "0.74.3"
   HUGO_ENV = "staging"
 
 [context.branch-deploy.environment]
-  HUGO_VERSION = "0.61.0"
+  HUGO_VERSION = "0.74.3"
   HUGO_ENV = "staging"
 
 # Site redirects
@@ -21,7 +21,7 @@
 # Update to the latest version number
 # Enable permanent links to a release (link persists after release is archived)
 [[redirects]]
-  from = "/v0.14-docs/*"
+  from = "/v0.16-docs/*"
   to = "/docs/:splat"
   status = 200
 
@@ -31,9 +31,20 @@
 # one of those "previously published" versions 
 
 [[redirects]]
+  from = "/v0.12-docs/*"
+  to = "/docs/"
+  status = 301
+
+[[redirects]]
+  from = "/v0.11-docs/*"
+  to = "/docs/"
+  status = 301
+
+[[redirects]]
   from = "/v0.10-docs/*"
   to = "/docs/"
   status = 301
+
 [[redirects]]
   from = "/v0.9-docs/*"
   to = "/docs/"
