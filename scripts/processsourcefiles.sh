@@ -31,24 +31,25 @@ then
   # DOCS BRANCHES
   echo '------ Cloning all docs releases ------'
   # Get versions of released docs from their branches in "$FORK"/docs
-  echo 'The /docs/ section is built from the' "$BRANCH" 'branch of' "$FORK"
-  # Latest version is defined in website/scripts/docs-version-settings.sh
+  # Versions are defined in website/scripts/docs-version-settings.sh
   # If this is a PR build, then build that content as the latest release (assume PR preview builds are always from "latest")
-  git clone --quiet -b "$BRANCH" https://github.com/"$FORK"/docs.git temp/release/latest
-  # Only copy and keep the "docs" folder from all branched releases:
-  mv temp/release/latest/docs content/en/docs
   echo 'Getting the archived docs releases from branches in:' "$FORK"'/docs'
-    ###############################################################
-    # Template for next release:
-    #git clone -b "release-[VERSION#]" https://github.com/"$FORK"/docs.git temp/release/[VERSION#]
-    #mv temp/release/[VERSION#]/docs content/en/[VERSION#]-docs
-    ###############################################################
-  git clone --quiet -b "release-0.15" https://github.com/"$FORK"/docs.git temp/release/v0.15
-  mv temp/release/v0.15/docs content/en/v0.15-docs
-  git clone --quiet -b "release-0.14" https://github.com/"$FORK"/docs.git temp/release/v0.14
-  mv temp/release/v0.14/docs content/en/v0.14-docs
-  git clone --quiet -b "release-0.13" https://github.com/"$FORK"/docs.git temp/release/v0.13
-  mv temp/release/v0.13/docs content/en/v0.13-docs
+  r=$OLDESTVERSION
+  while [[ $r -le $LATESTVERSION ]]
+  do
+    CLONE="temp/release-0.${r}"
+    echo 'Getting docs from: release-0.'"${r}"
+    git clone --quiet -b "release-0.${r}" "https://github.com/${FORK}/docs.git" "$CLONE"
+    if [ "$r" = "$LATESTVERSION" ]
+    then
+      echo 'The /docs/ section is built from:' "$FORK"'/release-0.'"${r}"
+      mv "$CLONE"/docs content/en/docs
+    else
+      # Only use the "docs" folder from all branches/releases
+      mv "$CLONE"/docs content/en/v0."$r"-docs
+    fi
+    (( r = r + 1 ))
+  done
 
 elif [ "$BUILDSINGLEBRANCH" = "true" ]
 then
