@@ -14,9 +14,9 @@ doclabel = "Pull Request Preview: "
 releaselabel = "Pull Request Preview: "
 
 # Set PRs to build to the "docs" path
-
+# RELEASE-ITEM: 'version' gets updated each release
 [[versions]]
-  version = "v0.16"
+  version = "v0.17"
   ghbranchname = "master"
   url = "/docs/"
   dirpath = "docs"
