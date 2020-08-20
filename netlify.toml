@@ -16,7 +16,7 @@
 # Site redirects
 
 ################
-# RELEASE-ITEM: Add new and archive old versions each release
+# RELEASE-ITEM: For each release, add new/latest release and archive versions older than latest-3
 
 # Update to the latest version number
 # Enable permanent links to a new release (so links persist after release is archived)
