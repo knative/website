@@ -1,3 +1,4 @@
+/async-component/* go-get=1 /golang/async-component.html 200
 /build/* go-get=1 /golang/build.html 200
 /caching/* go-get=1 /golang/caching.html 200
 /client/* go-get=1 /golang/client.html 200
