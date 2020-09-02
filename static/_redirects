@@ -19,6 +19,7 @@
 /net-kourier/* go-get=1 /golang/net-kourier.html 200
 /net-istio/* go-get=1 /golang/net-istio.html 200
 /pkg/* go-get=1 /golang/pkg.html 200
+/reconciler-test/* go-get=1 /golang/reconciler-test.html 200
 /sample-controller/* go-get=1 /golang/sample-controller.html 200
 /sample-source/* go-get=1 /golang/sample-source.html 200
 /serving/* go-get=1 /golang/serving.html 200
