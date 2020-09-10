@@ -16,7 +16,7 @@ Parameters:
 {{- $repo := trim (.Get "repo") " " -}}
 {{- $file := trim (.Get "file") " " -}}
 {{- $pageSection := .Page.Section -}}
-{{- $preRelease := .Site.Params.masterfolder -}}
+{{- $preRelease := .Site.Params.prereleasefolder -}}
 {{- if ne $pageSection $preRelease -}}
   {{/* Use version based on the directory path (see .dirpath in config/_default/params.toml) */}}
   {{- range .Site.Params.versions -}}

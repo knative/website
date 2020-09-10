@@ -2,12 +2,12 @@
 {{- $pageSection := .Page.Section -}}
 {{/* Get latest release and the name of the pre-release section */}}
 {{- $.Scratch.Set "release-version" .Site.Params.version -}}
-{{- $preRelease := .Site.Params.masterfolder -}}
+{{- $preRelease := .Site.Params.prereleasefolder -}}
 {{/* Use the specified version override (not directory based) */}}
 {{- if (.Get "override") -}}
   {{- $.Scratch.Set "release-version" (.Get "override") -}}
 {{- else -}}
-  {{/* Keep using the latest version for the "pre-release" content (masterfolder) */}}
+  {{/* Keep using the latest version for the "pre-release" content (prereleasefolder) */}}
   {{- if ne $pageSection $preRelease -}}
     {{/* Use version based on the directory path (see .dirpath in config/_default/params.toml) */}}
     {{- range .Site.Params.versions -}}

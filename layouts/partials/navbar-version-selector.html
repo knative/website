@@ -1,8 +1,8 @@
 {{/* Prefix labels for menus */}}
 {{ $.Scratch.Set "docLabel" .Site.Params.doclabel }}
 {{ $.Scratch.Set "releaseLabel" .Site.Params.releaselabel }}
-{{ $masterMainLabel := .Site.Params.masterlabel }}
-{{ $masterDropLabel := .Site.Params.masterfolder }}
+{{ $preReleaseLabel := .Site.Params.prereleaselabel }}
+{{ $preReleaseDropLabel := .Site.Params.prereleasefolder }}
 
 {{/* set defaults for version and dropdown menu highlighting */}}
 {{ $.Scratch.Set "activeVersion" .Site.Params.version }}
@@ -16,10 +16,10 @@
 {{ range .Site.Params.versions }}
   {{ if eq $curPage .dirpath }}
 
-    {{ if eq $curPage $masterDropLabel }}
-      {{/* pre-release content (master branch) */}}
-      {{ $.Scratch.Set "docLabel" $masterMainLabel }}
-      {{ $.Scratch.Set "releaseLabel" $masterMainLabel }}
+    {{ if eq $curPage $preReleaseDropLabel }}
+      {{/* pre-release content */}}
+      {{ $.Scratch.Set "docLabel" $preReleaseLabel }}
+      {{ $.Scratch.Set "releaseLabel" $preReleaseLabel }}
     {{ else }}
       {{/* released version */}}
       {{ $.Scratch.Add "docLabel" " " }}
@@ -41,6 +41,6 @@
   {{ range .Site.Params.versions }}
   <a
   class="dropdown-item{{ if eq ( $.Scratch.Get "activeVersion" ) ( printf "%s" .version ) }} active{{ end }}"
-  style="{{ if eq .version $masterMainLabel }}color:#BCBCBC{{ end }}" href="{{ .url }}">{{ .version }}</a>
+  style="{{ if eq .version $preReleaseLabel }}color:#BCBCBC{{ end }}" href="{{ .url }}">{{ .version }}</a>
   {{ end }}
 </div>

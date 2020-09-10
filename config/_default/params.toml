@@ -15,9 +15,9 @@ version = "v0.14"
 doclabel = "Documentation "
 releaselabel = "Release: "
 # Pre-release
-masterlabel = "Pre-release"
-# section path value ("master" docs directory folder on website)
-masterfolder = "development"
+prereleaselabel = "Pre-release"
+# section path value ("development" docs directory folder on website)
+prereleasefolder = "development"
 
 # Footer content
 knativeAuthors = "The Knative Authors"
