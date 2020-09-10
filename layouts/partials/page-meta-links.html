@@ -1,6 +1,6 @@
 {{/* Show only on production site (not local builds since we can't determine version) */}}
 {{ if not .Site.IsServer }}
-{{ $master := .Site.Params.masterfolder }}
+{{ $prerelease := .Site.Params.prereleasefolder }}
 {{ if .Path }}
   {{/* Set default values */}}
   {{ $pageSection := .Page.Section }}
@@ -13,9 +13,8 @@
   {{ if in $pageSection "docs" }}
     {{ $.Scratch.Set "filepath" (replaceRE "v[0-9].[0-9]-docs" "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
-  {{/* Point to 'master' for pre-release content */}}
-  {{ if eq $pageSection $master }}
-   {{ $.Scratch.Set "filepath" (replaceRE (printf "%s" $master) "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
+  {{ if eq $pageSection $prerelease }}
+   {{ $.Scratch.Set "filepath" (replaceRE (printf "%s" $prerelease) "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
   {{/* Remove the "contributing" from path for knative/community content */}}
   {{ if in $pageSection "contributing" }}
@@ -57,7 +56,7 @@
     <a href="{{ $issuesURL }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-github fa-fw"></i> {{ T "post_create_issue" }}</a>
 
     {{/* Determine the Knative component */}}
-    {{ if or (eq $pageSection "docs") (eq $pageSection .Site.Params.masterfolder) }}
+    {{ if or (eq $pageSection "docs") (eq $pageSection .Site.Params.prereleasefolder) }}
       {{ if in (printf "%s" ($.Scratch.Get "filepath")) "/serving/" }}
         {{ $.Scratch.Set "gh_repo" (printf "%s/issues/new" ($.Param "github_servingrepo")) }}
       {{ end }}
