@@ -19,7 +19,8 @@
   {{ end }}
   {{/* Remove "community/contributing" from the knative/community paths */}}
   {{ if in $pageSection "community" }}
-    {{ $.Scratch.Set "filepath" (replaceRE "community\\/contributing\\/" "" (printf "%s" ($.Scratch.Get "filepath"))) }}
+    {{ $.Scratch.Set "filepath" (replaceRE "community\\/" "" (printf "%s" ($.Scratch.Get "filepath"))) }}
+    {{ $.Scratch.Set "filepath" (replaceRE "contributing\\/" "" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
 
   {{/* Open to the README.md in github repo */}}
