@@ -11,14 +11,15 @@
   {{/* Set the right filepaths to match whats in the repo */}}
   {{/* Replace all 'v.#.#-docs' to just 'docs' */}}
   {{ if in $pageSection "docs" }}
-    {{ $.Scratch.Set "filepath" (replaceRE "v[0-9].[0-9]-docs" "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
+    {{ $.Scratch.Set "filepath" (replaceRE "v[0-9]+.[0-9]+-docs" "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
+  {{/* Replace all "pre-release" (development) paths to 'docs' */}}
   {{ if eq $pageSection $prerelease }}
    {{ $.Scratch.Set "filepath" (replaceRE (printf "%s" $prerelease) "docs" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
-  {{/* Remove the "contributing" from path for knative/community content */}}
-  {{ if in $pageSection "contributing" }}
-    {{ $.Scratch.Set "filepath" (replaceRE "contributing\\/" "" (printf "%s" ($.Scratch.Get "filepath"))) }}
+  {{/* Remove "community/contributing" from the knative/community paths */}}
+  {{ if in $pageSection "community" }}
+    {{ $.Scratch.Set "filepath" (replaceRE "community\\/contributing\\/" "" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
 
   {{/* Open to the README.md in github repo */}}
@@ -45,7 +46,7 @@
 
     {{/* DOCS or COMMUNITY section */}}
     {{/* Default to knative/docs repo OR use knative/community repo for CONTRIB info */}}
-    {{ if eq $pageSection "contributing" }}
+    {{ if eq $pageSection "community" }}
       {{ $.Scratch.Set "gh_repo" ($.Param "github_communityrepo") }}
     {{ end }}
 
