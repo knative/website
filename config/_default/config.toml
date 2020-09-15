@@ -22,7 +22,10 @@ ignoreFiles = [
   "README.md$",
   "/*/reference/api/serving.md",
   "/*/reference/api/eventing/eventing.md",
-  "/*/reference/api/eventing/eventing-contrib.md" ]
+  "/*/reference/api/eventing/eventing-contrib.md",
+  "/*/reference/serving.md",
+  "/*/reference/eventing/eventing.md",
+  "/*/reference/eventing/eventing-contrib.md" ]
 
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
 theme = ["docsy"]
