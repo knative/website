@@ -18,6 +18,7 @@
 /eventing-operator/* go-get=1 /golang/eventing-operator.html 200
 /eventing-prometheus/* go-get=1 /golang/eventing-prometheus.html 200
 /eventing-rabbitmq/* go-get=1 /golang/eventing-rabbitmq.html 200
+/eventing-redis/* go-get=1 /golang/eventing-redis.html 200
 /kperf/* go-get=1 /golang/kperf.html 200
 /observability/* go-get=1 /golang/observability.html 200
 /operator/* go-get=1 /golang/operator.html 200
