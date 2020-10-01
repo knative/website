@@ -6,3 +6,5 @@ and [`knative/docs`](https://github.com/knative/docs) should contain the content
 for the website.
 
 See [DEVELOPMENT.md](DEVELOPMENT.md) if you want to make changes.
+Hope this helps you.
+Stay tuned for future endevours.
