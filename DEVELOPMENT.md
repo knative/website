@@ -1,4 +1,4 @@
-# Development instructions
+# Development instructions An amazing project
 
 ## Setup
 
