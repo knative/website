@@ -5,4 +5,4 @@ Knative website. Basically, this should contain the formatting for the website,
 and [`knative/docs`](https://github.com/knative/docs) should contain the content
 for the website.
 
-See [DEVELOPMENT.md](DEVELOPMENT.md) if you want to make changes.
+You can visit [DEVELOPMENT.md](DEVELOPMENT.md) for making changes.
