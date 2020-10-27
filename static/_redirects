@@ -2,7 +2,6 @@
 /build/* go-get=1 /golang/build.html 200
 /caching/* go-get=1 /golang/caching.html 200
 /client/* go-get=1 /golang/client.html 200
-/community/contributing/working-groups /community/contributing/working-groups/working-groups 301
 /discovery/* go-get=1 /golang/discovery.html 200
 /eventing-autoscaler-keda/* go-get=1 /golang/eventing-autoscaler-keda.html 200
 /eventing-awssqs/* go-get=1 /golang/eventing-awssqs.html 200
@@ -38,3 +37,4 @@
 /serving-operator/* go-get=1 /golang/serving-operator.html 200
 /serving/* go-get=1 /golang/serving.html 200
 /test-infra/* go-get=1 /golang/test-infra.html 200
+/community/contributing/working-groups /community/contributing/working-groups/working-groups 301
