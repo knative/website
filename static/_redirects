@@ -21,6 +21,7 @@
 /eventing/* go-get=1 /golang/eventing.html 200
 /hack/* go-get=1 /golang/hack.html 200
 /kn-plugin-admin/* go-get=1 /golang/kn-plugin-admin.html 200
+/kn-plugin-source-kafka/* go-get=1 /golang/kn-plugin-source-kafka.html 200
 /kperf/* go-get=1 /golang/kperf.html 200
 /net-certmanager/* go-get=1 /golang/net-certmanager.html 200
 /net-contour/* go-get=1 /golang/net-contour.html 200
