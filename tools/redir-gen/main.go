@@ -82,6 +82,7 @@ func fetchRepos(orgs []string) ([]repoInfo, error) {
 				}
 				if *r.Archived {
 					log.Print("Ignoring archived repo: ", *r.Name)
+					continue
 				}
 				allRepos = append(allRepos, repoInfo{org, *r.Name, *r.DefaultBranch})
 			}
