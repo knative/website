@@ -6,6 +6,7 @@
 #
 # To regenerate, run:
 #   ./tools/redir-gen/redir-gen
+/actions-kind/* go-get=1 /golang/actions-kind.html 200
 /async-component/* go-get=1 /golang/async-component.html 200
 /build-spike/* go-get=1 /golang/build-spike.html 200
 /caching/* go-get=1 /golang/caching.html 200
@@ -36,6 +37,8 @@
 /kn-plugin-admin/* go-get=1 /golang/kn-plugin-admin.html 200
 /kn-plugin-diag/* go-get=1 /golang/kn-plugin-diag.html 200
 /kn-plugin-source-kafka/* go-get=1 /golang/kn-plugin-source-kafka.html 200
+/kn-plugin-source-pkg/* go-get=1 /golang/kn-plugin-source-pkg.html 200
+/knobots/* go-get=1 /golang/knobots.html 200
 /kperf/* go-get=1 /golang/kperf.html 200
 /net-certmanager/* go-get=1 /golang/net-certmanager.html 200
 /net-contour/* go-get=1 /golang/net-contour.html 200
