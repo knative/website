@@ -2,7 +2,7 @@
 # Use for development, like inflight PR reviews and content testing.
 
 # Usage notes:
-# To build with these settings, you use must specify the Hugo environment to 
+# To build with these settings, you use must specify the Hugo environment to
 # "staging" (hugo -e staging). Or configure the environment in Netlify.
 # The build uses every setting defined in "config/_default" and then merges or
 # overrides all the settings defined here.
@@ -16,7 +16,7 @@ releaselabel = "Pull Request Preview: "
 # Set PRs to build to the "docs" path
 # RELEASE-ITEM: 'version' gets updated each release
 [[versions]]
-  version = "v0.18"
+  version = "v0.19"
   ghbranchname = "master"
   url = "/docs/"
   dirpath = "docs"

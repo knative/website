@@ -6,7 +6,7 @@
 
 # Version number of the latest release
 # RELEASE-ITEM: This gets updated every release
-LATESTVERSION="18"
+LATESTVERSION="19"
 
 # Branch name of the latest release
 DEFAULTBRANCH="release-0.$LATESTVERSION"
