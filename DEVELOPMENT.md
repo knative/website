@@ -36,6 +36,8 @@
 
 1. (Optional) If you want to change the CSS, install
    [PostCSS](https://www.docsy.dev/docs/getting-started/#install-postcss)
+   
+1. Install [Hugo](https://gohugo.io/getting-started/installing/). It is used to render the site templates.
 
 ## Run locally
 
