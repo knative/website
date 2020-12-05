@@ -36,6 +36,8 @@
 
 1. (Optional) If you want to change the CSS, install
    [PostCSS](https://www.docsy.dev/docs/getting-started/#install-postcss)
+   
+1. Install a supported version of [Hugo](https://www.docsy.dev/docs/getting-started/#install-hugo).
 
 ## Run locally
 
