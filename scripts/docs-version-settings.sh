@@ -16,4 +16,5 @@ NUMOFVERSIONS="3"
 OLDESTVERSION=$((LATESTVERSION-NUMOFVERSIONS))
 
 # An optional value that you can locally override for local builds/testing
-DEFAULTFORK="knative"
+DEFAULTORG="knative"
+DEFAULTREPO="$DEFAULTORG/docs"

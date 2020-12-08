@@ -52,7 +52,7 @@ set -e
 source scripts/docs-version-settings.sh
 # Use default repo and branch from docs-version-settings.sh
 BRANCH="$DEFAULTBRANCH"
-FORK="$DEFAULTFORK"
+FORK="$DEFAULTREPO"
 
 # Set local build default values
 BUILDENVIRONMENT="local"
@@ -75,7 +75,7 @@ LIVERELOAD=" --watch=false --disableLiveReload"
 #
 #     USAGE: Append the -f repofork and/or the -b branchname to the command.
 #            Example:
-#                    ./scripts/build.sh -f repofork -b branchname -s
+#                    ./scripts/build.sh -f repofork -b branchname -s true
 #
 # (2) Run a complete local build of the knative.dev site. Clones all the content
 #     from knative/docs repo, including all branches.
@@ -105,9 +105,9 @@ LIVERELOAD=" --watch=false --disableLiveReload"
 #
 #    - Build content from specified fork and branch:
 #      - Build any branch from your fork or from someones in a PR
-#      ./scripts/localbuild.sh -f REPOFORK -b BRANCHNAME
+#      ./scripts/localbuild.sh -f REPO/FORK -b BRANCHNAME
 #
-#    - Locally build a specific branch from $FORK ($DEFAULTFORK):
+#    - Locally build a specific branch from knative/docs:
 #      ./scripts/localbuild.sh -b BRANCHNAME
 #
 #    - Combine other -s or -a flags. Example:
@@ -119,7 +119,8 @@ while getopts "f:b:a:s:" arg; do
 	  echo '--- BUILDING FROM ---'
       echo 'FORK:' "${OPTARG}"
       # Build remote content locally
-      # Set the GitHub repo name of your knative/docs fork you want built.
+      # Set the GitHub repo name of your knative/docs fork that you want built.
+      # Example: myrepo/forkname
       FORK="${OPTARG}"
       # Retrieve content from remote repo
       BUILDSINGLEBRANCH="true"

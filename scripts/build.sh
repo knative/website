@@ -27,7 +27,7 @@ set -e
 source scripts/docs-version-settings.sh
 # Use default repo and branch from docs-version-settings.sh
 BRANCH="$DEFAULTBRANCH"
-FORK="$DEFAULTFORK"
+FORK="$DEFAULTREPO"
 
 # Set build default values
 BUILDENVIRONMENT="production"
@@ -97,8 +97,10 @@ then
     PULL_REQUEST=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"number\"\:.*\,\"pull_request\"' | sed -e 's/\"number\"\://;s/\,\"pull_request\"//' || true)
     # Retrieve the fork and branch from PR webhook
     FORK_BRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"label\"\:\".*\"\,\"ref\"' | sed -e 's/\"label\"\:\"knative\:.*//;s/\"label\"\:\"//;s/\"\,\"ref\".*//' || true)
-    # Extract just the fork name
-    FORK=$(echo "$FORK_BRANCH" | sed -e 's/\:.*//')
+    # Extract just the repo name
+    REPO=$(echo "$FORK_BRANCH" | sed -e 's/\:.*//')
+    # Retrieve the repo fork name from PR webhook
+    FORK=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"full_name\"\:\".*\"\,\"private\"' | sed -e 's/\"full_name\"\:\"knative\/.*//;s/\"full_name\"\:\"//;s/\"\,\"private\".*//' || true)
     # If PR was merged, just run default build and deploy production site (www.knative.dev)
     MERGEDPR=$(echo "$INCOMING_HOOK_BODY" | grep -o '\"merged\"\:true\,' || : )
     if [ "$MERGEDPR" = "true" ]
@@ -115,7 +117,7 @@ then
   else
     # Webhook from "PUSH event"
     # If the event was from someone's fork, then get their branchname
-    if [ "$FORK" != "knative" ]
+    if [ "$REPO" != "knative" ]
     then
       BRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 ':"refs\/heads\/.*\"\,\"before\"' | sed -e 's/.*:\"refs\/heads\///;s/\"\,\"before\".*//' || true)
       # Use "Staging" environment settings (config/staging)
@@ -138,9 +140,9 @@ else
 echo 'Pull Request:' "$PULL_REQUEST"
 fi
 # Only display these values when building other user's forks
-if [ "$FORK" != "knative" ]
+if [ "$REPO" != "knative" ]
 then
-echo 'Building From Fork:' "$FORK"
+echo 'Building From:' "$FORK"
 echo 'Using Branch:' "$BRANCH"
 fi
 echo 'Commit HEAD:' "$HEAD"
