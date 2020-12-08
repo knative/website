@@ -84,7 +84,8 @@ then
   # Check if $FORK includes the /community branch (remote and PR builds)
   if ! (git ls-remote --quiet git@github.com:"$REPO"/community.git)
   then
-    echo 'No /community fork found in' "$REPO" '- building from the master branch of' "$DEFAULTORG"
+    echo 'No /community fork found in' "$REPO"
+    echo 'Building from the master branch of' "$DEFAULTORG"'/community'
     # Default to knative/community
     git clone --quiet -b master https://github.com/"$DEFAULTORG"/community.git temp/community
   else

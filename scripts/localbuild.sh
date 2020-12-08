@@ -53,6 +53,7 @@ source scripts/docs-version-settings.sh
 # Use default repo and branch from docs-version-settings.sh
 BRANCH="$DEFAULTBRANCH"
 FORK="$DEFAULTREPO"
+REPO="$DEFAULTORG"
 
 # Set local build default values
 BUILDENVIRONMENT="local"
@@ -124,6 +125,8 @@ while getopts "f:b:a:s:" arg; do
       FORK="${OPTARG}"
       # Retrieve content from remote repo
       BUILDSINGLEBRANCH="true"
+      # Extract the repo name
+      REPO=$(echo "$FORK" | sed -e 's/\.*\/.*//')
       ;;
     b)
       echo 'USING BRANCH:' "${OPTARG}"
@@ -134,7 +137,7 @@ while getopts "f:b:a:s:" arg; do
       BUILDSINGLEBRANCH="true"
       ;;
     a)
-      echo 'BUILDING ALL RELEASES FROM KNATIVE/DOCS'
+      echo 'BUILDING ALL RELEASES FROM' "$FORK"
       # If 'true', all knative/docs branches are built to mimic a
       # "production" build.
       # REQUIRED: If you specify a fork ($FORK), all of the same branches

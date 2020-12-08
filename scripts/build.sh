@@ -28,6 +28,7 @@ source scripts/docs-version-settings.sh
 # Use default repo and branch from docs-version-settings.sh
 BRANCH="$DEFAULTBRANCH"
 FORK="$DEFAULTREPO"
+REPO="$DEFAULTORG"
 
 # Set build default values
 BUILDENVIRONMENT="production"
@@ -56,8 +57,11 @@ while getopts f:b:a: arg; do
   case $arg in
     f)
       echo 'FORK:' "${OPTARG}"
-      # Set specified knative/docs repo fork
+      # The GitHub repo name of the knative/docs fork to builb.
+      # Example: myrepo/forkname
       FORK="${OPTARG}"
+      # Extract the repo name
+      REPO=$(echo "$FORK" | sed -e 's/\.*\/.*//')
       ;;
     b)
       echo 'BRANCH:' "${OPTARG}"
