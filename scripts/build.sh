@@ -35,6 +35,7 @@ BUILDALLRELEASES="true"
 BUILDSINGLEBRANCH="false"
 LOCALBUILD="false"
 PRBUILD="false"
+WEBHOOK="false"
 
 # Manually specify your fork and branch for all builds.
 #
@@ -67,9 +68,9 @@ while getopts f:b:a: arg; do
       echo 'BUILDING ALL RELEASES'
       # True by default. If set to "false" , the build does not clone nor build
       # the docs releases from other branches.
-      # REQUIRED: If you specify a fork ($FORK), all of the same branches 
+      # REQUIRED: If you specify a fork ($FORK), all of the same branches
       # (with the same branch names) that are built in knative.dev must
-      # also exist and be available in that $FORK (ie, 'release-0.X'). 
+      # also exist and be available in that $FORK (ie, 'release-0.X').
       # See /config/production/params.toml for the list of the branches
       # their names that are currently built in knative.dev.
       BUILDALLRELEASES="${OPTARG}"
@@ -80,10 +81,10 @@ done
 # If a webhook triggered the build, get repo fork and branch name
 if [ "$INCOMING_HOOK_BODY" ] || [ "$INCOMING_HOOK_TITLE" ] || [ "$INCOMING_HOOK_URL" ]
 then
+  WEBHOOK="true"
   echo '------ BUILD REQUEST FROM KNATIVE/DOCS WEBHOOK ------'
+
   echo 'Webhook Title:' "$INCOMING_HOOK_TITLE"
-  echo 'Webhook URL:' "$INCOMING_HOOK_URL"
-  echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
 
   # If webhook is from a "PULL REQUEST" event
   if echo "$INCOMING_HOOK_BODY" | grep -q -m 1 '\"pull_request\"'
@@ -100,7 +101,7 @@ then
     FORK=$(echo "$FORK_BRANCH" | sed -e 's/\:.*//')
     # If PR was merged, just run default build and deploy production site (www.knative.dev)
     MERGEDPR=$(echo "$INCOMING_HOOK_BODY" | grep -o '\"merged\"\:true\,' || : )
-    if [ "$MERGEDPR" = "true" ] 
+    if [ "$MERGEDPR" = "true" ]
     then
       # For merged PR, do not get branch name (use default: "latest knative release branch")
       echo '------ PR' "$PULL_REQUEST" 'MERGED ------'
@@ -131,7 +132,7 @@ echo 'Build environment:' "$BUILDENVIRONMENT"
 if [ "$PRBUILD" = "true" ]
 then
 # Builds only the content from the PR
-echo 'Building docs from PR#' "$PULL_REQUEST" 
+echo 'Building docs from PR#' "$PULL_REQUEST"
 else
 # The Netlify $PULL_REQUEST variable doesnt like the use of our multiple repos: Always returns false if we dont override it(see above)
 echo 'Pull Request:' "$PULL_REQUEST"
@@ -157,6 +158,14 @@ else
 # Gets overritten and shows only latest build
 #echo 'Shared staging URL:' "$DEPLOY_PRIME_URL"
 echo 'Staged content (unique to only this build) can be viewed at:' "$DEPLOY_URL"
+fi
+
+# If from a WEBHOOK, show payload
+if [ "$WEBHOOK" = "true" ]
+then
+  echo '------ WEBHOOK DETAILS ------'
+  echo 'Webhook URL:' "$INCOMING_HOOK_URL"
+  echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
 fi
 
 # Process the source files
