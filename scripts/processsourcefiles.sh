@@ -15,7 +15,7 @@ if [ "$BUILDALLRELEASES" = "true" ]
 then
 # PRODUCTION BUILD (ALL RELEASES)
 # Full build for knative.dev (config/production). Contributors can also use this for personal builds.
-  echo '------ BUILDING ALL DOC RELEASES ------'
+  echo '------ BUILDING ALL DOCS BRANCHES/RELEASES ------'
   # Build Knative docs from:
   # - https://github.com/"$FORK"/docs
   # - https://github.com/knative/community
@@ -50,19 +50,21 @@ then
     fi
     (( r = r + 1 ))
   done
+  LOCALBUILD="false"
 
 elif [ "$BUILDSINGLEBRANCH" = "true" ]
 then
 # SINGLE REMOTE BRANCH BUILD
 # Build only the content from $FORK and $BRANCH
-  echo '------ BUILDING CONENT FROM REMOTE ------'
+  echo '------ BUILDING SINGLE REMOTE BRANCH ------'
   echo 'The /docs/ section is built from the' "$BRANCH" 'branch of' "$FORK"'/docs'
   git clone --quiet -b "$BRANCH" https://github.com/"$FORK"/docs.git content/en
+  LOCALBUILD="false"
 else
 # DEFAULT: LOCAL BUILD
-# Assumes that knative/docs and knative/website are cloned to the same directory.
+# Assumes that knative/docs, /community, and /website are cloned to the same directory.
   LOCALBUILD="true"
-  echo '------ BUILDING ONLY FROM YOUR LOCAL KNATIVE/DOCS CLONE ------'
+  echo '------ BUILDING YOUR LOCAL KNATIVE/DOCS CLONE ------'
   echo 'Copying local clone of knative/docs into the /docs folder under:'
   pwd
   cp -r ../docs content/en/
@@ -74,12 +76,22 @@ else
   fi
 fi
 
+# Build knative/community for remote, PR, and production builds
 if [ "$LOCALBUILD" = "false" ]
 then
-  echo '------ Cloning contributor docs ------'
-  # COMMUNITY
-  echo 'Getting Knative contributor guidelines from the master branch of' "$FORK"'/community'
-  git clone --quiet -b master https://github.com/"$FORK"/community.git temp/community
+  echo ' - ----- Cloning contributor docs ------'
+  echo 'Getting Knative community and contributor guidelines'
+  # Check if $FORK includes the /community branch (remote and PR builds)
+  if ! (git ls-remote --quiet git@github.com:"$FORK"/community.git)
+  then
+    echo 'No /community fork found in' "$FORK" '- building from the master branch of' "$DEFAULTFORK"
+    # Default to knative/community
+    git clone --quiet -b master https://github.com/"$DEFAULTFORK"/community.git temp/community
+  else
+  # Build /community from the remote fork
+    echo 'Building from the master branch of' "$FORK"'/community'
+    git clone --quiet -b master https://github.com/"$FORK"/community.git temp/community
+  fi
   # Move files into existing "contributing" folder
   mv temp/community/* content/en/community/contributing
 fi
