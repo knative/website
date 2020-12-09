@@ -166,6 +166,9 @@ else
 echo 'Staged content (unique to only this build) can be viewed at:' "$DEPLOY_URL"
 fi
 
+# Process the source files
+source scripts/processsourcefiles.sh
+
 # If from a WEBHOOK, show payload
 if [ "$WEBHOOK" = "true" ]
 then
@@ -173,9 +176,6 @@ then
   echo 'Webhook URL:' "$INCOMING_HOOK_URL"
   echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
 fi
-
-# Process the source files
-source scripts/processsourcefiles.sh
 
 # BUILD MARKDOWN
 # Start HUGO build
