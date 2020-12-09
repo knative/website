@@ -6,7 +6,7 @@
 
 # Version number of the latest release
 # RELEASE-ITEM: This gets updated every release
-LATESTVERSION="18"
+LATESTVERSION="19"
 
 # Branch name of the latest release
 DEFAULTBRANCH="release-0.$LATESTVERSION"
@@ -16,4 +16,5 @@ NUMOFVERSIONS="3"
 OLDESTVERSION=$((LATESTVERSION-NUMOFVERSIONS))
 
 # An optional value that you can locally override for local builds/testing
-DEFAULTFORK="knative"
+DEFAULTORG="knative"
+DEFAULTREPO="$DEFAULTORG/docs"

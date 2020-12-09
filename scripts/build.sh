@@ -27,7 +27,8 @@ set -e
 source scripts/docs-version-settings.sh
 # Use default repo and branch from docs-version-settings.sh
 BRANCH="$DEFAULTBRANCH"
-FORK="$DEFAULTFORK"
+FORK="$DEFAULTREPO"
+REPO="$DEFAULTORG"
 
 # Set build default values
 BUILDENVIRONMENT="production"
@@ -35,6 +36,7 @@ BUILDALLRELEASES="true"
 BUILDSINGLEBRANCH="false"
 LOCALBUILD="false"
 PRBUILD="false"
+WEBHOOK="false"
 
 # Manually specify your fork and branch for all builds.
 #
@@ -55,8 +57,11 @@ while getopts f:b:a: arg; do
   case $arg in
     f)
       echo 'FORK:' "${OPTARG}"
-      # Set specified knative/docs repo fork
+      # The GitHub repo name of the knative/docs fork to builb.
+      # Example: myrepo/forkname
       FORK="${OPTARG}"
+      # Extract the repo name
+      REPO=$(echo "$FORK" | sed -e 's/\.*\/.*//')
       ;;
     b)
       echo 'BRANCH:' "${OPTARG}"
@@ -67,9 +72,9 @@ while getopts f:b:a: arg; do
       echo 'BUILDING ALL RELEASES'
       # True by default. If set to "false" , the build does not clone nor build
       # the docs releases from other branches.
-      # REQUIRED: If you specify a fork ($FORK), all of the same branches 
+      # REQUIRED: If you specify a fork ($FORK), all of the same branches
       # (with the same branch names) that are built in knative.dev must
-      # also exist and be available in that $FORK (ie, 'release-0.X'). 
+      # also exist and be available in that $FORK (ie, 'release-0.X').
       # See /config/production/params.toml for the list of the branches
       # their names that are currently built in knative.dev.
       BUILDALLRELEASES="${OPTARG}"
@@ -80,10 +85,10 @@ done
 # If a webhook triggered the build, get repo fork and branch name
 if [ "$INCOMING_HOOK_BODY" ] || [ "$INCOMING_HOOK_TITLE" ] || [ "$INCOMING_HOOK_URL" ]
 then
+  WEBHOOK="true"
   echo '------ BUILD REQUEST FROM KNATIVE/DOCS WEBHOOK ------'
+
   echo 'Webhook Title:' "$INCOMING_HOOK_TITLE"
-  echo 'Webhook URL:' "$INCOMING_HOOK_URL"
-  echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
 
   # If webhook is from a "PULL REQUEST" event
   if echo "$INCOMING_HOOK_BODY" | grep -q -m 1 '\"pull_request\"'
@@ -96,11 +101,13 @@ then
     PULL_REQUEST=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"number\"\:.*\,\"pull_request\"' | sed -e 's/\"number\"\://;s/\,\"pull_request\"//' || true)
     # Retrieve the fork and branch from PR webhook
     FORK_BRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"label\"\:\".*\"\,\"ref\"' | sed -e 's/\"label\"\:\"knative\:.*//;s/\"label\"\:\"//;s/\"\,\"ref\".*//' || true)
-    # Extract just the fork name
-    FORK=$(echo "$FORK_BRANCH" | sed -e 's/\:.*//')
+    # Extract just the repo name
+    REPO=$(echo "$FORK_BRANCH" | sed -e 's/\:.*//')
+    # Retrieve the repo fork name from PR webhook
+    FORK=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 '\"full_name\"\:\".*\"\,\"private\"' | sed -e 's/\"full_name\"\:\"knative\/.*//;s/\"full_name\"\:\"//;s/\"\,\"private\".*//' || true)
     # If PR was merged, just run default build and deploy production site (www.knative.dev)
     MERGEDPR=$(echo "$INCOMING_HOOK_BODY" | grep -o '\"merged\"\:true\,' || : )
-    if [ "$MERGEDPR" = "true" ] 
+    if [ "$MERGEDPR" = "true" ]
     then
       # For merged PR, do not get branch name (use default: "latest knative release branch")
       echo '------ PR' "$PULL_REQUEST" 'MERGED ------'
@@ -114,7 +121,7 @@ then
   else
     # Webhook from "PUSH event"
     # If the event was from someone's fork, then get their branchname
-    if [ "$FORK" != "knative" ]
+    if [ "$REPO" != "knative" ]
     then
       BRANCH=$(echo "$INCOMING_HOOK_BODY" | grep -o -m 1 ':"refs\/heads\/.*\"\,\"before\"' | sed -e 's/.*:\"refs\/heads\///;s/\"\,\"before\".*//' || true)
       # Use "Staging" environment settings (config/staging)
@@ -131,15 +138,15 @@ echo 'Build environment:' "$BUILDENVIRONMENT"
 if [ "$PRBUILD" = "true" ]
 then
 # Builds only the content from the PR
-echo 'Building docs from PR#' "$PULL_REQUEST" 
+echo 'Building docs from PR#' "$PULL_REQUEST"
 else
 # The Netlify $PULL_REQUEST variable doesnt like the use of our multiple repos: Always returns false if we dont override it(see above)
 echo 'Pull Request:' "$PULL_REQUEST"
 fi
 # Only display these values when building other user's forks
-if [ "$FORK" != "knative" ]
+if [ "$REPO" != "knative" ]
 then
-echo 'Building From Fork:' "$FORK"
+echo 'Building From:' "$FORK"
 echo 'Using Branch:' "$BRANCH"
 fi
 echo 'Commit HEAD:' "$HEAD"
@@ -161,6 +168,14 @@ fi
 
 # Process the source files
 source scripts/processsourcefiles.sh
+
+# If from a WEBHOOK, show payload
+if [ "$WEBHOOK" = "true" ]
+then
+  echo '------ WEBHOOK DETAILS ------'
+  echo 'Webhook URL:' "$INCOMING_HOOK_URL"
+  echo 'Webhook Body:' "$INCOMING_HOOK_BODY"
+fi
 
 # BUILD MARKDOWN
 # Start HUGO build

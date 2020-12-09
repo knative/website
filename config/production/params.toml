@@ -39,8 +39,8 @@ no = 'Sorry to hear that. Please <a href="https://github.com/knative/docs/issues
 # Set to "docs" path
 
 [[versions]]
-  version = "v0.18"
-  ghbranchname = "release-0.18"
+  version = "v0.19"
+  ghbranchname = "release-0.19"
   url = "/docs/"
   dirpath = "docs"
 
@@ -49,6 +49,11 @@ no = 'Sorry to hear that. Please <a href="https://github.com/knative/docs/issues
 ###################
 # Prefix all past versions with release # "v#.#-docs"
 
+[[versions]]
+  version = "v0.18"
+  ghbranchname = "release-0.18"
+  url = "/v0.18-docs/"
+  dirpath = "v0.18-docs"
 [[versions]]
   version = "v0.17"
   ghbranchname = "release-0.17"
@@ -59,11 +64,6 @@ no = 'Sorry to hear that. Please <a href="https://github.com/knative/docs/issues
   ghbranchname = "release-0.16"
   url = "/v0.16-docs/"
   dirpath = "v0.16-docs"
-[[versions]]
-  version = "v0.15"
-  ghbranchname = "release-0.15"
-  url = "/v0.15-docs/"
-  dirpath = "v0.15-docs"
 
 [[versions]]
   version = "Archives"

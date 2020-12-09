@@ -67,15 +67,28 @@ func fetchRepos(orgs []string) ([]repoInfo, error) {
 	allRepos := riSlice{}
 	client := github.NewClient(nil)
 	for _, org := range orgs {
-		repos, _, err := client.Repositories.ListByOrg(ctx, org, nil)
-		if err != nil {
-			return nil, err
+		opts := &github.RepositoryListByOrgOptions{
+			ListOptions: github.ListOptions{PerPage: 50},
 		}
-		for _, r := range repos {
-			if !allowedRepoRe.MatchString(*r.Name) || *r.Archived {
-				continue
+		for {
+			repos, resp, err := client.Repositories.ListByOrg(ctx, org, opts)
+			if err != nil {
+				return nil, err
 			}
-			allRepos = append(allRepos, repoInfo{org, *r.Name, *r.DefaultBranch})
+			for _, r := range repos {
+				if !allowedRepoRe.MatchString(*r.Name) {
+					log.Printf("Ignoring repo %s, matched by ignore %q", *r.Name, allowedRepoRe)
+					continue
+				}
+				if *r.Archived {
+					log.Print("Ignoring archived repo: ", *r.Name)
+					continue
+				}
+				allRepos = append(allRepos, repoInfo{org, *r.Name, *r.DefaultBranch})
+			}
+			if resp.NextPage == 0 {
+				break
+			}
 		}
 	}
 	sort.Sort(allRepos)
