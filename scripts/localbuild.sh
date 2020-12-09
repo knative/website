@@ -15,7 +15,7 @@ set -e
 #    2. Add it to your `PATH`. For example, add the following line to your `~/.bash_profile`:
 #      `PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"`
 #
-# 3. Optional: Install PostCSS if you want to change the sites CSS and need to build those changes locally.
+# 3. Install PostCSS. Needed to build the site locally.
 #    https://www.docsy.dev/docs/getting-started/#install-postcss
 #
 # 4. Clone the knative/docs repo:
@@ -24,10 +24,18 @@ set -e
 # 5. Clone the knative/website repo, including the Docsy theme submodule:
 #    `git clone --recurse-submodules https://github.com/knative/website.git`
 #
-# 6. From the root of the knative/website clone, run:
+#     Note: These repos must be cloned into the same folder and use the same
+#     names ('docs', 'website', 'community')
+#
+# 6. Optional: Clone the knative/community repo.
+#    `git clone https://github.com/knative/community.git`
+#
+# 7. From the root of the knative/website clone, run:
 #    `scripts/localbuild.sh`
 #
-# 7. If you change content in your knative/docs repo clone, you rebuild your local
+#     See all command options below (ie. build from your remote fork, etc).
+#
+# 8. If you change content in your knative/docs repo clone, you rebuild your local
 #    site by stopping the localhost (CTRL C) and running `scripts/localbuild.sh` again.
 #
 # By default, the command locally runs a Hugo build of using your local knative/website and
@@ -44,13 +52,15 @@ set -e
 source scripts/docs-version-settings.sh
 # Use default repo and branch from docs-version-settings.sh
 BRANCH="$DEFAULTBRANCH"
-FORK="$DEFAULTFORK"
+FORK="$DEFAULTREPO"
+REPO="$DEFAULTORG"
 
 # Set local build default values
 BUILDENVIRONMENT="local"
 BUILDALLRELEASES="false"
 BUILDSINGLEBRANCH="false"
 PRBUILD="false"
+LOCALBUILD="true"
 
 # Default Hugo build options
 # disable Hugo server
@@ -66,7 +76,7 @@ LIVERELOAD=" --watch=false --disableLiveReload"
 #
 #     USAGE: Append the -f repofork and/or the -b branchname to the command.
 #            Example:
-#                    ./scripts/build.sh -f repofork -b branchname -s
+#                    ./scripts/build.sh -f repofork -b branchname -s true
 #
 # (2) Run a complete local build of the knative.dev site. Clones all the content
 #     from knative/docs repo, including all branches.
@@ -96,9 +106,9 @@ LIVERELOAD=" --watch=false --disableLiveReload"
 #
 #    - Build content from specified fork and branch:
 #      - Build any branch from your fork or from someones in a PR
-#      ./scripts/localbuild.sh -f REPOFORK -b BRANCHNAME
+#      ./scripts/localbuild.sh -f REPO/FORK -b BRANCHNAME
 #
-#    - Locally build a specific branch from $FORK ($DEFAULTFORK):
+#    - Locally build a specific branch from knative/docs:
 #      ./scripts/localbuild.sh -b BRANCHNAME
 #
 #    - Combine other -s or -a flags. Example:
@@ -110,10 +120,13 @@ while getopts "f:b:a:s:" arg; do
 	  echo '--- BUILDING FROM ---'
       echo 'FORK:' "${OPTARG}"
       # Build remote content locally
-      # Set the GitHub repo name of your knative/docs fork you want built.
+      # Set the GitHub repo name of your knative/docs fork that you want built.
+      # Example: myrepo/forkname
       FORK="${OPTARG}"
       # Retrieve content from remote repo
       BUILDSINGLEBRANCH="true"
+      # Extract the repo name
+      REPO=$(echo "$FORK" | sed -e 's/\.*\/.*//')
       ;;
     b)
       echo 'USING BRANCH:' "${OPTARG}"
@@ -124,7 +137,7 @@ while getopts "f:b:a:s:" arg; do
       BUILDSINGLEBRANCH="true"
       ;;
     a)
-      echo 'BUILDING ALL RELEASES FROM KNATIVE/DOCS'
+      echo 'BUILDING ALL RELEASES FROM' "$FORK"
       # If 'true', all knative/docs branches are built to mimic a
       # "production" build.
       # REQUIRED: If you specify a fork ($FORK), all of the same branches
