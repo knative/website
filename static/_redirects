@@ -44,6 +44,7 @@
 /net-contour/* go-get=1 /golang/net-contour.html 200
 /net-http01/* go-get=1 /golang/net-http01.html 200
 /net-istio/* go-get=1 /golang/net-istio.html 200
+/net-ingressv2/* go-get=1 /golang/net-ingressv2.html 200
 /net-kourier/* go-get=1 /golang/net-kourier.html 200
 /networking/* go-get=1 /golang/networking.html 200
 /operator/* go-get=1 /golang/operator.html 200
