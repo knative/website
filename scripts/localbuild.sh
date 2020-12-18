@@ -150,7 +150,7 @@ while getopts "f:b:a:s:" arg; do
       ;;
     s)
       echo 'Running Hugo server'
-      SERVER="server"
+      SERVER="server $LIVERELOAD"
       if [ "${OPTARG}" = "reload" ]; then
         echo 'with live reload'
         LIVERELOAD=" --disableFastRender --renderToDisk"
@@ -167,7 +167,7 @@ source scripts/processsourcefiles.sh
 
 # BUILD MARKDOWN
 # Start HUGO build
-hugo $SERVER --baseURL "" --environment "$BUILDENVIRONMENT" $LIVERELOAD --gc
+hugo $SERVER --baseURL "" --environment "$BUILDENVIRONMENT" --gc
 
 if [ -z "$SERVER" ]; then
   echo ''
