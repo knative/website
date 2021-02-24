@@ -85,7 +85,7 @@ The two local docs build options:
   Use this option to locally build knative.dev. This uses Hugo's local server
   command [`hugo server`](https://gohugo.io/commands/hugo_server/). 
   
-  From your clone of knative/website, you run `./scripts/localbuild.sh -s`. 
+  From your clone of knative/website, you run `./scripts/localbuild.sh -s true`. 
   
   All of the HTML files are temporarily copied into the `content/en/` folder to allow
   the Hugo server to locally host those files at the URL:port specified in your terminal.  
