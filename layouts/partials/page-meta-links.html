@@ -23,12 +23,6 @@
     {{ $.Scratch.Set "filepath" (replaceRE "contributing\\/" "" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
 
-  {{/* Open to the README.md in github repo */}}
-  {{ if in (printf "%s" .File) "index.md" }}
-    {{ $.Scratch.Set "filepath" (replaceRE "_index" "README" ($.Scratch.Get "filepath")) }}
-    {{ $.Scratch.Set "filepath" (replaceRE "index" "README" ($.Scratch.Get "filepath")) }}
-  {{ end }}
-
   {{/* Find the github branch for the corresponding docs version otherwise set to master */}}
   {{ if in $pageSection "docs" }}
     {{ range .Site.Params.versions }}
