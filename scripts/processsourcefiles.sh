@@ -179,7 +179,7 @@ find . -type f -path '*/content/*/*/*' -name 'README.md' \
      ! -path '*/contributing/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' \
      ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' \
      ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
-    -execdir bash -c 'if [ -e _index.md -o -e index.md ]; then echo "_index.md exists - skipping ${PWD#*/}"; else mv "$1" "${1/\README/\index}"; fi' -- {} \;
+    -execdir bash -c 'if ! [ -e _index.md -o -e index.md ]; then echo "BARE README AT ${PWD#*/}, WILL NOT BE RENDERED."; fi' -- {} \;
 
 # GET HANDCRAFTED SITE LANDING PAGE
 echo 'Copying the override files into the /content/ folder'
