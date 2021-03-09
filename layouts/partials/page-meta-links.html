@@ -23,7 +23,7 @@
     {{ $.Scratch.Set "filepath" (replaceRE "contributing\\/" "" (printf "%s" ($.Scratch.Get "filepath"))) }}
   {{ end }}
 
-  {{/* Find the github branch for the corresponding docs version otherwise set to master */}}
+  {{/* Find the github branch for the corresponding docs version otherwise set to main */}}
   {{ if in $pageSection "docs" }}
     {{ range .Site.Params.versions }}
       {{ if eq $pageSection .dirpath }}
@@ -31,7 +31,7 @@
       {{ end }}
     {{ end }}
   {{ else }}
-    {{ $.Scratch.Set "gh_branch" "master" }}
+    {{ $.Scratch.Set "gh_branch" "main" }}
   {{ end }}
 
   {{ if ($.Scratch.Get "gh_repo") }}
@@ -74,7 +74,7 @@
     {{ $getfolder := (replace (printf "%s" $getfolder) "/" " " ) }}
     {{ $.Scratch.Set "blogsec" $getfolder }}
     {{ end }}
-    <a href="https://github.com/knative/docs/new/master/{{ .File.Dir }}" target="_blank"><i class="fab fa-github fa-fw"></i>Post to the {{ $.Scratch.Get "blogsec" }}blog</a>
+    <a href="https://github.com/knative/docs/new/main/{{ .File.Dir }}" target="_blank"><i class="fab fa-github fa-fw"></i>Post to the {{ $.Scratch.Get "blogsec" }}blog</a>
     {{ end }}
   </div>
   {{ end }}

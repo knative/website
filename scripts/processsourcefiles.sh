@@ -21,11 +21,11 @@ then
   # - https://github.com/"$REPO"/community
 
   # Build all branches (assumes $FORK contains all docs branches)
-  echo '------ Cloning Community and Pre-release docs (master) ------'
-  # MASTER
-  echo 'Getting blog posts and community owned samples from the master branch of' "$FORK"
-  git clone --quiet -b master https://github.com/"$FORK".git content/en
-  echo 'Getting pre-release development docs from master branch'
+  echo '------ Cloning Community and Pre-release docs (main) ------'
+  # "main" branch
+  echo 'Getting blog posts and community owned samples from the main branch of' "$FORK"
+  git clone --quiet -b main https://github.com/"$FORK".git content/en
+  echo 'Getting pre-release development docs from main branch'
   # Move "pre-release" docs content into the 'development' folder:
   mv content/en/docs content/en/development
   # DOCS BRANCHES
@@ -91,8 +91,8 @@ then
       DEFAULTCOMMUNITY="true"
     else
       # Build /community from $REPO fork
-      echo 'Building from the master branch of' "$REPO"'/community'
-      git clone --quiet -b master https://github.com/"$REPO"/community.git temp/community
+      echo 'Building from the main branch of' "$REPO"'/community'
+      git clone --quiet -b main https://github.com/"$REPO"/community.git temp/community
       DEFAULTCOMMUNITY="false"
     fi
   else
@@ -102,9 +102,9 @@ then
   # Build knative/community for production builds and by default
   if [ "$DEFAULTCOMMUNITY" = "true" ]
   then
-    echo 'Building from the master branch of' "$DEFAULTORG"'/community'
+    echo 'Building from the main branch of' "$DEFAULTORG"'/community'
     # Default to knative/community
-    git clone --quiet -b master https://github.com/"$DEFAULTORG"/community.git temp/community
+    git clone --quiet -b main https://github.com/"$DEFAULTORG"/community.git temp/community
   fi
   # Move files into existing "contributing" folder
   mv temp/community/* content/en/community/contributing

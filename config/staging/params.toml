@@ -17,7 +17,7 @@ releaselabel = "Pull Request Preview: "
 # RELEASE-ITEM: 'version' gets updated each release
 [[versions]]
   version = "v0.21"
-  ghbranchname = "master"
+  ghbranchname = "main"
   url = "/docs/"
   dirpath = "docs"
 
