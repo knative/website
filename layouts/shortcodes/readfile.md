@@ -1,7 +1,7 @@
 {{/*
 
 Overrides the Docsy theme's default
-[`readfile` shortcode](https://github.com/google/docsy/blob/master/layouts/shortcodes/readfile.md).
+[`readfile` shortcode](https://github.com/google/docsy/blob/main/layouts/shortcodes/readfile.md).
 
 
 Use this `readfile` shortcode to include the contents of a file into another file.

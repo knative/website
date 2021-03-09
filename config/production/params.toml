@@ -74,10 +74,10 @@ no = 'Sorry to hear that. Please <a href="https://github.com/knative/docs/issues
 
 # Pre-release version
 ###################
-# In-development (pre-release) content - "master" branch
+# In-development (pre-release) content - "main" branch
 
 [[versions]]
   version = "Pre-release"
-  ghbranchname = "master"
+  ghbranchname = "main"
   url = "/development/"
   dirpath = "development"
