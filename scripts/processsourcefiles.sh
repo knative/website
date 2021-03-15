@@ -4,7 +4,7 @@
 
 echo '------ PROCESSING SOURCE FILES ------'
 # Default to a local build. Otherwise, retreives content from the specified source repos.
-# All builds copy or clone the content into the "content" folder of knative/webiste before starting the Hugo build.
+# All builds copy or clone the content into the "content" folder of knative/website before starting the Hugo build.
 # A temp directory is used and move files around and prevent git clone errors (fails if directory exists).
 
 # Clean slate: Make sure that nothing from a past build exists in the /content/ or /temp/ folders
