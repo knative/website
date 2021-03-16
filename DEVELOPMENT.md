@@ -1,3 +1,12 @@
+- [Development instructions](#development-instructions)
+  * [Setup](#setup)
+  * [Run locally](#run-locally)
+  * [On a Mac](#on-a-mac)
+    + [Sed](#sed)
+    + [File Descriptors in "server mode"](#file-descriptors-in--server-mode-)
+- [How it is deployed](#how-it-is-deployed)
+
+
 # Development instructions
 
 ## Setup
@@ -144,3 +153,20 @@ ulimit -n 65535
 sudo sysctl -w kern.maxfiles=100000
 sudo sysctl -w kern.maxfilesperproc=65535
 ```
+
+# How it is deployed
+
+(taken from Slack)
+
+While the above describes how the content is built locally, https://knative.dev/ is built and served by [Netlify](https://netlify.com/) on their platform. There are a few differences between the two, and when debugging issues on the website, it can be useful to understand what Netlify is doing (as we've configured it).
+
+Generally, Netlify runs Hugo/Docsy builds and publishes everything that gets merged into the /docs and /website repos (anything in /community will get picked up when either of the other two repos trigger a build).
+
+The way we are running builds (telling Netlify which build to run) is through GitHub webhooks. There are two:
+
+* one that triggers a "production" build - any PR that gets merged
+* one that triggers a "preview" build - any PR action other than a merge (ie. commit, comment, label, etc)
+
+All of our builds (and build logs) are shown (in the order of recent to past) here: https://app.netlify.com/sites/knative/deploys
+
+More info here about webhook events: https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads (edited)
