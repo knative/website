@@ -1,4 +1,5 @@
 /community/contributing/working-groups /community/contributing/working-groups/working-groups 301
+/community/contributing/docs/docs-contributing https://github.com/knative/docs/tree/main/CONTRIBUTING.md 301
 
 # The following lines are AUTO-GENERATED
 #
@@ -13,6 +14,7 @@
 /client/* go-get=1 /golang/client.html 200
 /client-contrib/* go-get=1 /golang/client-contrib.html 200
 /community/* go-get=1 /golang/community.html 200
+/control-protocol/* go-get=1 /golang/control-protocol.html 200
 /discovery/* go-get=1 /golang/discovery.html 200
 /docs/* go-get=1 /golang/docs.html 200
 /downstream-test-go/* go-get=1 /golang/downstream-test-go.html 200
@@ -36,6 +38,11 @@
 /integration/* go-get=1 /golang/integration.html 200
 /kn-plugin-admin/* go-get=1 /golang/kn-plugin-admin.html 200
 /kn-plugin-diag/* go-get=1 /golang/kn-plugin-diag.html 200
+/kn-plugin-event/* go-get=1 /golang/kn-plugin-event.html 200
+/kn-plugin-migration/* go-get=1 /golang/kn-plugin-migration.html 200
+/kn-plugin-sample/* go-get=1 /golang/kn-plugin-sample.html 200
+/kn-plugin-service-log/* go-get=1 /golang/kn-plugin-service-log.html 200
+/kn-plugin-source-kamelet/* go-get=1 /golang/kn-plugin-kamelet.html 200
 /kn-plugin-source-kafka/* go-get=1 /golang/kn-plugin-source-kafka.html 200
 /kn-plugin-source-pkg/* go-get=1 /golang/kn-plugin-source-pkg.html 200
 /knobots/* go-get=1 /golang/knobots.html 200
@@ -44,6 +51,7 @@
 /net-contour/* go-get=1 /golang/net-contour.html 200
 /net-http01/* go-get=1 /golang/net-http01.html 200
 /net-istio/* go-get=1 /golang/net-istio.html 200
+/net-ingressv2/* go-get=1 /golang/net-ingressv2.html 200
 /net-kourier/* go-get=1 /golang/net-kourier.html 200
 /networking/* go-get=1 /golang/networking.html 200
 /operator/* go-get=1 /golang/operator.html 200
@@ -52,6 +60,7 @@
 /sample-controller/* go-get=1 /golang/sample-controller.html 200
 /sample-source/* go-get=1 /golang/sample-source.html 200
 /serving/* go-get=1 /golang/serving.html 200
+/specs/* go-get=1 /golang/specs.html 200
 /test-infra/* go-get=1 /golang/test-infra.html 200
 /website/* go-get=1 /golang/website.html 200
 /wg-repository/* go-get=1 /golang/wg-repository.html 200

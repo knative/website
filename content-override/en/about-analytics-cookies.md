@@ -45,7 +45,7 @@ These cookies contain no personally identifiable information (PII) but they will
 IP address. For more information about the data collected, [view our Privacy Policy](https://policies.google.com/privacy).
 
 If you prefer to view the Knative docs from within the [knative/docs
-](https://github.com/knative/docs/tree/master/docs) GitHub repository,
+](https://github.com/knative/docs/tree/main/docs) GitHub repository,
 view details about their cookies and tracking at
 [GitHub Privacy Statement](https://help.github.com/en/github/site-policy/github-privacy-statement#what-information-github-collects).
 

@@ -18,8 +18,8 @@ echo '------ CONVERT FULLY QUALIFIED REPO URLS TO RELATIVE ------'
 # - Remove repo domains:
 #   - "https://github.com/knative/community/"
 #   - "https://github.com/knative/docs/"
-# - Remove GitHub "tree|blob" paths (ie "/tree/master/" or "/blob/master/")
-#   Note: Assume all links point to the `master` branch.
+# - Remove GitHub "tree|blob" paths (ie "/tree/main/" or "/blob/main/")
+#   Note: Assume all links point to the `main` branch.
 # - Exclude issues or pulls URLs:
 #   - https://github.com/knative/(docs|community)/OWNERS*
 #   - https://github.com/knative/(docs|community)/branches
@@ -38,11 +38,11 @@ find . -type f -path '*/content/*' -name '*.md' \
     ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' \
     ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' \
     ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
-    -exec sed -i '/](https:\/\/github\.com\/knative\/docs/ { /OWNERS*/ !{ /docs\/branches/ !{ /docs\/issues/ !{ /docs\/pulls/ !{ /docs\/labels/ !{ s#(https\:\/\/github\.com\/knative\/docs#(#g; s#\/tree\/master##g; s#\/blob\/master##g }}}}}}' {} +
+    -exec sed -i '/](https:\/\/github\.com\/knative\/docs/ { /OWNERS*/ !{ /docs\/branches/ !{ /docs\/issues/ !{ /docs\/pulls/ !{ /docs\/labels/ !{ s#(https\:\/\/github\.com\/knative\/docs#(#g; s#\/tree\/main##g; s#\/blob\/main##g }}}}}}' {} +
 
 # Convert fully qualified URLs that point to knative/community GitHub repo:
 find . -type f -path '*/content/*' -name '*.md' \
     ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' \
     ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' \
     ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
-    -exec sed -i '/](https:\/\/github\.com\/knative\/community/ { /OWNERS*/ !{ /docs\/branches/ !{ /community\/issues/ !{ /community\/pulls/ !{ /community\/labels/ !{ s#(https\:\/\/github\.com\/knative\/community#(/community/contributing/#g; s#\/tree\/master##g; s#\/blob\/master##g }}}}}}' {} +
+    -exec sed -i '/](https:\/\/github\.com\/knative\/community/ { /OWNERS*/ !{ /docs\/branches/ !{ /community\/issues/ !{ /community\/pulls/ !{ /community\/labels/ !{ s#(https\:\/\/github\.com\/knative\/community#(/community/contributing/#g; s#\/tree\/main##g; s#\/blob\/main##g }}}}}}' {} +
