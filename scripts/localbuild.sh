@@ -149,11 +149,18 @@ while getopts "f:b:a:s:" arg; do
       BUILDSINGLEBRANCH="false"
       ;;
     s)
-      echo 'Running Hugo server'
+      echo 'Running local Hugo server'
+      # Enable the local Hugo server with options for live reload or
+      # run with production settings /config/production/params.toml
+      # (default settings: /config/local/params.toml )
       SERVER="server $LIVERELOAD"
       if [ "${OPTARG}" = "reload" ]; then
         echo 'with live reload'
         LIVERELOAD=" --disableFastRender --renderToDisk"
+      fi
+      if [ "${OPTARG}" = "production" ]; then
+        echo 'in production mode'
+        BUILDENVIRONMENT="production"
       fi
       ;;
   esac
