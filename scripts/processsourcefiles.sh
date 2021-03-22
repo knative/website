@@ -145,7 +145,7 @@ source scripts/convert-repo-ulrs.sh
 #       - Convert '../' to '../../'
 echo 'Converting all links in GitHub source files to Hugo supported relative links...'
 # Convert relative links to support Hugo
-find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' \
+find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*index.md' ! -name '*README.md' \
     ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' \
     ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' \
     ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
