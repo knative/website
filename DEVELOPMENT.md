@@ -45,6 +45,10 @@
 
 1. (Optional) If you want to change the CSS, install
    [PostCSS](https://www.docsy.dev/docs/getting-started/#install-postcss)
+   
+1. Install a supported version of [Hugo](https://www.docsy.dev/docs/getting-started/#install-hugo).
+
+1. Install a supported version of [Hugo](https://www.docsy.dev/docs/getting-started/#install-hugo).
 
 1. Install a supported version of [Hugo](https://www.docsy.dev/docs/getting-started/#install-hugo).
 
@@ -74,7 +78,7 @@ The two local docs build options:
   Notes:
 
   - This method does not mirror how knative.dev is generated and therefore is
-    only recommend to for testing how your files render. That also means that link
+    only recommended for testing how your files render. That also means that link
     checking might not be 100% accurate. Hugo builds relative links differently
     (all links based on the site root vs relative to the file in which the link
     resides - this is part of the Knative specific file processing that is done)
