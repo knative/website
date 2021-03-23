@@ -1,3 +1,12 @@
+- [Development instructions](#development-instructions)
+  * [Setup](#setup)
+  * [Run locally](#run-locally)
+  * [On a Mac](#on-a-mac)
+    + [Sed](#sed)
+    + [File Descriptors in "server mode"](#file-descriptors-in--server-mode-)
+- [How it is deployed](#how-it-is-deployed)
+
+
 # Development instructions
 
 ## Setup
@@ -41,6 +50,8 @@
 
 1. Install a supported version of [Hugo](https://www.docsy.dev/docs/getting-started/#install-hugo).
 
+1. Install a supported version of [Hugo](https://www.docsy.dev/docs/getting-started/#install-hugo).
+
 ## Run locally
 
 You can use `./scripts/localbuild.sh` to build and test files locally.
@@ -67,7 +78,7 @@ The two local docs build options:
   Notes:
 
   - This method does not mirror how knative.dev is generated and therefore is
-    only recommened to for testing how your files render. That also means that link
+    only recommended for testing how your files render. That also means that link
     checking might not be 100% accurate. Hugo builds relative links differently
     (all links based on the site root vs relative to the file in which the link
     resides - this is part of the Knative specific file processing that is done)
@@ -146,3 +157,21 @@ ulimit -n 65535
 sudo sysctl -w kern.maxfiles=100000
 sudo sysctl -w kern.maxfilesperproc=65535
 ```
+
+# How it is deployed
+
+While the above describes how the content is built locally, https://knative.dev/ is built and served by [Netlify](https://netlify.com/) on their platform.
+There are a few differences between the two, and when debugging issues on the website, it can be useful to understand what Netlify is doing (as we've
+configured it).
+
+Generally, Netlify runs Hugo/Docsy builds and publishes everything that gets merged into the knative/docs and knative/website repos
+(anything in knative/community will get picked up when either of the other two repos trigger a build).
+
+The builds are triggered are through [GitHub webhooks](https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads).
+There are two webhooks sent from knative/docs that are configured to inidicate that they were sent from knative/website:
+
+* One that triggers a "production" build - Any PR that gets merged. (Webhook payload - /website `main` branch)
+* One that triggers a "preview" build - Any PR action other than a merge (ie. commit, comment, label, etc). (Webhook payload - /website `staging` branch)
+
+All of our builds (and build logs) are shown here: https://app.netlify.com/sites/knative/deploys (in the order of recent to past)
+

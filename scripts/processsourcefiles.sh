@@ -4,7 +4,7 @@
 
 echo '------ PROCESSING SOURCE FILES ------'
 # Default to a local build. Otherwise, retreives content from the specified source repos.
-# All builds copy or clone the content into the "content" folder of knative/webiste before starting the Hugo build.
+# All builds copy or clone the content into the "content" folder of knative/website before starting the Hugo build.
 # A temp directory is used and move files around and prevent git clone errors (fails if directory exists).
 
 # Clean slate: Make sure that nothing from a past build exists in the /content/ or /temp/ folders
@@ -145,7 +145,7 @@ source scripts/convert-repo-ulrs.sh
 #       - Convert '../' to '../../'
 echo 'Converting all links in GitHub source files to Hugo supported relative links...'
 # Convert relative links to support Hugo
-find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*README.md' \
+find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*index.md' ! -name '*README.md' \
     ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' \
     ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' \
     ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
