@@ -1,16 +1,22 @@
 aliases:
-  eng-approvers:
-  - averikitsch
+  technical-oversight-committee:
   - evankanderson
   - grantr
   - markusthoemmes
-  - mattmoor
-  - tcnghia
-  - vaikas
+  - rhuss
+
+  ux-writers:
   - csantanapr
   - omerbensaadon
 
-  docs-approvers:
-  - carieshmarie
+  docs-writers:
   - abrennan89
+  - carieshmarie
   - richieescarez
+
+  docs-reviewers:
+  - RichardJJG
+  - jonatasbaldin
+  - mpetason
+  - omerbensaadon
+  - snneji
