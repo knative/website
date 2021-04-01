@@ -47,6 +47,7 @@
 /kn-plugin-source-pkg/* go-get=1 /golang/kn-plugin-source-pkg.html 200
 /knobots/* go-get=1 /golang/knobots.html 200
 /kperf/* go-get=1 /golang/kperf.html 200
+/linter/* go-get=1 /golang/linter.html 200
 /net-certmanager/* go-get=1 /golang/net-certmanager.html 200
 /net-contour/* go-get=1 /golang/net-contour.html 200
 /net-http01/* go-get=1 /golang/net-http01.html 200
