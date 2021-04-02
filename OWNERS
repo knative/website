@@ -1,7 +1,9 @@
 # The OWNERS file is used by prow to automatically merge approved PRs.
 
 approvers:
-- eng-approvers
-- docs-approvers
+- technical-oversight-committee
+- ux-writers
+- docs-writers
 reviewers:
-- docs-approvers
+- docs-writers
+- docs-reviewers
