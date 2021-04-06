@@ -171,3 +171,22 @@ There are two webhooks sent from knative/docs that are configured to inidicate t
 
 All of our builds (and build logs) are shown here: https://app.netlify.com/sites/knative/deploys (in the order of recent to past)
 
+## Cutting a Release
+
+Update API docs
+1. Update the API docs in main branch:
+https://github.com/knative/docs/blob/master/docs/reference/api/README.md
+Use the following command from the root directory of the `docs` repo:
+    ```
+    cd ./hack/
+    KNATIVE_SERVING_COMMIT=v0.21.0   KNATIVE_EVENTING_COMMIT=v0.21.0 ./  gen-api-reference-docs.sh
+    ```
+    Here is an example PR: https://github.com/knative/docs/pull/3276#issue-579549750
+
+2. Create a new knative/docs branch and release tag (the new release): https://github.com/knative/docs/releases
+
+
+3. Update the knative/website to include the next release.
+Here is an example PR: https://github.com/knative/website/pull/256
+
+    The Netlify build automatically publishes everything
