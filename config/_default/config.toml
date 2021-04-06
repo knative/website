@@ -21,7 +21,7 @@ relativeURLs = "true"
 ignoreFiles = [
   "README.md$",
   "DEVELOPMENT.md",
-  "/doc/CONTRIBUTING.md",
+  "/docs/CONTRIBUTING.md",
   "/template-_index-page.md",
   "/template-docs-page.md",
   "/template-blog-page.md",
