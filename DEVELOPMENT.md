@@ -179,7 +179,7 @@ https://github.com/knative/docs/blob/master/docs/reference/api/README.md
 Use the following command from the root directory of the `docs` repo:
     ```
     cd ./hack/
-    KNATIVE_SERVING_COMMIT=v0.21.0   KNATIVE_EVENTING_COMMIT=v0.21.0 ./  gen-api-reference-docs.sh
+    KNATIVE_SERVING_COMMIT=v0.21.0 KNATIVE_EVENTING_COMMIT=v0.21.0 ./gen-api-reference-docs.sh
     ```
     Here is an example PR: https://github.com/knative/docs/pull/3276#issue-579549750
 
