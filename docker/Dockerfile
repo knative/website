@@ -10,8 +10,8 @@ RUN git clone https://github.com/knative/docs.git
 
 WORKDIR /website
 
-COPY processsourcefiles.sh scripts/processsourcefiles.sh
-COPY localbuild.sh scripts/localbuild.sh
+COPY scripts.patch .
+RUN patch -p0 < scripts.patch
 
 ENTRYPOINT ["/bin/bash", "scripts/localbuild.sh","-s","reload"]
 

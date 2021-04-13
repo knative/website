@@ -26,45 +26,14 @@ docker run --name=knative-docs -d -v $GOPATH/src/github.com/knative.dev/docs/doc
 
 This will run the service on port 9001, but you can pick any port you want. The container is listening on 1313.
 
+If you want to run an already built image you can specify mpetason/knative-docs:latest instead of building locally.
 
-Diffs on script files (edited so that mounted volumes aren't deleted or copied over)
-
-```
-$ diff localbuild.sh ../knative.dev/website/scripts/localbuild.sh 
-153,157c153,157
-<       SERVER="server "
-<      # if [ "${OPTARG}" = "reload" ]; then
-<      #   echo 'with live reload'
-<      #   LIVERELOAD=" --disableFastRender --renderToDisk"
-<      # fi
----
->       SERVER="server $LIVERELOAD"
->       if [ "${OPTARG}" = "reload" ]; then
->         echo 'with live reload'
->         LIVERELOAD=" --disableFastRender --renderToDisk"
->       fi
-170c170
-< exec hugo $SERVER --disableFastRender --baseURL "" --environment "$BUILDENVIRONMENT" --bind=0.0.0.0 --gc
----
-> hugo $SERVER --baseURL "" --environment "$BUILDENVIRONMENT" --gc
-178d177
-< 
+Just Docs
+```bash
+docker run --name=knative-docs -d -v $GOPATH/src/github.com/knative.dev/docs/docs:/website/content/en/docs -p 9001:1313 mpetason/knative-docs:latest
 ```
 
-```
-$ diff processsourcefiles.sh ../../knative.dev/website/scripts/processsourcefiles.sh 
-11c11
-< # rm -rf content/en
----
-> rm -rf content/en
-30c30
-<   # mv content/en/docs content/en/development
----
->   mv content/en/docs content/en/development
-70c70
-<   #cp -r ../docs content/en/
----
->   cp -r ../docs content/en/
-187d186
-< 
+Docs and Blog
+```bash
+docker run --name=knative-docs -d -v $GOPATH/src/github.com/knative.dev/docs/docs:/website/content/en/docs -v $GOPATH/src/github.com/knative.dev/docs/blog:/website/content/en/blog -p 9001:1313 mpetason/knative-docs:latest
 ```
