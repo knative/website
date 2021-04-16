@@ -23,6 +23,9 @@
 # Quit on error
 set -e
 
+# Install asciidoctor via RubyGems
+bundle
+
 # Retrieve the default docs version
 source scripts/docs-version-settings.sh
 # Use default repo and branch from docs-version-settings.sh
