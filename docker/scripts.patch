@@ -1,0 +1,67 @@
+--- scripts/localbuild.sh	2021-03-22 14:07:32.533556409 -0700
++++ docker/localbuild.sh	2021-04-12 20:56:04.615203305 -0700
+@@ -150,11 +150,11 @@
+       ;;
+     s)
+       echo 'Running Hugo server'
+-      SERVER="server $LIVERELOAD"
+-      if [ "${OPTARG}" = "reload" ]; then
+-        echo 'with live reload'
+-        LIVERELOAD=" --disableFastRender --renderToDisk"
+-      fi
++      SERVER="server "
++     # if [ "${OPTARG}" = "reload" ]; then
++     #   echo 'with live reload'
++     #   LIVERELOAD=" --disableFastRender --renderToDisk"
++     # fi
+       ;;
+   esac
+ done
+@@ -167,7 +167,7 @@
+ 
+ # BUILD MARKDOWN
+ # Start HUGO build
+-hugo $SERVER --baseURL "" --environment "$BUILDENVIRONMENT" --gc
++exec hugo $SERVER --disableFastRender --baseURL "" --environment "$BUILDENVIRONMENT" --bind=0.0.0.0 --gc
+ 
+ if [ -z "$SERVER" ]; then
+   echo ''
+@@ -175,3 +175,4 @@
+   echo ''
+   echo 'Static HTML files output to public/. Open public/index.html to view these files.'
+ fi
++
+--- scripts/processsourcefiles.sh	2021-04-07 11:05:32.746104145 -0700
++++ docker/processsourcefiles.sh	2021-04-12 20:56:07.385965069 -0700
+@@ -8,7 +8,7 @@
+ # A temp directory is used and move files around and prevent git clone errors (fails if directory exists).
+ 
+ # Clean slate: Make sure that nothing from a past build exists in the /content/ or /temp/ folders
+-rm -rf content/en
++# rm -rf content/en
+ rm -rf temp
+ 
+ if [ "$BUILDALLRELEASES" = "true" ]
+@@ -27,7 +27,7 @@
+   git clone --quiet -b main https://github.com/"$FORK".git content/en
+   echo 'Getting pre-release development docs from main branch'
+   # Move "pre-release" docs content into the 'development' folder:
+-  mv content/en/docs content/en/development
++  # mv content/en/docs content/en/development
+   # DOCS BRANCHES
+   echo '------ Cloning all docs releases ------'
+   # Get versions of released docs from their branches in "$FORK"
+@@ -67,7 +67,7 @@
+   echo '------ BUILDING YOUR LOCAL KNATIVE/DOCS CLONE ------'
+   echo 'Copying local clone of knative/docs into the /docs folder under:'
+   pwd
+-  cp -r ../docs content/en/
++  #cp -r ../docs content/en/
+   if [ -d "../community" ]; then
+     echo 'Also copying the local clone of knative/community into the /community/contributing folder.'
+     cp -r ../community/* content/en/community/contributing
+@@ -184,3 +184,4 @@
+ # GET HANDCRAFTED SITE LANDING PAGE
+ echo 'Copying the override files into the /content/ folder'
+ cp -rfv content-override/* content/
++

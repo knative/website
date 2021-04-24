@@ -154,6 +154,10 @@ sudo sysctl -w kern.maxfiles=100000
 sudo sysctl -w kern.maxfilesperproc=65535
 ```
 
+## Docker
+
+[Docker Setup Guide](./docker/README.md)
+
 # How it is deployed
 
 While the above describes how the content is built locally, https://knative.dev/ is built and served by [Netlify](https://netlify.com/) on their platform.
