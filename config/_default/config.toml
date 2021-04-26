@@ -30,7 +30,11 @@ ignoreFiles = [
   "/*/reference/api/eventing/eventing-contrib.md",
   "/*/reference/serving.md",
   "/*/reference/eventing/eventing.md",
-  "/*/reference/eventing/eventing-contrib.md" ]
+  "/*/reference/eventing/eventing-contrib.md",
+  "/community/contributing/elections/.*",
+  "/community/contributing/hack/.*",
+  "/community/contributing/mechanics/tools/.*",
+  "/community/contributing/peribolos/.*" ]
 
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
 theme = ["docsy"]
