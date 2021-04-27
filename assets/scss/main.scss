@@ -60,28 +60,3 @@ footer {
         max-width: 100%;
     }
 }
-
-table {
-    border: 1px solid lightgray;
-    margin: 1em;
-    padding: .5em;
-    tr {
-        border: 1px solid lightgray;
-        margin-left: .5em;
-        margin-right: .5em;
-        padding: .5em;
-    }
-    th {
-        border: 1px solid #495057;
-        margin-left: .5em;
-        margin-right: .5em;
-        padding: .5em;
-        background: lightgray;
-    }
-    td {
-        border: 1px solid lightgray;
-        margin-left: .5em;
-        margin-right: .5em;
-        padding: 5px;
-    }
-}
