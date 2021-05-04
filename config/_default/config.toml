@@ -20,6 +20,11 @@ relativeURLs = "true"
 # (the README.md files are kept for GitHub repo users so a landing pages appears)
 ignoreFiles = [
   "README.md$",
+  "DEVELOPMENT.md",
+  "/docs/CONTRIBUTING.md",
+  "/template-_index-page.md",
+  "/template-docs-page.md",
+  "/template-blog-page.md",
   "/*/reference/api/serving.md",
   "/*/reference/api/eventing/eventing.md",
   "/*/reference/api/eventing/eventing-contrib.md",

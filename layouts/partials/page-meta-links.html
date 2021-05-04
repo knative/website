@@ -1,11 +1,15 @@
-{{/* Show only on production site (not local builds since we can't determine version) */}}
-{{ if not .Site.IsServer }}
+{{/* Dynamically determine the version and in what section of the docs each page belongs */}}
+
 {{ $prerelease := .Site.Params.prereleasefolder }}
 {{ if .Path }}
   {{/* Set default values */}}
   {{ $pageSection := .Page.Section }}
   {{ $.Scratch.Set "filepath" .Path }}
+  {{ if not .Site.IsServer }}
   {{ $.Scratch.Set "gh_branch" ($.Param "latest_github_branch") }}
+  {{ else }} {{/* Set to 'main' for local builds */}}
+  {{ $.Scratch.Set "gh_branch" "main" }}
+  {{ end }}
   {{ $.Scratch.Set "gh_repo" ($.Param "github_docsrepo") }}
 
   {{/* Set the right filepaths to match whats in the repo */}}
@@ -36,6 +40,7 @@
 
   {{ if ($.Scratch.Get "gh_repo") }}
   <div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+
     {{/* Show different links for each website section */}}
     {{ if ne $pageSection "blog" }}
 
@@ -45,12 +50,18 @@
       {{ $.Scratch.Set "gh_repo" ($.Param "github_communityrepo") }}
     {{ end }}
 
+
+    {{/* Edit in GitHub - Show only on production site */}}
     {{ $editURL := printf "%s/tree/%s/%s" ($.Scratch.Get "gh_repo") ($.Scratch.Get "gh_branch") ($.Scratch.Get "filepath") }}
     <a href="{{ $editURL }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-edit fa-fw"></i> {{ T "post_edit_this" }}</a>
 
+    {{/* ISSUES */}}
+
+    {{/* Docs issues */}}
     {{ $issuesURL := printf "%s/issues/new?title=%s(%s)&labels=kind%2Fbug&template=bug-in-existing-docs.md" ($.Scratch.Get "gh_repo") (htmlEscape $.Title) (htmlEscape $.Path) }}
     <a href="{{ $issuesURL }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-github fa-fw"></i> {{ T "post_create_issue" }}</a>
 
+    {{/* Code issues */}}
     {{/* Determine the Knative component */}}
     {{ if or (eq $pageSection "docs") (eq $pageSection .Site.Params.prereleasefolder) }}
       {{ if in (printf "%s" ($.Scratch.Get "filepath")) "/serving/" }}
@@ -65,7 +76,14 @@
       {{ end }}
     {{ end }}
 
-    {{/* BLOG section - Show Post link */}}
+    {{/* Docs "how-to" guides */}}
+    {{ if ne $pageSection "help" }}
+    <hr>{{/* New docs template and help */}}
+    <a href="{{ $.Param "docs_template" }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-copy fa-fw"></i> {{ T "docs_template" }}</a>
+    <a href="/help/contributor/" target="_blank" rel="noopener noreferrer"><i class="fa fa-book fa-fw"></i> {{ T "docs_help" }}</a>
+    {{ end }}
+
+    {{/* BLOG section - Dynamically show "Post to ... Blog" links */}}
     {{ else if (eq $pageSection "blog")}}
     {{ if eq .File.Dir "blog/" }}
     {{ $.Scratch.Set "blogsec" "Knative " }}
@@ -74,9 +92,13 @@
     {{ $getfolder := (replace (printf "%s" $getfolder) "/" " " ) }}
     {{ $.Scratch.Set "blogsec" $getfolder }}
     {{ end }}
+
     <a href="https://github.com/knative/docs/new/main/{{ .File.Dir }}" target="_blank"><i class="fab fa-github fa-fw"></i>Post to the {{ $.Scratch.Get "blogsec" }}blog</a>
+    {{/* Blog "how-to" guides */}}
+    <hr>{{/* Blog post template and Blog help */}}
+    <a href="{{ $.Param "blog_template" }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-copy fa-fw"></i> {{ T "blog_template" }}</a>
+    <a href="/help/contributor/" target="_blank" rel="noopener noreferrer"><i class="fa fa-book fa-fw"></i> {{ T "blog_help" }}</a>
     {{ end }}
   </div>
   {{ end }}
-{{ end }}
 {{ end }}

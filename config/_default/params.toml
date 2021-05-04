@@ -39,6 +39,11 @@ github_communityrepo = "https://github.com/knative/community"
 github_eventingrepo = "https://github.com/knative/eventing"
 github_servingrepo = "https://github.com/knative/serving"
 
+# Templates
+
+docs_template = "https://github.com/knative/docs/blob/main/template-docs-page.md"
+blog_template = "https://github.com/knative/docs/blob/main/template-blog-entry.md"
+
 # User interface configuration
 [ui]
 # Set to true to display the nav bar in compact state (collapse menu).
