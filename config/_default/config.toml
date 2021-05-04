@@ -34,7 +34,10 @@ ignoreFiles = [
   "/community/contributing/elections/.*",
   "/community/contributing/hack/.*",
   "/community/contributing/mechanics/tools/.*",
-  "/community/contributing/peribolos/.*" ]
+  "/community/contributing/peribolos/.*",
+  "/hack/.*",
+  "/vendor/.*",
+  "/third_party/.*" ]
 
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
 theme = ["docsy"]
