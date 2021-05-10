@@ -9,7 +9,6 @@
 latest_github_branch = "release-0.22"
 # Default version (latest release)
 version = "v0.22"
-########################
 
 # Section labels for versions
 # Current release
