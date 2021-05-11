@@ -1,5 +1,6 @@
 /community/contributing/working-groups /community/contributing/working-groups/working-groups 301
-/community/contributing/docs/docs-contributing https://github.com/knative/docs/tree/main/CONTRIBUTING.md 301
+/community/contributing/docs/docs-contributing /help/ 301
+/docs/serving/spec/knative-api-specification-1.0 https://github.com/knative/specs/blob/main/specs/serving/knative-api-specification-1.0.md
 
 # The following lines are AUTO-GENERATED
 #

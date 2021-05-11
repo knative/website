@@ -50,6 +50,15 @@ other = "All Rights Reserved"
 [footer_privacy_policy]
 other = "Privacy Policy"
 
+# Help and templates
+[docs_help]
+other = "Docs help"
+[docs_template]
+other = "New page template"
+[blog_help]
+other = "Blog help"
+[blog_template]
+other = "New post template"
 
 # Post (blog, articles etc.)
 [post_byline_by]

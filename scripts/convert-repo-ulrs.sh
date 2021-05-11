@@ -45,4 +45,4 @@ find . -type f -path '*/content/*' -name '*.md' \
     ! -name '*serving-api.md' ! -name '*eventing-contrib-api.md' ! -name '*eventing-api.md' \
     ! -name '*build-api.md' ! -name '*.git*' ! -path '*/.github/*' ! -path '*/hack/*' \
     ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
-    -exec sed -i '/](https:\/\/github\.com\/knative\/community/ { /OWNERS*/ !{ /docs\/branches/ !{ /community\/issues/ !{ /community\/pulls/ !{ /community\/labels/ !{ s#(https\:\/\/github\.com\/knative\/community#(/community/contributing/#g; s#\/tree\/main##g; s#\/blob\/main##g }}}}}}' {} +
+    -exec sed -i '/](https:\/\/github\.com\/knative\/community/ { /OWNERS*/ !{ /docs\/branches/ !{ /community\/issues/ !{ /community\/pulls/ !{ /community\/labels/ !{ s#(https\:\/\/github\.com\/knative\/community#(/community/contributing#g; s#\/tree\/main##g; s#\/blob\/main##g }}}}}}' {} +

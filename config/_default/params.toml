@@ -6,10 +6,9 @@
 # RELEASE-ITEM: 'latest_github_branch' and 'version' get updated each release
 
 # GitHub branch (latest release)
-latest_github_branch = "release-0.21"
+latest_github_branch = "release-0.22"
 # Default version (latest release)
-version = "v0.21"
-########################
+version = "v0.22"
 
 # Section labels for versions
 # Current release
@@ -38,6 +37,11 @@ github_docsrepo = "https://github.com/knative/docs"
 github_communityrepo = "https://github.com/knative/community"
 github_eventingrepo = "https://github.com/knative/eventing"
 github_servingrepo = "https://github.com/knative/serving"
+
+# Templates
+
+docs_template = "https://github.com/knative/docs/blob/main/template-docs-page.md"
+blog_template = "https://github.com/knative/docs/blob/main/template-blog-entry.md"
 
 # User interface configuration
 [ui]
@@ -124,4 +128,3 @@ breadcrumb_disable = false
   external = "false"
   icon = "fa fa-link"
         desc = "Link to your Knative samples that live on another site"
-

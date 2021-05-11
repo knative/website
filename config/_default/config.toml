@@ -20,12 +20,24 @@ relativeURLs = "true"
 # (the README.md files are kept for GitHub repo users so a landing pages appears)
 ignoreFiles = [
   "README.md$",
+  "DEVELOPMENT.md",
+  "/docs/CONTRIBUTING.md",
+  "/template-_index-page.md",
+  "/template-docs-page.md",
+  "/template-blog-page.md",
   "/*/reference/api/serving.md",
   "/*/reference/api/eventing/eventing.md",
   "/*/reference/api/eventing/eventing-contrib.md",
   "/*/reference/serving.md",
   "/*/reference/eventing/eventing.md",
-  "/*/reference/eventing/eventing-contrib.md" ]
+  "/*/reference/eventing/eventing-contrib.md",
+  "/community/contributing/elections/.*",
+  "/community/contributing/hack/.*",
+  "/community/contributing/mechanics/tools/.*",
+  "/community/contributing/peribolos/.*",
+  "/hack/.*",
+  "/vendor/.*",
+  "/third_party/.*" ]
 
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
 theme = ["docsy"]

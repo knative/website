@@ -132,7 +132,6 @@ source scripts/convert-repo-ulrs.sh
 #      - GitHub file (.git* files)
 #      - non-docs directories
 #    - Ignore Hugo site related files (avoid "readfile" shortcodes):
-#      - _index.md files (Hugo 'section' files)
 #      - API shell files (serving-api.md, eventing-contrib-api.md, eventing-api.md)
 #    - For all remaining Markdown files:
 #      - Remove all '.md' file extensions from within Markdown links "[]()"
@@ -140,7 +139,7 @@ source scripts/convert-repo-ulrs.sh
 #       - Replace all in-page URLS from "README.md" to "index.html"
 #       - Rename all files from "README.md" to "index.md"
 #      - Adjust relative links by adding additional depth:
-#       - Exclude all README.md & _index.md files
+#       - Exclude all README.md files
 #       - Convert './' to '../'
 #       - Convert '../' to '../../'
 echo 'Converting all links in GitHub source files to Hugo supported relative links...'
@@ -152,18 +151,19 @@ find . -type f -path '*/content/*.md' ! -name '*_index.md' ! -name '*index.md' !
     -exec sed -i '/](/ { s#(\.\.\/#(../../#g; s#(\.\/#(../#g; }' {} +
 # Convert all relative links from README.md to index.html
 find . -type f -path '*/content/*.md' ! -name '_index.md' \
-    -exec sed -i '/](/ { /http/ !{s#README\.md#index.html#g;s#\.md##g} }' {} +
+    -exec sed -i '/](/ { /http/ !{s#README\.md#index.html#g} }' {} +
+# Convert all Markdown links to HTML
+find . -type f -path '*/content/*.md' \
+    -exec sed -i '/](/ { /http/ !{s#\.md##g} }' {} +
 
 ###############################################
 # Process file names (HIDE README.md FROM URLS)
 # For SEO, dont use "README" in the URL
 # (convert them to index.md OR use a "readfile" shortcode to nest them within a _index.md section file)
 #
-# Notes about past docs versions:
-# v0.6 and earlier doc releases: Use the "readfile" shortcodes to nest all README.md files within the _index.md files.
-# v0.7 or later doc releases: Rename "README.md" files to "index.md" to avoid unnecessary lower-level _index.md files
-#     (and to prevent deeply nested shortcodes ==> double markdown processing issues).
-#     The "readfile" shortcodes are still used but only at the top level.
+# Rename "README.md" files to "index.md" to avoid unnecessary lower-level _index.md files
+# (and to prevent deeply nested shortcodes ==> double markdown processing issues).
+# The "readfile" shortcodes are still used but only for files the exclude shortcodes.
 #
 echo 'Converting all standalone README.md files to index.md...'
 # Some README.md files should not be converted to index.md, either because that README.md
@@ -173,12 +173,9 @@ echo 'Converting all standalone README.md files to index.md...'
 # Do not convert the following README.md files to index.md:
 #  - files in doc releases v0.6 and earlier
 #  - README.md files in folders that also include _index.md files
-#  - content/en/contributing/README.md
-#  - content/en/reference/README.md
 find . -type f -path '*/content/*/*/*' -name 'README.md' \
-     ! -path '*/contributing/*' ! -path '*/v0.6-docs/*' ! -path '*/v0.5-docs/*' \
-     ! -path '*/v0.4-docs/*' ! -path '*/v0.3-docs/*' ! -path '*/.github/*' ! -path '*/hack/*' \
-     ! -path '*/node_modules/*' ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
+     ! -path '*/.github/*' ! -path '*/hack/*' ! -path '*/node_modules/*' \
+     ! -path '*/test/*' ! -path '*/themes/*' ! -path '*/vendor/*' \
     -execdir bash -c 'if ! [ -e _index.md -o -e index.md ]; then echo "BARE README AT ${PWD#*/}, WILL NOT BE RENDERED."; fi' -- {} \;
 
 # GET HANDCRAFTED SITE LANDING PAGE
