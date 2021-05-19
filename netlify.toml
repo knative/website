@@ -21,7 +21,7 @@
 # Update to the latest version number
 # Enable permanent links to a new release (so links persist after release is archived)
 [[redirects]]
-  from = "/v0.22-docs/*"
+  from = "/v0.23-docs/*"
   to = "/docs/:splat"
   status = 200
 
@@ -31,9 +31,15 @@
 # one of those "previously published" versions
 
 [[redirects]]
+  from = "/v0.19-docs/*"
+  to = "/docs/"
+  status = 301
+
+[[redirects]]
   from = "/v0.18-docs/*"
   to = "/docs/"
   status = 301
+
 [[redirects]]
   from = "/v0.17-docs/*"
   to = "/docs/"
