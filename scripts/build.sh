@@ -183,7 +183,7 @@ fi
 # BUILD MARKDOWN
 # Start HUGO build
 cd themes/docsy && git submodule update -f --init && cd ../.. && hugo --environment "$BUILDENVIRONMENT"
-
+rm -rf public/development
 echo '------ BUILD SUCCESSFUL ------'
 echo 'VIEW STAGED CONTENT:' "$DEPLOY_URL"
 echo '------------------------------'
