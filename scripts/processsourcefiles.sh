@@ -27,7 +27,10 @@ then
   git clone --quiet -b main https://github.com/"$FORK".git content/en
   echo 'Getting pre-release development docs from main branch'
   # Move "pre-release" docs content into the 'development' folder:
-  mv content/en/docs content/en/development
+  
+  # /development now is going to be redirected to https://beta-knative.netlify.app/development
+  # mv content/en/docs content/en/development
+
   # DOCS BRANCHES
   echo '------ Cloning all docs releases ------'
   # Get versions of released docs from their branches in "$FORK"
