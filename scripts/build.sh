@@ -183,7 +183,8 @@ fi
 # BUILD MARKDOWN
 # Start HUGO build
 cd themes/docsy && git submodule update -f --init && cd ../.. && hugo --environment "$BUILDENVIRONMENT"
-
+# /development now is going to be redirected to https://beta-knative.netlify.app/development
+rm -rf public/development
 echo '------ BUILD SUCCESSFUL ------'
 echo 'VIEW STAGED CONTENT:' "$DEPLOY_URL"
 echo '------------------------------'

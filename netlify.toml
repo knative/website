@@ -123,3 +123,9 @@
   from = "/docs/build/*"
   to = "/docs/"
   status = 301
+
+# Redirect to point to mkdocs dev for now
+[[redirects]]
+  from = "/development/*"
+  to = "https://dev-knative.netlify.app/development/"
+  status = 302
