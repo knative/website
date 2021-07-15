@@ -38,6 +38,7 @@
 /kn-plugin-admin/* go-get=1 /golang/kn-plugin-admin.html 200
 /kn-plugin-diag/* go-get=1 /golang/kn-plugin-diag.html 200
 /kn-plugin-event/* go-get=1 /golang/kn-plugin-event.html 200
+/kn-plugin-func/* go-get=1 /golang/kn-plugin-func.html 200
 /kn-plugin-migration/* go-get=1 /golang/kn-plugin-migration.html 200
 /kn-plugin-quickstart/* go-get=1 /golang/kn-plugin-quickstart.html 200
 /kn-plugin-sample/* go-get=1 /golang/kn-plugin-sample.html 200
