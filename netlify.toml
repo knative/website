@@ -129,3 +129,10 @@
   from = "/development/*"
   to = "https://dev-knative.netlify.app/development/"
   status = 302
+
+#################
+# Finally, fallback to Go docs
+[[redirects]]
+  from = "*"
+  to = "https://pkg.go.dev/*"
+  status = 200
