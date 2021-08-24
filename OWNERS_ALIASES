@@ -16,10 +16,10 @@ aliases:
   - yanweiguo
   channel-wg-leads:
   - matzew
-  - slinkydeveloper
   client-reviewers:
   - itsmurugappan
   client-wg-leads:
+  - dsimansk
   - navidshaikh
   - rhuss
   client-writers:
@@ -40,9 +40,11 @@ aliases:
   - snneji
   docs-wg-leads: []
   docs-writers:
+  - RichardJJG
   - abrennan89
   - carieshmarie
   - richieescarez
+  - snneji
   eventing-reviewers:
   - aslom
   - tayarani
@@ -52,11 +54,9 @@ aliases:
   - antoineco
   - lberk
   - n3wscott
-  - slinkydeveloper
   eventing-wg-leads:
   - devguyio
   - lionelvillard
-  - vaikas
   eventing-writers:
   - akashrv
   - aliok
@@ -67,10 +67,9 @@ aliases:
   - matzew
   - n3wscott
   - pierDipi
-  - slinkydeveloper
   - vaikas
   knative-admin:
-  - RichieEscarez
+  - ZhiminXiang
   - bsnchan
   - dprotaso
   - duglin
@@ -81,7 +80,6 @@ aliases:
   - knative-prow-updater-robot
   - knative-test-reporter-robot
   - markusthoemmes
-  - matzew
   - mbehrendt
   - pmorie
   - rhuss
@@ -102,20 +100,19 @@ aliases:
   - julz
   - lionelvillard
   - markusthoemmes
+  - matzew
   - n3wscott
   - nak3
   - navidshaikh
   - rhuss
   - shashwathi
-  - slinkydeveloper
   - tanzeeb
   - tcnghia
   - vagababov
   - vaikas
   knative-release-leads:
-  - RichieEscarez
-  - dprotaso
-  - matzew
+  - ZhiminXiang
+  - evankanderson
   knative-robots:
   - knative-prow-releaser-robot
   - knative-prow-robot
@@ -207,6 +204,7 @@ aliases:
   - yanweiguo
   serving-reviewers:
   - julz
+  - psschwei
   - whaught
   serving-writers:
   - dprotaso
