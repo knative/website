@@ -80,7 +80,7 @@
     {{ if ne $pageSection "help" }}
     <hr>{{/* New docs template and help */}}
     <a href="{{ $.Param "docs_template" }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-copy fa-fw"></i> {{ T "docs_template" }}</a>
-    <a href="/help/contributor/" target="_blank" rel="noopener noreferrer"><i class="fa fa-book fa-fw"></i> {{ T "docs_help" }}</a>
+    <a href="/docs/help/contributor/" target="_blank" rel="noopener noreferrer"><i class="fa fa-book fa-fw"></i> {{ T "docs_help" }}</a>
     {{ end }}
 
     {{/* BLOG section - Dynamically show "Post to ... Blog" links */}}
@@ -97,7 +97,7 @@
     {{/* Blog "how-to" guides */}}
     <hr>{{/* Blog post template and Blog help */}}
     <a href="{{ $.Param "blog_template" }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-copy fa-fw"></i> {{ T "blog_template" }}</a>
-    <a href="/help/contributor/" target="_blank" rel="noopener noreferrer"><i class="fa fa-book fa-fw"></i> {{ T "blog_help" }}</a>
+    <a href="/docs/help/contributor/" target="_blank" rel="noopener noreferrer"><i class="fa fa-book fa-fw"></i> {{ T "blog_help" }}</a>
     {{ end }}
   </div>
   {{ end }}
