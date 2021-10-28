@@ -15,8 +15,6 @@ aliases:
   - markusthoemmes
   - vagababov
   - yanweiguo
-  channel-wg-leads:
-  - matzew
   client-reviewers:
   - itsmurugappan
   client-wg-leads:
@@ -28,14 +26,17 @@ aliases:
   - maximilien
   - navidshaikh
   - rhuss
-  conformance-wg-leads:
-  - tayarani
+  conformance-task-force-leads:
+  - omerbensaadon
+  - salaboy
   conformance-writers:
-  - tayarani
+  - omerbensaadon
+  - salaboy
   docs-reviewers:
   - RichardJJG
   - jonatasbaldin
   - mpetason
+  - nainaz
   - omerbensaadon
   - pmbanugo
   - snneji
@@ -68,7 +69,7 @@ aliases:
   - pierDipi
   - vaikas
   knative-admin:
-  - ZhiminXiang
+  - benmoss
   - bsnchan
   - dprotaso
   - duglin
@@ -80,38 +81,17 @@ aliases:
   - knative-test-reporter-robot
   - markusthoemmes
   - mbehrendt
+  - omerbensaadon
   - pmorie
   - rhuss
+  - salaboy
   - spencerdillard
   - thisisnotapril
   - vaikas
-  knative-milestone-maintainers:
-  - ImJasonH
-  - ZhiminXiang
-  - andrew-su
-  - aslom
-  - chaodaiG
-  - chizhg
-  - csantanapr
-  - dprotaso
-  - evankanderson
-  - igsong
-  - julz
-  - lionelvillard
-  - markusthoemmes
-  - matzew
-  - n3wscott
-  - nak3
-  - navidshaikh
-  - rhuss
-  - shashwathi
-  - tanzeeb
-  - tcnghia
-  - vagababov
-  - vaikas
   knative-release-leads:
-  - ZhiminXiang
-  - evankanderson
+  - benmoss
+  - julz
+  - salaboy
   knative-robots:
   - knative-prow-releaser-robot
   - knative-prow-robot
@@ -122,6 +102,7 @@ aliases:
   - ZhiminXiang
   - andrew-su
   - arturenault
+  - carlisia
   - markusthoemmes
   - nak3
   - shashwathi
@@ -179,6 +160,7 @@ aliases:
   - evankanderson
   - gerardo-lc
   - joshua-bone
+  - kvmware
   - steuhs
   productivity-wg-leads:
   - chizhg
@@ -200,7 +182,9 @@ aliases:
   serving-observability-writers:
   - yanweiguo
   serving-reviewers:
+  - carlisia
   - julz
+  - nealhu
   - psschwei
   - whaught
   serving-writers:
@@ -224,8 +208,8 @@ aliases:
   - markusthoemmes
   - rhuss
   trademark-committee:
-  - bsnchan
   - duglin
+  - omerbensaadon
   - spencerdillard
   ux-wg-leads:
   - csantanapr
