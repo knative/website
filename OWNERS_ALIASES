@@ -9,12 +9,9 @@ aliases:
   - psschwei
   - taragu
   autoscaling-wg-leads:
-  - markusthoemmes
-  - vagababov
+  - julz
   autoscaling-writers:
   - julz
-  - markusthoemmes
-  - vagababov
   - yanweiguo
   client-reviewers:
   - itsmurugappan
@@ -87,7 +84,6 @@ aliases:
   - matzew
   - mbehrendt
   - nak3
-  - omerbensaadon
   - pmorie
   - rhuss
   - spencerdillard
@@ -107,7 +103,6 @@ aliases:
   - andrew-su
   - arturenault
   - carlisia
-  - markusthoemmes
   - nak3
   - shashwathi
   - tcnghia
@@ -126,7 +121,6 @@ aliases:
   - aliok
   - houshengbo
   - jcrossley3
-  - markusthoemmes
   - matzew
   - trshafer
   operations-wg-leads:
@@ -136,7 +130,6 @@ aliases:
   - aliok
   - houshengbo
   - jcrossley3
-  - markusthoemmes
   - matzew
   - trshafer
   pkg-configmap-reviewers:
@@ -214,7 +207,7 @@ aliases:
   - rhuss
   trademark-committee:
   - duglin
-  - omerbensaadon
+  - evankanderson
   - spencerdillard
   ux-wg-leads:
   - csantanapr
